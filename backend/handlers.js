@@ -14,20 +14,28 @@ const getFlights = (req, res) => {
 };
 
 const getFlight = (req, res) => {
-  const flightId = req.params.id
+  const flightId = req.params.id;
   res.status(200).json({
     status: 200,
-    data: flights[flightId]
-  })
+    data: flights[flightId],
+  });
 };
 
 const addReservations = (req, res) => {
-  const body = req.body
+  const body = req.body;
+  if (body) {
+    res.status(201).json({
+      status: 201,
+      data: body, 
+      
+    });
+  } else {
+    res.status(400).json({
+      status: 400,
+      message: "didnt create anything",
+    });
+  }
   // console.log(body)
-  res.status(200).json({
-    status: 200,
-    data: body
-  })
 };
 
 const getReservations = (req, res) => {};

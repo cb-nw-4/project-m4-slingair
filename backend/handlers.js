@@ -6,9 +6,20 @@ const { v4: uuidv4 } = require("uuid");
 //  Use this data. Changes will persist until the server (backend) restarts.
 const { flights, reservations } = require("./data");
 
-const getFlights = (req, res) => {};
+const getFlights = (req, res) => {
+  res.status(200).json({
+    status: 200,
+    data: Object.keys(flights),
+  });
+};
 
-const getFlight = (req, res) => {};
+const getFlight = (req, res) => {
+  const flightId = req.params.id
+  res.status(200).json({
+    status: 200,
+    data: flights[flightId]
+  })
+};
 
 const addReservations = (req, res) => {};
 

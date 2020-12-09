@@ -21,7 +21,14 @@ const getFlight = (req, res) => {
   })
 };
 
-const addReservations = (req, res) => {};
+const addReservations = (req, res) => {
+  const body = req.body
+  // console.log(body)
+  res.status(200).json({
+    status: 200,
+    data: body
+  })
+};
 
 const getReservations = (req, res) => {};
 

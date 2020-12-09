@@ -44,6 +44,14 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
+      fetch("/reservation", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)

@@ -67,14 +67,33 @@ const deleteReservation = (req, res) => {
 };
 
 const updateReservation = (req, res) => {
-  const reservationId = req.params.id
+  const reservationId = req.params.id;
+  const update = req.body;
+
   const findId = reservations.find((el) => el.id == reservationId);
+
   const index = reservations.indexOf(findId);
-  
-  res.status(200).json({
-    status: 200,
-    message: 'updated successfully'
-  })
+  if (
+    findId &&
+    update.email === findId.email &&
+    update.givenName === findId.givenName &&
+    update.surname === findId.surname &&
+    (update.seat != findId.seat || update.flight != findId.flight)
+  ) {
+    const updatedObj = { ...findId, flight: update.flight, seat: update.seat };
+
+    reservations.splice(index, 1, updatedObj);
+
+    res.status(200).json({
+      status: 200,
+      message: "updated successfully",
+    });
+  } else {
+    res.status(400).json({
+      status: 400,
+      message: "did not update",
+    });
+  }
 };
 
 module.exports = {

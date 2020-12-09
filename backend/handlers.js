@@ -22,29 +22,60 @@ const getFlight = (req, res) => {
 };
 
 const addReservations = (req, res) => {
-  const body = req.body;
-  if (body) {
+  try {
+    const reservationId = uuidv4();
+    const body = req.body;
     res.status(201).json({
       status: 201,
-      data: body, 
-      
+      data: { ...body, id: reservationId },
     });
-  } else {
+  } catch {
     res.status(400).json({
       status: 400,
       message: "didnt create anything",
     });
   }
-  // console.log(body)
 };
 
-const getReservations = (req, res) => {};
+const getReservations = (req, res) => {
+  res.status(200).json({
+    status: 200,
+    body: reservations,
+  });
+};
 
-const getSingleReservation = (req, res) => {};
+const getSingleReservation = (req, res) => {
+  const reservationId = req.params.id;
+  res.status(200).json({
+    status: 200,
+    body: reservations.find((el) => {
+      return el.id === reservationId;
+    }),
+  });
+};
 
-const deleteReservation = (req, res) => {};
+const deleteReservation = (req, res) => {
+  const reservationId = req.params.id;
+  const findId = reservations.find((el) => el.id == reservationId);
+  const index = reservations.indexOf(findId);
+  // console.log(findId, index)
+  reservations.splice(index, 1);
+  res.status(200).json({
+    status: 200,
+    message: "deleted successfully",
+  });
+};
 
-const updateReservation = (req, res) => {};
+const updateReservation = (req, res) => {
+  const reservationId = req.params.id
+  const findId = reservations.find((el) => el.id == reservationId);
+  const index = reservations.indexOf(findId);
+  
+  res.status(200).json({
+    status: 200,
+    message: 'updated successfully'
+  })
+};
 
 module.exports = {
   getFlights,

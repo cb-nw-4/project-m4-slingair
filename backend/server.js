@@ -25,7 +25,18 @@ express()
   // get flights (flight numbers)
   .get("/flight/:id", handler.getFlight)
 
+  .get("/reservation/:id", handler.getSingleReservation)
+
+  .get("/reservation", handler.getReservations)
+
   .post("/reservation", handler.addReservations)
+
+  .put('/reservation/:id', handler.updateReservation)
+
+  .delete('/reservation/:id', handler.deleteReservation)
+
+
+
   // add new endpoints here ☝️
   // ---------------------------------
   // Nothing to modify below this line

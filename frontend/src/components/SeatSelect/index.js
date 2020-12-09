@@ -11,7 +11,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
-
+  //console.log(flightNumber);
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
     // of the form data is filled out.

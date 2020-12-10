@@ -46,16 +46,25 @@ const SeatSelect = ({ updateUserReservation }) => {
     if (validateEmail()) {
       fetch("/reservation", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({...formData, flight: flightNumber}),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-      });
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          updateUserReservation(json.data)
+          window.localStorage.setItem('formData', JSON.stringify(json.data))
+          console.log(JSON.parse(window.localStorage.getItem('formData')))
+          history.push('/confirmed')
+        })
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
+    } else {
+      
     }
   };
 

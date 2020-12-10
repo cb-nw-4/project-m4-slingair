@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
-const Confirmation = () => {
+const Confirmation = ({userReservation}) => {
+  console.log(userReservation)
   return (
     <Wrapper>
       <Container>
         <H1>Your flight is confirmed!</H1>
-        {/* create a map that goes over the data and makes a UUID etc */}
+  <p>{userReservation.id}</p>
       </Container>
       <Img src={tombstone}></Img>
     </Wrapper>

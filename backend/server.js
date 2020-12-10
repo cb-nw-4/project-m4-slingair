@@ -4,11 +4,27 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const {
+  getFlights,
+  getFlight,
+  getReservations,
+  addReservations,
+  getSingleReservation,
+  deleteReservation,
+  updateReservation
+} = require('./handlers');
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
-
+  .use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+  })
   // This will give us will log more info to the console. see https://www.npmjs.com/package/morgan
   .use(morgan("tiny"))
   .use(bodyParser.json())
@@ -20,7 +36,16 @@ express()
   // ---------------------------------
   // add new endpoints here 👇
 
-  // get flights (flight numbers)
+  // Get flights
+  .get('/flights', (req, res) => {
+    const response = getFlights();
+
+    if (response.status = 'ok') {
+      res.status(200).json({ status: 200, data: response.data});
+    } else {
+      res.status(200).json({ status: 200, message: 'An error occured'});
+    }
+  })
 
   // add new endpoints here ☝️
   // ---------------------------------

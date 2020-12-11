@@ -4,7 +4,7 @@
 const { v4: uuidv4 } = require("uuid");
 
 //  Use this data. Changes will persist until the server (backend) restarts.
-const { flights, reservations } = require("./data");
+let { flights, reservations } = require("./data");
 
 const getFlights = (req, res) => {
   res.status(200).json({
@@ -25,12 +25,14 @@ const addReservations = (req, res) => {
   try {
     const reservationId = uuidv4();
     const body = req.body;
+    const newReservation = { ...body, id: reservationId };
+    reservations = reservations.concat(newReservation);
 
     res.status(201).json({
       status: 201,
-      data: { ...body, id: reservationId },
+      data: newReservation,
     });
-  } catch {
+  } catch (err) {
     res.status(400).json({
       status: 400,
       message: "didnt create anything",

@@ -1,15 +1,16 @@
 "use strict";
 
-// import the needed node_modules.
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+
+const { getFlights, getFlight, getReservations, getSingleReservation, addReservations, deleteReservation, updateReservation } = require('./handlers');
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
 
-  // This will give us will log more info to the console. see https://www.npmjs.com/package/morgan
+  // This will log more info to the console. see https://www.npmjs.com/package/morgan
   .use(morgan("tiny"))
   .use(bodyParser.json())
 
@@ -19,8 +20,13 @@ express()
   // Nothing to modify above this line
   // ---------------------------------
   // add new endpoints here 👇
-
-  // get flights (flight numbers)
+  .get('/flights', getFlights)
+  .get('/flight/:num', getFlight)
+  .get('/reservations', getReservations)
+  .post('/reservations', addReservations)
+  .get('/reservation/:id', getSingleReservation)
+  .delete('/reservation/:id', deleteReservation)
+  .put('/reservation/:id', updateReservation)
 
   // add new endpoints here ☝️
   // ---------------------------------

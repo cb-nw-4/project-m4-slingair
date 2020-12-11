@@ -20,11 +20,26 @@ const getFlight = (req, res) => {
   res.status(200).json({status:200, data:seats})
 };
 
-const addReservations = (req, res) => {};
+const addReservations = (req, res) => {
+  let reservation=req.body.formData;
+  let flight=req.body.flightNumber;
+  reservation.id=uuidv4();
+  reservation.flight=flight;
+  console.log(reservation);
+  reservations.push(reservation);
+  console.log(reservations);
+  res.status(201).json({status:201, data:reservation});
+};
 
 const getReservations = (req, res) => {};
 
-const getSingleReservation = (req, res) => {};
+const getSingleReservation = (req, res) => {
+  res.status(200)
+  .json({
+    status:200,
+    data:reservations.find(reservation=>reservation.id===req.params.id
+  )})
+};
 
 const deleteReservation = (req, res) => {};
 

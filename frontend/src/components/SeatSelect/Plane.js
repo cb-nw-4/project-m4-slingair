@@ -9,10 +9,7 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
     // TODO: get seating data for selected flight
     fetch(`/getflight/${flightNumber}`)
     .then(res=>res.json())
-    .then((newres)=>{
-      console.log(newres);
-      return setSeating(newres.data);
-    })
+    .then((newres)=>setSeating(newres.data))
   }, [flightNumber]);
 
   return (

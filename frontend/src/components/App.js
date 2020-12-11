@@ -17,6 +17,17 @@ const App = () => {
   useEffect(() => {
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
+    const reservationID = JSON.parse(localStorage.getItem('reservationID'));
+    console.log(reservationID);
+    if(reservationID){
+      fetch(`/getreservation/${reservationID}`)
+      .then(res=>res.json())
+      .then(res=>{
+        console.log(res.data)
+        setUserReservation(res.data);
+      })
+    }
+    
   }, [setUserReservation]);
 
   return (
@@ -26,10 +37,10 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect />
+            <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation />
+            <Confirmation userReservation={userReservation}/>
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

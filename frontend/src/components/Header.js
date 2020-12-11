@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => (
-  <Wrapper>
-    <Logo>
-      <h1>Sling Airlines</h1>
-    </Logo>
-    {}
-    <Nav>
-      <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-      </>
-    </Nav>
-  </Wrapper>
-);
+const Header = () => {
+  return (
+    <Wrapper>
+      <Logo>
+        <h1>Sling Airlines</h1>
+      </Logo>
+      {window.localStorage.getItem("formData") && (
+        <Nav>
+          <>
+            <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+            <StyledNavLink to="/profile">Profile</StyledNavLink>
+          </>
+        </Nav>
+      )}
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.header`
   display: flex;

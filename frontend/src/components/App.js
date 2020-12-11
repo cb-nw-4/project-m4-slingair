@@ -15,6 +15,11 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (window.localStorage.getItem('formData')) {
+      fetch('/reservation')
+      .then(res => res.json())
+      .then(json => console.log(json))
+    }
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
   }, [setUserReservation]);

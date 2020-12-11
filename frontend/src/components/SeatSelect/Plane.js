@@ -7,7 +7,11 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
-    // TODO: get seating data for selected flight
+    fetch(`/flight/${flightNumber}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setSeating(json.data);
+      })
   }, [flightNumber]);
 
   return (

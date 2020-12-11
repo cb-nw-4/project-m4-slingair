@@ -13,6 +13,7 @@ const {
   deleteReservation,
   updateReservation
 } = require('./handlers');
+const { response } = require("express");
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
@@ -37,13 +38,26 @@ express()
   // add new endpoints here 👇
 
   // Get flights
-  .get('/flights', (req, res) => {
-    const response = getFlights();
+  .get('/flights', async (req, res) => {
+    try {
+      const response = await getFlights();
 
-    if (response.status = 'ok') {
-      res.status(200).json({ status: 200, data: response.data});
-    } else {
-      res.status(200).json({ status: 200, message: 'An error occured'});
+      res.status(200).json({ status: 200, result: 'ok', data: response.data});
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message});
+    }
+  })
+
+  // Get seating for specfic flight
+  .get('/flights/:id', async (req, res) => {
+    if (req.params.id !== 'null') {
+      try {
+        const response = await getFlight(req.params.id);
+
+        res.status(200).json({ status: 200, result: 'ok', data: response.data });
+      } catch (err) {
+        res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+      }
     }
   })
 

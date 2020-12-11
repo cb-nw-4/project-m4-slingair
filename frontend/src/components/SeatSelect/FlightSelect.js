@@ -11,15 +11,19 @@ const FlightSelect = ({ handleFlightSelect }) => {
     fetch('http://localhost:8000/flights')
     .then((res) => res.json())
     .then((json) => {
-      setFlights(json.data);
+      if (json.result === 'ok') {
+        setFlights(json.data);
+      } else {
+        window.alert(json.message);
+      }
     });
   }, []);
 
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      <Select onChange={(ev) => handleFlightSelect(ev)} name="flight">
-        <option value="" disabled selected>Select a flight</option>
+      <Select onChange={(ev) => handleFlightSelect(ev)} name="flight" value="Select a flight">
+        <option disabled>Select a flight</option>
         {flights.map(flight => (
           <option key={RandomKey()} value={flight}>{flight}</option>
         ))}

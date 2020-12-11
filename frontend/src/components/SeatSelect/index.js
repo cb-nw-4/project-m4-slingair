@@ -20,7 +20,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
 
-  const handleFlightSelect = (ev) => {
+  const handleFlightSelect = (ev) => {   
     setFlightNumber(ev.target.value);
   };
 

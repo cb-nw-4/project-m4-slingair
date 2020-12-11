@@ -16,18 +16,21 @@ const getFlights = (req, res) => {
 
 const getFlight = (req, res) => {
   const flightData = flights[req.params.flightNum];
-  if (flightData)
+  if (flightData){
+    console.log(flightData);
     res.status(200).json({ 
       status: 200,
       data: flightData,
       message: "Success"
-    }); 
-  else
+    });
+  }
+  else {
     res.status(404).json({ 
       status: 404,
       data: req.params.flightNum,
       message: "Flight not found" 
     });
+  }
 };
 
 const addReservations = (req, res) => {
@@ -121,8 +124,7 @@ const deleteReservation = (req, res) => {
 };
 
 const updateReservation = (req, res) => {
-  const {  
-    id,  
+  const { 
     flight,
     seat,
     givenName,
@@ -133,8 +135,7 @@ const updateReservation = (req, res) => {
   //Peut-etre vrifier si le flight and seat exist dans le flight array et est disponible... ou peut-etre voir si toutes ces valid sont fait frontend] 
   //Doit-on cr/er un nouveau numero de id?  besoin de verifier id?
   const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
-  const isGoodId = id === req.params.id;
-  const incomplete = !id || !flight || !seat || !givenName || !surname || !email;  
+  const incomplete = !flight || !seat || !givenName || !surname || !email;  
   const isEmailValid = /(.+)@(.+){2,}\.(.+){2,}/.test(email);
 
   if (reservationIndex === -1) {
@@ -143,14 +144,7 @@ const updateReservation = (req, res) => {
       data: req.body,
       message: "Reservation not found"
     });
-  }
-  else if (!isGoodId){
-    res.status(400).json({ 
-      status: 400,
-      data: req.body,
-      message: "Bad id"
-    });
-  }
+  }  
   else if (incomplete) {
      res.status(400).json({ 
       status: 400,
@@ -166,7 +160,7 @@ const updateReservation = (req, res) => {
     });
   }
   else{
-    const newReservation = {...req.body};   
+    const newReservation = { id: req.params.id, ...req.body };   
     reservations[reservationIndex] = newReservation;
     res.status(200).json({ 
       status: 200,

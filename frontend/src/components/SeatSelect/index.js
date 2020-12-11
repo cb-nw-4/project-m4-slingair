@@ -3,6 +3,9 @@ import { useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
+// use this package to generate unique ids: https://www.npmjs.com/package/uuid
+const { v4: uuidv4 } = require("uuid");
+
 const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
 const SeatSelect = ({ updateUserReservation }) => {
@@ -13,8 +16,6 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [subStatus, setSubStatus] = useState("idle");
 
   useEffect(() => {
-    // This hook is listening to state changes and verifying whether or not all
-    // of the form data is filled out.
     Object.values(formData).includes("") || flightNumber === ""
       ? setDisabled(true)
       : setDisabled(false);
@@ -44,12 +45,36 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
-      // TODO: Send data to the server for validation/submission
-      // TODO: if 201, add reservation id (received from server) to localStorage
-      // TODO: if 201, redirect to /confirmed (push)
-      // TODO: if error from server, show error to user (stretch goal)
+      formData.flight = `${flightNumber}`;
+      formData.id = uuidv4();
+      console.log(formData);
+      
+      fetch("http://localhost:8000/confirmed", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          const { status, message, data } = json;
+          if (status === 201) {
+            console.log(message);
+            setSubStatus("confirmed");
+            formData.id = data.id;
+            history.push("/confirmed");
+          } else {
+            console.log(status, message, data);
+            setSubStatus("error");
+          }
+          
+        });
     }
   };
+  window.localStorage.setItem('myData', JSON.stringify(formData));
+
 
   return (
     <>

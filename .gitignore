@@ -14,6 +14,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+/backend/request.http
 
 npm-debug.log*
 yarn-debug.log*

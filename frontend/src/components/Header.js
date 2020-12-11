@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
 const Header = () => (
   <Wrapper>
-    <Logo>
+    <StyledImg to="/">
       <h1>Sling Airlines</h1>
-    </Logo>
+    </StyledImg>
     <Nav>
       {/* TODO: only show links if the user has a reservation already */}
       <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+        <StyledNavLink exact={true} to="/view-reservation">Reservation</StyledNavLink>
         <StyledNavLink to="/profile">Profile</StyledNavLink>
       </>
     </Nav>
@@ -27,7 +27,7 @@ const Wrapper = styled.header`
   height: 110px;
   padding: ${themeVars.pagePadding} 18px;
 `;
-const Logo = styled.div`
+const StyledImg = styled(Link)`
   background-image: url(${slingairLogo});
   background-repeat: no-repeat;
   background-position: left center, right center;

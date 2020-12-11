@@ -26,6 +26,7 @@ express()
   .get("/getflights", getFlights)
   .get("/getflight/:flightid", getFlight)
   .post("/addreservation", addReservations)
+  .get("/view-reservation", getReservations)
   .get("/getreservation/:id", getSingleReservation)
   
 

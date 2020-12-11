@@ -44,7 +44,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit =  (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
-      console.log(formData);
+      //console.log(formData);
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
@@ -59,7 +59,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
       .then(res=>res.json())
       .then(newres=>{
-        console.log(newres);
+        //console.log(newres);
         localStorage.setItem('reservationID',JSON.stringify(newres.data.id));
         updateUserReservation(newres.data);
         history.push('/confirmed')

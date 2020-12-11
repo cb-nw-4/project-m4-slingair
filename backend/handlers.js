@@ -26,12 +26,21 @@ const addReservations = (req, res) => {
   reservation.id=uuidv4();
   reservation.flight=flight;
   console.log(reservation);
+  //console.log(flight);
+  flights[flight].forEach(el => {
+    if(el.id===reservation.seat){
+      return el.isAvailable=false;
+    }
+  });
   reservations.push(reservation);
-  console.log(reservations);
+  //console.log(reservations);
   res.status(201).json({status:201, data:reservation});
 };
 
-const getReservations = (req, res) => {};
+const getReservations = (req, res) => {
+  console.log(reservations);
+  res.status(200).json({status:200, data:reservations})
+};
 
 const getSingleReservation = (req, res) => {
   res.status(200)

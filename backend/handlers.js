@@ -25,6 +25,7 @@ const addReservations = (req, res) => {
   try {
     const reservationId = uuidv4();
     const body = req.body;
+
     res.status(201).json({
       status: 201,
       data: { ...body, id: reservationId },

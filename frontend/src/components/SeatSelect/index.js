@@ -54,10 +54,16 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          updateUserReservation(json.data)
-          window.localStorage.setItem('formData', JSON.stringify(json.data))
-          history.push('/confirmed')
+          if (json.status == 201) {
+            updateUserReservation(json.data)
+            window.localStorage.setItem('formData', JSON.stringify(json.data))
+            history.push('/confirmed')
+          } else if (json.status == 400) {
+            history.push('/error')
+          }
+          console.log(json)
         })
+
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)

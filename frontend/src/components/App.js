@@ -31,7 +31,10 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation} />
           </Route>
-          <Route path="">404: Oops!</Route>
+
+          <Route exact path="/error">
+            404: Oops!
+          </Route>
         </Switch>
         <Footer />
       </Main>
@@ -43,7 +46,7 @@ const Main = styled.div`
   background: ${themeVars.background};
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px);
+  min-height: calc(100vh - 110px);
 `;
 
 export default App;

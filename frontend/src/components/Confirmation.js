@@ -5,7 +5,6 @@ import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
 const Confirmation = ({ userReservation }) => {
-  console.log(userReservation);
   return (
     <Wrapper>
       <Container>

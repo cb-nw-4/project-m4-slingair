@@ -37,6 +37,8 @@ const getFlight = (req, res) => {
 };
 
 const addReservations = (req, res) => {
+
+  console.log(req.body, 'server post')
   const newReservation ={
     id: uuidv4(),
     flight: req.body.flight,

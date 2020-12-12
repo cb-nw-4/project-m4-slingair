@@ -60,9 +60,16 @@ const SeatSelect = ({ updateUserReservation }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.status === 201) {
-          updateUserReservation(json.data);
-          localStorage.setItem('reservationId', json.data.id);
-          history.push('/confirmed');
+          function createLocalStorage(key, value) {
+                return Promise.resolve().then(function () {
+                    localStorage.setItem(key, value);
+                });
+            }
+          createLocalStorage('reservationId', json.data.id).then(() => {
+            setSubStatus("pending");
+            updateUserReservation(json.data);
+            history.push('/confirmed');
+          });
         }
         if (json.status === 400) {
           console.log(json.data);

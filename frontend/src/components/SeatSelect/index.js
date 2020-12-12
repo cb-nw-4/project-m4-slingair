@@ -32,7 +32,7 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleChange = (val, item) => {
     setFormData({ flightNumber, ...formData, [item]: val });
-    console.log(formData);
+    return formData;
   };
 
   const validateEmail = () => {
@@ -46,16 +46,32 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+    // localStorage.setItem("data", "form")
     if (validateEmail()) {
-      fetch("/reservations", { method: "post"})
-      .then((res) => res.json())
-      
+      fetch("/reservations", { method: "post" })
+        .then((res) => res.json())
+        .then((json) => (json = json.data))
+        .then((data) => {
+
+          console.log(data);
+          setFormData({flightNumber, formData });
+          data.push(formData);
+      //     let info = data.data;
+      //     info.push(formData);
+      //     if(data.status === 201) {
+      // setItem(info)
+      //     }
+        
+        });
+
+
+        }
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
     }
-  };
+  
 
   return (
     <>
@@ -75,6 +91,6 @@ const SeatSelect = ({ updateUserReservation }) => {
       />
     </>
   );
-};
+}
 
 export default SeatSelect;

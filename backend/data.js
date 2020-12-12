@@ -61,6 +61,37 @@ const flights = {
     { id: "10E", isAvailable: true },
     { id: "10F", isAvailable: true },
   ],
+
+  SA232: [
+    { id: "1A", isAvailable: true },
+    { id: "1B", isAvailable: true },
+    { id: "1C", isAvailable: true },
+    { id: "1D", isAvailable: true },
+    { id: "1E", isAvailable: true },
+    { id: "1F", isAvailable: true },
+    { id: "2A", isAvailable: true },
+    { id: "2B", isAvailable: true },
+    { id: "2C", isAvailable: false },
+    { id: "2D", isAvailable: true },
+    { id: "2E", isAvailable: true },
+    { id: "2F", isAvailable: true },
+    { id: "3A", isAvailable: true },
+  ],
+  SA233: [
+    { id: "1A", isAvailable: true },
+    { id: "1B", isAvailable: true },
+    { id: "1C", isAvailable: false },
+    { id: "1D", isAvailable: true },
+    { id: "1E", isAvailable: true },
+    { id: "1F", isAvailable: true },
+    { id: "2A", isAvailable: true },
+    { id: "2B", isAvailable: true },
+    { id: "2C", isAvailable: true },
+    { id: "2D", isAvailable: true },
+    { id: "2E", isAvailable: true },
+    { id: "2F", isAvailable: true },
+    { id: "3A", isAvailable: true },
+  ],
 };
 
 const reservations = [

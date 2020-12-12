@@ -7,9 +7,11 @@ import slingairLogo from "../assets/logo_text.png";
 
 const Header = () => (
   <Wrapper>
-    <Logo>
-      <h1>Sling Airlines</h1>
-    </Logo>
+    <a href="/">
+      <Logo>
+        <h1>Sling Airlines</h1>
+      </Logo>
+    </a>
     <Nav>
       {/* TODO: only show links if the user has a reservation already */}
       <>

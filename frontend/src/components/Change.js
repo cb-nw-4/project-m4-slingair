@@ -7,7 +7,7 @@ const initialState = JSON.parse(window.localStorage.getItem('myDatas'));
 
 const Change = () => {
     const history = useHistory();
-    const [flightNumber, setFlightNumber] = useState(null);
+    const [flightNumber] = useState(null);
     const [formData, setFormData] = useState(initialState);
     const [disabled, setDisabled] = useState(true);
     const [subStatus, setSubStatus] = useState("idle");
@@ -17,8 +17,6 @@ const Change = () => {
         ? setDisabled(true)
         : setDisabled(false);
     }, [flightNumber, formData, setDisabled]);
-
-        console.log(JSON.parse(window.localStorage.getItem('myDatas')).flight)
 
     const handleSeatSelect = (seatId) => {
         setFormData({ ...formData, seat: seatId });
@@ -61,7 +59,6 @@ const Change = () => {
                 formData.id = data.id;
                 history.push("/confirmed");
             } else {
-                console.log(status, message, data);
                 setSubStatus("error");
             }
         });

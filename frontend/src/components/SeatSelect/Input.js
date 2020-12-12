@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Input = ({ name, type, placeholder, handleChange, value }) => {
+const Input = ({ 
+  name, 
+  type, 
+  placeholder, 
+  handleChange, 
+  value }) => {
   return (
     <Wrapper>
       <label htmlFor={name}>{placeholder}</label>
@@ -10,7 +15,7 @@ const Input = ({ name, type, placeholder, handleChange, value }) => {
         name={name}
         placeholder={placeholder}
         onChange={(ev) => handleChange(ev.target.value, name)}
-        value={value}
+        value={value || '' }
       />
       
     </Wrapper>

@@ -59,7 +59,6 @@ const SeatSelect = () => {
         .then((json) => {
           const { status, message, data } = json;
           if (status === 201) {
-            console.log(message);
             setSubStatus("confirmed");
             formData.id = data.id;
             history.push("/confirmed");

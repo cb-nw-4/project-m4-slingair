@@ -17,40 +17,44 @@ const Admin = () => {
     }, []);
     return (
         <Wrapper>
-            <ConfirmationCard>
-            <thead>
-                <tr>
-                    <Th>Last name</Th>
-                    <Th>First name</Th>
-                    <Th>Email</Th>
-                    <Th>Flight</Th>
-                    <Th>Seat</Th>
-                    <Th>Reservation id</Th>
-                </tr>
-            </thead>
-            <tbody>
-            { reservations && reservations.length > 0 ? (
-                reservations.map((res) => (
-                    <tr key={`${res.id}`}>
-                        <Td>{res.surname}</Td>
-                        <Td>{res.givenName}</Td>
-                        <Td>{res.email}</Td>
-                        <Td>{res.flight}</Td>
-                        <Td>{res.seat}</Td>
-                        <Td>{res.id}</Td>
-                    </tr>
-                ))
-                
-            ) : (
-                <Placeholder>Select a Flight to view seating.</Placeholder>
-            )}
-            </tbody>
-            </ConfirmationCard>
+            <Card>
+                <ConfirmationCard>
+                    <thead>
+                        <tr>
+                            <Th>Last name</Th>
+                            <Th>First name</Th>
+                            <Th>Email</Th>
+                            <Th>Flight</Th>
+                            <Th>Seat</Th>
+                            <Th>Reservation id</Th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    { reservations && reservations.length > 0 ? (
+                        reservations.map((res) => (
+                            <tr key={`${res.id}`}>
+                                <Td>{res.surname}</Td>
+                                <Td>{res.givenName}</Td>
+                                <Td>{res.email}</Td>
+                                <Td>{res.flight}</Td>
+                                <Td>{res.seat}</Td>
+                                <Td>{res.id}</Td>
+                            </tr>
+                        ))
+                        
+                    ) : (
+                        <tr>
+                            <Placeholder>Select a Flight to view seating.</Placeholder>
+                        </tr>
+                    )}
+                    </tbody>
+                </ConfirmationCard>
+            </Card>
         </Wrapper>
     );
 };
 
-const Placeholder = styled.div`
+const Placeholder = styled.td`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,21 +67,24 @@ const Placeholder = styled.div`
     opacity: 0.5;
 `;
 
-const Wrapper = styled.table`
+const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     padding: 40px;
-    border-collapse: collapse;
 `;
 
-const ConfirmationCard = styled.div`
+const Card = styled.div`
+    padding: 30px;
     border: 3px solid ${themeVars.alabamaCrimson};
     border-radius: 5px;
+`;
+
+const ConfirmationCard = styled.table`
     margin: auto;
-    padding: 30px;
     width: 850px;
+    border-collapse: collapse;
 `;
 
 const Td = styled.td`

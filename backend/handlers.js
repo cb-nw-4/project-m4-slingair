@@ -10,12 +10,8 @@ const getFlights = (req, res) => {
 };
 
 const getFlight = (req, res) => {
-  if (req.params.id === 'null'){
-    res.status(100).json({ status: 100, data: {}, message: "Waiting on customer choice"});
-  } else {
       const flightSeats = Object.values(flights[req.params.id]);
       res.status(200).json({ status: 200, data: {flightSeats}, message: "Flight confirmed"});
-  }
 };
 
 const addReservations = (req, res) => {

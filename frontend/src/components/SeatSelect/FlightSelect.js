@@ -7,19 +7,35 @@ const FlightSelect = ({ handleFlightSelect }) => {
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
-    // TODO: fetch the flight numbers
+    fetch("/flight")
+      .then((res) => res.json())
+      .then((json) => {
+        setFlights(json.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   }, []);
+  const handleChange = (e) => {
+    handleFlightSelect(e);
+  };
 
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      {/* TODO: Create a dropdown from the flight numbers */}
+
+      <Form>
+        <Dropdown onChange={handleChange}>
+          <option value="Select">Select your flight</option>
+          <Option value={flights}>{flights}</Option>
+        </Dropdown>
+      </Form>
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   background: ${themeVars.cadmiumRed};
+
   height: 80px;
   display: flex;
   align-items: center;
@@ -27,4 +43,15 @@ const Wrapper = styled.div`
   margin-bottom: ${themeVars.pagePadding};
 `;
 
+const Form = styled.div`
+  margin-left: 10px;
+`;
+const Dropdown = styled.select`
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+`;
+const Option = styled.option`
+  color: ${themeVars.alabamaCrimson};
+`;
 export default FlightSelect;

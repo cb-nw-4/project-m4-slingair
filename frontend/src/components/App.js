@@ -5,6 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import Profile from "./Profile";
+import Reservations from "./Reservations";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -30,6 +32,12 @@ const App = () => {
           </Route>
           <Route exact path="/confirmed">
             <Confirmation />
+          </Route>
+          <Route exact path= "/reservations">
+            <Reservations/>
+          </Route>
+          <Route exact path= "/profile">
+            <Profile />
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

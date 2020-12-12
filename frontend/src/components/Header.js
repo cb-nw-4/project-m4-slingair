@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => (
+const Header = ({setDisabled}) => (
   <Wrapper>
     <Logo>
       <h1>Sling Airlines</h1>
@@ -13,7 +13,7 @@ const Header = () => (
     <Nav>
       {/* TODO: only show links if the user has a reservation already */}
       <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+        <StyledNavLink to="/reservations">Reservation</StyledNavLink>
         <StyledNavLink to="/profile">Profile</StyledNavLink>
       </>
     </Nav>

@@ -22,10 +22,12 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
+    console.log(ev.target.value);
   };
 
   const handleSeatSelect = (seatId) => {
     setFormData({ ...formData, seat: seatId });
+    console.log(seatId);
   };
 
   const handleChange = (val, item) => {

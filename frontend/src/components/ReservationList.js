@@ -106,30 +106,34 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
 
 
 const Table = styled.table`
-    padding: 5px;
-    margin: 20px;
-    width: 100%;
-    border: 1px solid ${themeVars.alabamaCrimson};
 
-    thead {
-        padding: 10px;
-    }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    
 
     & th{
         padding: 10px;
+        margin: 0 10px;
         text-align: center;
         color: ${themeVars.headingFont};
+        border-bottom: 1px solid ${themeVars.alabamaCrimson};
 
     }
 
 
     & td {
         padding: 10px;
+        margin: 0 10px;
         text-align: left;
+        border-bottom: 1px solid ${themeVars.alabamaCrimson};
     }
 
     & tr:hover{
-        background-color: ${themeVars.alabamaCrimson};
+
+        background: ${themeVars.alabamaCrimson};
+        color: ${themeVars.selectiveYellow};
+        border-color: ${themeVars.selectiveYellow};
     
     }
 `

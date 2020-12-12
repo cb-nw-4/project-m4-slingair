@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
 
-const FlightSelect = ({ handleFlightSelect }) => {
+const FlightSelect = ({ handleFlightSelect}) => {
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
@@ -21,19 +21,22 @@ const FlightSelect = ({ handleFlightSelect }) => {
       <label htmlFor="flight">Flight Number :</label>
       {/* TODO: Create a dropdown from the flight numbers */}
 
-      <select id='flight' name='flight' onChange={handleFlightSelect}>
+      <Select id='flight' name='flight' onChange={handleFlightSelect}>
         <option>Select flight</option>
           {flights.map(flight => 
             <option key={flight} value={flight}>{flight}</option>
             
             )}
-      </select>
+      </Select>
     </Wrapper>
   );
 };
 
 
 const Wrapper = styled.div`
+  display: flex;
+  
+ 
   background: ${themeVars.cadmiumRed};
   height: 80px;
   display: flex;
@@ -41,5 +44,16 @@ const Wrapper = styled.div`
   padding: ${themeVars.pagePadding};
   margin-bottom: ${themeVars.pagePadding};
 `;
+
+const Select = styled.select`
+  margin: 10px;
+  align-self: baseline;
+  background-color: ${themeVars.selectiveYellow};
+  color: ${themeVars.alabamaCrimson};
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+
+`
 
 export default FlightSelect;

@@ -9,7 +9,7 @@ const { flights, reservations } = require("./data");
 const getFlights = (req, res) => {
   res.status(200).json({
     status: 200,
-    flights: Object.keys(flights),
+    data: Object.keys(flights),
   })
 };
 
@@ -20,12 +20,12 @@ const getFlight = (req, res) => {
   if (selectedFlight) {
     res.status(200).json({
       status: 200,
-      seating: selectedFlight,
+      data: selectedFlight,
     })
   } else {
     res.status(404).json({
       status: 404,
-      seating: "Flight not found.",
+      message: "Flight not found.",
     })
   }
 };
@@ -43,7 +43,7 @@ const addReservations = (req, res) => {
 
   res.status(200).json({
     status: 200,
-    reservation: newReservation,
+    data: newReservation,
   })
 };
 
@@ -51,7 +51,7 @@ const addReservations = (req, res) => {
 const getReservations = (req, res) => {
   res.status(200).json({
     status: 200,
-    reservations: reservations,
+    data: reservations,
   })
 };
 
@@ -63,12 +63,12 @@ const getSingleReservation = (req, res) => {
   if (selectedReservation.length > 0 ) {
     res.status(200).json({
       status: 200,
-      reservation: selectedReservation,
+      data: selectedReservation,
     })
   } else {
     res.status(404).json({
       status: 404,
-      reservation: "Reservation not found.",
+      data: "Reservation not found.",
     })
   }
 };
@@ -106,7 +106,7 @@ const updateReservation = (req, res) => {
 
   res.status(200).json({
     status: 200,
-    reservation: "Reservation has been updated.",
+    message: "Reservation has been updated.",
   })
 
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { renderedFlights } from "./FlightSelect";
 
 import { themeVars } from "../GlobalStyles";
 
@@ -15,7 +14,7 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
         method: "GET",
       })
       .then((res) => res.json())
-      .then((res) => setSeating(res.seating))
+      .then((res) => setSeating(res.data))
     }
   }, [flightNumber]);
 

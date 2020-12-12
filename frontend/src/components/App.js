@@ -26,7 +26,7 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect />
+            <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
             <Confirmation />

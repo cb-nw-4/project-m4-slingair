@@ -4,7 +4,7 @@ import Plane from "./Plane";
 
 import { themeVars } from "../GlobalStyles";
 
-const FlightSelect = ({ handleFlightSelect }) => {
+const FlightSelect = ({ handleFlightSelect, flightNumber }) => {
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
@@ -12,42 +12,24 @@ const FlightSelect = ({ handleFlightSelect }) => {
       method: "GET",
     })
     .then((res) => res.json())
-    .then((res) => setFlights(res.flights))
+    .then((res) => setFlights(res.data))
   }, []);
 
-  let [showMenu, setShowMenu] = useState(false);
 
-  const renderFlights = () => {
-    let renderedFlights = []
-    flights.forEach((flight) => {
-      renderedFlights.push(<Flight onClick={() => handleFlightSelect(flight)}>{flight}</Flight>);
-    });
-    if (flights.length > 0) {
-      showMenu = false;
-    }
-    return renderedFlights;
-  }
 
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
 
       <div>
-        <Button onClick={() => setShowMenu(showMenu = true)}>
-          <FlightSelection>Select a flight ▼</FlightSelection>
-        </Button>
-
-        { showMenu === true
-          ? (
-            <DropdownContainer>
-              <Flight>Select a flight</Flight>
-              <Flight onClick={() => setShowMenu(showMenu = false)}>{renderFlights()}</Flight>
-            </DropdownContainer>
-          )
-          : (
-            null
-          )
-        }
+          <FlightSelection value={flightNumber} onChange={(e) => handleFlightSelect(e.target.value)}>
+            <Flight disable selected>Select a flight</Flight>
+            {flights.map((flight) => {
+                return (
+                  <Flight value={flight}>{flight}</Flight>
+                );
+            })}
+          </FlightSelection>
         
       </div>
 
@@ -72,11 +54,12 @@ const Button = styled.button`
   width: 130px;
 `;
 
-const FlightSelection = styled.p` 
+const FlightSelection = styled.select` 
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: black;
   padding: 5px;
+  margin-left: 15px;
 `
 
 const DropdownContainer = styled.div` 
@@ -89,7 +72,7 @@ const DropdownContainer = styled.div`
   width: 130px;
 `;
 
-const Flight = styled.a`
+const Flight = styled.option`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   padding: 5px;

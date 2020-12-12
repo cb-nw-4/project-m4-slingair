@@ -35,8 +35,6 @@ const FlightSelect = ({ handleFlightSelect}) => {
 
 const Wrapper = styled.div`
   display: flex;
-  
- 
   background: ${themeVars.cadmiumRed};
   height: 80px;
   display: flex;

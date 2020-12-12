@@ -43,6 +43,7 @@ const Form = ({
         value={formData.email}
       />
       <Button
+        value={'Confirm'}
         disabled={disabled}
         handleClick={handleSubmit}
         subStatus={subStatus}

@@ -8,29 +8,61 @@ import Confirmation from "./Confirmation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 import Reservation from "./Reservation";
 import Profile from "./profile";
+import ModifyReservation from "./ModifyReservation";
+
+const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
   const [subStatus, setSubStatus] = useState("idle");
+  const [isSeatModify, setSeatModify] = useState(false);
+
+  //New Update
+  const [formData, setFormData] = useState(initialState);
+  const [flightNumber, setFlightNumber] = useState(null);
+
+
+  const handleFlightSelect = (ev) => {
+    setFlightNumber(ev.target.value);
+  };
+
+  const validateEmail = () => {
+    const emailParts = formData.email.split("@");
+    return (
+      emailParts.length === 2 &&
+      emailParts[0].length > 0 &&
+      emailParts[1].length > 0
+    );
+  };
+
+  const handleChange = (val, item) => {
+    setFormData({ ...formData, [item]: val });
+  };
+
+  const handleSeatSelect = (seatId) => {
+    setSeatModify(true);
+    console.log('seat');
+    setFormData({ ...formData, seat: seatId });
+  };
+
+  //End of Update
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
-    console.log({ ...userReservation, ...newData }, 'datta')
+
   };
 
   useEffect(() => {
     // TODO: check localStorage for an id
 
     if(localStorage.length !== 0){
-      console.log('app', localStorage)
       fetch(`/reservations/${localStorage.id}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json, 'app')
+        //console.log(json, 'app')
         updateUserReservation(json.data);
       })
     }
-
     // if yes, get data from server and add it to state
   }, [setUserReservation, subStatus]);
 
@@ -41,18 +73,48 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect setSubStatus={setSubStatus} subStatus={subStatus}/>
+            <SeatSelect setSubStatus={setSubStatus} 
+                        updateUserReservation={updateUserReservation}
+                        subStatus={subStatus} 
+                        formData={formData}
+                        setFormData={setFormData}
+                        handleChange = {() => handleChange}
+                        flightNumber={flightNumber} 
+                        validateEmail={validateEmail}
+                        handleFlightSelect={() => handleFlightSelect} 
+                        setFlightNumber={setFlightNumber}
+                        handleSeatSelect= {() => handleSeatSelect}
+                        isSeatModify={isSeatModify}/>
           </Route>
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation} />
           </Route>
           <Route exact path="/reservation">
-            <Reservation  />
+            <Reservation 
+                        userReservation={userReservation}
+                      
+            />
           </Route>
           <Route exact path="/profile">
-            <Profile  />
+            <Profile  setSubStatus={setSubStatus} 
+                      subStatus={subStatus} 
+            />
           </Route>
 
+          <Route exact path='/modifyReservation'>
+            <ModifyReservation  userReservation={userReservation}
+                                updateUserReservation={updateUserReservation}
+                                setSubStatus={setSubStatus} 
+                                subStatus={subStatus} 
+                                formData={formData}
+                                setFormData={setFormData}
+                                handleChange = {() => handleChange}
+                                flightNumber={flightNumber} 
+                                validateEmail={validateEmail}
+                                handleFlightSelect={() => handleFlightSelect} 
+                                setFlightNumber={setFlightNumber}
+                                handleSeatSelect= {() => handleSeatSelect} />
+          </Route>
 
           <Route path="/error">404: Oops!</Route>
 

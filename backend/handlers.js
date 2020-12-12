@@ -125,6 +125,8 @@ const deleteReservation = (req, res) => {
 const updateReservation = (req, res) => {
 
   const reservationId = req.params.id;
+  
+  console.log(req.body, 'update')
 
   const updateObj ={
     flight: req.body.flight,
@@ -161,8 +163,9 @@ const updateReservation = (req, res) => {
     message:'Reservation is updated in the data Base'
   })
 
+    
   }
-
+  
 };
 
 module.exports = {

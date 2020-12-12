@@ -3,12 +3,22 @@ import { useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
-const initialState = { seat: "", givenName: "", surname: "", email: "" };
+// const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
-const SeatSelect = ({ setSubStatus , subStatus}) => {
+const SeatSelect = ({ setSubStatus , 
+  subStatus, 
+  handleFlightSelect, 
+  flightNumber, 
+  validateEmail,
+  formData,
+  setFormData,
+  handleChange,
+  handleSeatSelect,
+  updateUserReservation,
+}) => {
   const history = useHistory();
-  const [flightNumber, setFlightNumber] = useState(null);
-  const [formData, setFormData] = useState(initialState);
+  //const [flightNumber, setFlightNumber] = useState(null);
+  // const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -19,26 +29,26 @@ const SeatSelect = ({ setSubStatus , subStatus}) => {
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
 
-  const handleFlightSelect = (ev) => {
-    setFlightNumber(ev.target.value);
-  };
+  // const handleFlightSelect = (ev) => {
+  //   setFlightNumber(ev.target.value);
+  // };
 
-  const handleSeatSelect = (seatId) => {
-    setFormData({ ...formData, seat: seatId });
-  };
+  // const handleSeatSelect = (seatId) => {
+  //   setFormData({ ...formData, seat: seatId });
+  // };
 
-  const handleChange = (val, item) => {
-    setFormData({ ...formData, [item]: val });
-  };
+  // const handleChange = (val, item) => {
+  //   setFormData({ ...formData, [item]: val });
+  // };
 
-  const validateEmail = () => {
-    const emailParts = formData.email.split("@");
-    return (
-      emailParts.length === 2 &&
-      emailParts[0].length > 0 &&
-      emailParts[1].length > 0
-    );
-  };
+  // const validateEmail = () => {
+  //   const emailParts = formData.email.split("@");
+  //   return (
+  //     emailParts.length === 2 &&
+  //     emailParts[0].length > 0 &&
+  //     emailParts[1].length > 0
+  //   );
+  // };
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -63,9 +73,11 @@ const SeatSelect = ({ setSubStatus , subStatus}) => {
           const { status, error } = json;
           if (status === 200) {
             setSubStatus("confirmed");
-            console.log(json.data, 'reservation post')
+            //updateUserReservation(json.data);
+            //console.log(json.data, 'reservation post')
             localStorage.setItem('id', json.data.id)
-            console.log(localStorage, 'index')
+            localStorage.setItem('flightNumber', json.data.flight)
+            //console.log(localStorage, 'index')
             history.push("/confirmed")
             
           } else if (status===404) {
@@ -86,14 +98,14 @@ const SeatSelect = ({ setSubStatus , subStatus}) => {
     <>
       <FlightSelect
         flightNumber={flightNumber}
-        handleFlightSelect={handleFlightSelect}
+        handleFlightSelect={handleFlightSelect()}
       />
       <h2>Select your seat and Provide your information!</h2>
       <Form
         flightNumber={flightNumber}
         formData={formData}
-        handleChange={handleChange}
-        handleSeatSelect={handleSeatSelect}
+        handleChange={handleChange()}
+        handleSeatSelect={handleSeatSelect()}
         handleSubmit={handleSubmit}
         disabled={disabled}
         subStatus={subStatus}

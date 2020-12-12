@@ -30,7 +30,7 @@ const Confirmation = ({userReservation}) => {
 
     </Container>
 
-    <img src={tombstone} />
+    <img src={tombstone} alt='img logo'/>
   </Wrapper>;
 };
 

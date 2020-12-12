@@ -8,10 +8,25 @@ const FlightSelect = ({ handleFlightSelect }) => {
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
-    // TODO: fetch the flight numbers
+    fetch("/flights", {
+      method: "GET",
+    })
+    .then((res) => res.json())
+    .then((res) => setFlights(res.flights))
   }, []);
 
   let [showMenu, setShowMenu] = useState(false);
+
+  const renderFlights = () => {
+    let renderedFlights = []
+    flights.forEach((flight) => {
+      renderedFlights.push(<Flight onClick={() => handleFlightSelect(flight)}>{flight}</Flight>);
+    });
+    if (flights.length > 0) {
+      showMenu = false;
+    }
+    return renderedFlights;
+  }
 
   return (
     <Wrapper>
@@ -26,7 +41,7 @@ const FlightSelect = ({ handleFlightSelect }) => {
           ? (
             <DropdownContainer>
               <Flight>Select a flight</Flight>
-              <Flight onClick={() => FlightSelect()}>SA231</Flight>
+              <Flight onClick={() => setShowMenu(showMenu = false)}>{renderFlights()}</Flight>
             </DropdownContainer>
           )
           : (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+// import { renderedFlights } from "./FlightSelect";
 
 import { themeVars } from "../GlobalStyles";
 
@@ -8,7 +9,16 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
 
   useEffect(() => {
     // TODO: get seating data for selected flight
+    console.log(flightNumber);
+    if (flightNumber) {
+      fetch(`/flights/${flightNumber}`, {
+        method: "GET",
+      })
+      .then((res) => res.json())
+      .then((res) => setSeating(res.seating))
+    }
   }, [flightNumber]);
+
 
   return (
     <Wrapper>

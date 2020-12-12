@@ -5,14 +5,15 @@ import { NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = ({userReservation}) => {
- 
+const Header = ({ userReservation }) => {
   return (
     <Wrapper>
-      <Logo>
-        <h1>Sling Airlines</h1>
-      </Logo>
-      {(userReservation) && (
+      <StyledNavLink to='/'>
+        <Logo>
+          <h1>Sling Airlines</h1>
+        </Logo>
+      </StyledNavLink>
+      {userReservation.id && (
         <Nav>
           <>
             <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>

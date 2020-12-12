@@ -13,43 +13,46 @@ const Form = ({
   handleSeatSelect,
   handleSubmit,
   subStatus,
-}) => (
-  <Wrapper>
-    <Plane
-      selectedSeat={formData.seat}
-      flightNumber={flightNumber}
-      handleSeatSelect={handleSeatSelect}
+}) => {
+  console.log("this is the form",formData)
+  return (<Wrapper>
+  <Plane
+    selectedSeat={formData.seat}
+    flightNumber={flightNumber}
+    handleSeatSelect={handleSeatSelect}
+  />
+  <UserForm>
+    <Input
+      name="givenName"
+      placeholder="First Name"
+      type="text"
+      handleChange={handleChange}
+      value={formData.givenName}
     />
-    <UserForm>
-      <Input
-        name="givenName"
-        placeholder="First Name"
-        type="text"
-        handleChange={handleChange}
-        value={formData.givenName}
-      />
-      <Input
-        name="surname"
-        placeholder="Last Name"
-        type="text"
-        handleChange={handleChange}
-        value={formData.surname}
-      />
-      <Input
-        name="email"
-        placeholder="Email"
-        type="email"
-        handleChange={handleChange}
-        value={formData.email}
-      />
-      <Button
-        disabled={disabled}
-        handleClick={handleSubmit}
-        subStatus={subStatus}
-      />
-    </UserForm>
-  </Wrapper>
-);
+    <Input
+      name="surname"
+      placeholder="Last Name"
+      type="text"
+      handleChange={handleChange}
+      value={formData.surname}
+    />
+    <Input
+      name="email"
+      placeholder="Email"
+      type="email"
+      handleChange={handleChange}
+      value={formData.email}
+    />
+    <Button
+      disabled={disabled}
+      handleClick={handleSubmit}
+      subStatus={subStatus}
+    />
+  </UserForm>
+</Wrapper>)
+}
+  
+;
 
 const Wrapper = styled.form`
   display: flex;

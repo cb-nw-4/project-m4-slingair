@@ -3,7 +3,13 @@ import { NavLink, useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
-const SeatSelect = ({ updateUserReservation, update, userReservation }) => {
+const SeatSelect = ({
+  updateUserReservation,
+  update,
+  userReservation,
+  isDeleting,
+  setIsDeleting
+}) => {
   const initialState = userReservation || {
     seat: "",
     givenName: "",
@@ -25,6 +31,19 @@ const SeatSelect = ({ updateUserReservation, update, userReservation }) => {
       ? setDisabled(true)
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
+
+  useEffect(() => {
+    if (isDeleting == true) {
+      setFormData({
+        seat: "",
+        givenName: "",
+        surname: "",
+        email: "",
+      });
+      setIsDeleting(false)
+    }
+  }, [isDeleting]);
+
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
@@ -74,6 +93,9 @@ const SeatSelect = ({ updateUserReservation, update, userReservation }) => {
           } else if (json.status == 400) {
             history.push("/error");
           }
+          console.log(initialState);
+
+          console.log(initialState, "hello");
         });
 
       // TODO: Send data to the server for validation/submission

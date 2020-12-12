@@ -8,27 +8,34 @@ const { flights, reservations } = require("./data");
 
 const getFlights = (req, res) => {
   const data = Object.keys(flights);
-
   res.status(200).json({ status: 200, message: "Success", data: data });
 };
 
 const getFlight = (req, res) => {
-const data = flights.SA231;
-  res.status(200).json({ status: 200, message: "Success", data: data});
+  const data = flights.SA231;
+  res.status(200).json({ status: 200, message: "Success", data: data });
 };
 
-const addReservations = (req, res) => {};
+let addReservations = (req, res) => {
+  let newReservation = req.body;
+  console.log(newReservation);
+  reservations.push(newReservation);
+
+  return res.status(201).json({
+    status: 201,
+    message: "New Reservation confirmed",
+    data: reservations,
+  });
+};
 
 const getReservations = (req, res) => {
-const data = reservations;
-res.status(200).json({status:200, message: "Success", data: data});
-
+  const data = reservations;
+  res.status(200).json({ status: 200, message: "Success", data: data });
 };
 
 const getSingleReservation = (req, res) => {
   const data = reservations;
-  res.status(200).json({status:200, message: "Success", data: data});
-
+  res.status(200).json({ status: 200, message: "Success", data: data });
 };
 
 const deleteReservation = (req, res) => {};

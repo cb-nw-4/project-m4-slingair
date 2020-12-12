@@ -31,7 +31,8 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleChange = (val, item) => {
-    setFormData({ ...formData, [item]: val });
+    setFormData({ flightNumber, ...formData, [item]: val });
+    console.log(formData);
   };
 
   const validateEmail = () => {
@@ -46,6 +47,9 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
+      fetch("/reservations", { method: "post"})
+      .then((res) => res.json())
+      
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)

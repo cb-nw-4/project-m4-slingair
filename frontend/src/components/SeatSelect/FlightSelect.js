@@ -26,7 +26,7 @@ const FlightSelect = ({ handleFlightSelect }) => {
 
       <Form>
         <Dropdown onChange={handleChange}>
-          <option value="Select">Select your flight</option>
+          <Option value="Select">Select your flight</Option>
           <Option value={flights}>{flights}</Option>
         </Dropdown>
       </Form>
@@ -35,7 +35,6 @@ const FlightSelect = ({ handleFlightSelect }) => {
 };
 const Wrapper = styled.div`
   background: ${themeVars.cadmiumRed};
-
   height: 80px;
   display: flex;
   align-items: center;
@@ -50,8 +49,14 @@ const Dropdown = styled.select`
   height: 30px;
   border: none;
   border-radius: 5px;
+  width:150px;
+  font-weight:bold;
+  color: ${themeVars.alabamaCrimson};
+  
 `;
 const Option = styled.option`
-  color: ${themeVars.alabamaCrimson};
+ color: ${themeVars.alabamaCrimson};
+  
 `;
+
 export default FlightSelect;

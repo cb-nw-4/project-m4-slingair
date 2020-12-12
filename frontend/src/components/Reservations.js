@@ -19,12 +19,12 @@ const Reservations = () => {
       <Title>Reservations</Title>
       <Div>
       <List>
-        <Item>First Name :  {reservations.givenName}</Item>
-        <Item>Last Name:  {reservations.surname}</Item>
-        <Item>Email:  {reservations.email}</Item>
-        <Item>Seat Number:  {reservations.seat}</Item>
-        <Item>Flight Number:  {reservations.flight}</Item>
-        <Item>Reservation ID:  {reservations.id}</Item>
+        <Item><Span>First Name:</Span> {reservations.givenName}</Item>
+        <Item><Span>Last Name:</Span>  {reservations.surname}</Item>
+        <Item><Span>Email:</Span>  {reservations.email}</Item>
+        <Item><Span>Seat Number:</Span>  {reservations.seat}</Item>
+        <Item><Span>Flight Number:</Span>  {reservations.flight}</Item>
+        <Item><Span>Reservation ID:</Span>  {reservations.id}</Item>
       </List>
       </Div>
     </Wrapper>
@@ -47,9 +47,15 @@ margin-top:30px;
 `;
 const Title = styled.h1``;
 
+const Span = styled.span`
+text-decoration:underline;
+font-weight:bold;
+color:black;
+`;
+
 const List = styled.ul`
 padding:10px;
-background-color:white;
+border: 3px #AA001E solid;
 box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 border-radius:10px;
 
@@ -59,5 +65,6 @@ border-radius:10px;
 const Item = styled.li`
 padding:5px;
 font-family: ${themeVars.contentFont};
+font-size:150%;
 `;
 export default Reservations;

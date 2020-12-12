@@ -51,7 +51,7 @@ const getSingleReservation = (req, res) => {
   const reservationId = req.params.id;
   res.status(200).json({
     status: 200,
-    body: reservations.find((el) => {
+    data: reservations.find((el) => {
       return el.id === reservationId;
     }),
   });
@@ -76,19 +76,14 @@ const updateReservation = (req, res) => {
   const findId = reservations.find((el) => el.id == reservationId);
 
   const index = reservations.indexOf(findId);
-  if (
-    findId &&
-    update.email === findId.email &&
-    update.givenName === findId.givenName &&
-    update.surname === findId.surname &&
-    (update.seat != findId.seat || update.flight != findId.flight)
-  ) {
-    const updatedObj = { ...findId, flight: update.flight, seat: update.seat };
+  if (findId) {
+    const updatedObj = { ...findId, ...update};
 
     reservations.splice(index, 1, updatedObj);
 
     res.status(200).json({
       status: 200,
+      data: updatedObj,
       message: "updated successfully",
     });
   } else {

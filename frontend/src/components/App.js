@@ -8,6 +8,7 @@ import Confirmation from "./Confirmation";
 import Profile from "./Profile";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
+
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
 
@@ -16,10 +17,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (window.localStorage.getItem("formData")) {
-      fetch("/reservation")
+    const reservationId = window.localStorage.getItem("reservationId");
+    if (reservationId) {
+      fetch(`/reservation/${reservationId}`)
         .then((res) => res.json())
-        .then((json) => console.log(json));
+        .then((json) => {
+          setUserReservation(json.data);
+        });
     }
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
@@ -28,17 +32,23 @@ const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header />
+      <Header userReservation={userReservation}/>
       <Main>
         <Switch>
           <Route exact path="/">
             <SeatSelect updateUserReservation={updateUserReservation} />
           </Route>
+          <Route exact path="/update-reservation">
+            <SeatSelect updateUserReservation={updateUserReservation} update />
+          </Route>
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation} />
           </Route>
-          <Route exact path='/profile'>
-            <Profile/>
+          <Route exact path="/profile">
+            <Profile
+              updateUserReservation={updateUserReservation}
+              userReservation={userReservation}
+            />
           </Route>
           <Route exact path="/error">
             404: Oops!

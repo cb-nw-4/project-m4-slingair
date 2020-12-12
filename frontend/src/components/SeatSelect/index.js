@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
-const initialState = { seat: "", givenName: "", surname: "", email: "" };
-
-const SeatSelect = ({ updateUserReservation }) => {
+const SeatSelect = ({ updateUserReservation, update, userReservation }) => {
+  const initialState = userReservation || {
+    seat: "",
+    givenName: "",
+    surname: "",
+    email: "",
+  };
   const history = useHistory();
-  const [flightNumber, setFlightNumber] = useState(null);
+  const [flightNumber, setFlightNumber] = useState(
+    userReservation && userReservation.flight
+  );
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
@@ -44,24 +50,31 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
-      fetch("/reservation", {
-        method: "POST",
-        body: JSON.stringify({...formData, flight: flightNumber}),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      fetch(
+        update && userReservation
+          ? `/reservation/${userReservation.id}`
+          : "/reservation",
+        {
+          method: update ? "PUT" : "POST",
+          body: JSON.stringify({ ...formData, flight: flightNumber }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-          if (json.status == 201) {
-            updateUserReservation(json.data)
-            window.localStorage.setItem('formData', JSON.stringify(json.data))
-            history.push('/confirmed')
+          if (json.status == 200 || json.status == 201) {
+            updateUserReservation(json.data);
+            if (!update) {
+              window.localStorage.setItem("reservationId", json.data.id);
+            }
+            history.push("/confirmed");
           } else if (json.status == 400) {
-            history.push('/error')
+            history.push("/error");
           }
-        })
+        });
 
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
@@ -77,6 +90,7 @@ const SeatSelect = ({ updateUserReservation }) => {
         handleFlightSelect={handleFlightSelect}
       />
       <h2>Select your seat and Provide your information!</h2>
+
       <Form
         flightNumber={flightNumber}
         formData={formData}

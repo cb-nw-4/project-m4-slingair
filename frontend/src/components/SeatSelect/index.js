@@ -61,7 +61,6 @@ const SeatSelect = ({ updateUserReservation }) => {
           } else if (json.status == 400) {
             history.push('/error')
           }
-          console.log(json)
         })
 
       // TODO: Send data to the server for validation/submission

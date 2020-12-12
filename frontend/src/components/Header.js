@@ -6,12 +6,24 @@ import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
 const Header = () => {
+  const [resLength, setResLength] = useState(false);
+
+  const checkReservationLength = fetch("/reservation")
+    .then((res) => res.json())
+    .then((json) => {
+      if (json.body.length > 1) {
+        setResLength(true);
+      } else {
+        setResLength(false);
+      }
+    });
+
   return (
     <Wrapper>
       <Logo>
         <h1>Sling Airlines</h1>
       </Logo>
-      {window.localStorage.getItem("formData") && (
+      {(resLength) && (
         <Nav>
           <>
             <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>

@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import Profile from "./Profile";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -15,10 +16,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (window.localStorage.getItem('formData')) {
-      fetch('/reservation')
-      .then(res => res.json())
-      .then(json => console.log(json))
+    if (window.localStorage.getItem("formData")) {
+      fetch("/reservation")
+        .then((res) => res.json())
+        .then((json) => console.log(json));
     }
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
@@ -36,7 +37,9 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation} />
           </Route>
-
+          <Route exact path='/profile'>
+            <Profile/>
+          </Route>
           <Route exact path="/error">
             404: Oops!
           </Route>

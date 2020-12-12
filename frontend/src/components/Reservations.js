@@ -8,8 +8,11 @@ const Reservations = () => {
         fetch("/reservations")
         .then((res) => res.json())
         .then((json) => {
-            console.log(json.data[0]);
-            setReservations(json.data[0]);
+          const result = JSON.parse(localStorage.getItem("data"))
+          console.log(result);
+            console.log(json.data);
+            setReservations(result);
+          console.log(json.data);
         })
     }, []);
 
@@ -23,7 +26,7 @@ const Reservations = () => {
         <Item><Span>Last Name:</Span>  {reservations.surname}</Item>
         <Item><Span>Email:</Span>  {reservations.email}</Item>
         <Item><Span>Seat Number:</Span>  {reservations.seat}</Item>
-        <Item><Span>Flight Number:</Span>  {reservations.flight}</Item>
+        <Item><Span>Flight Number:</Span>  {reservations.flightNumber}</Item>
         <Item><Span>Reservation ID:</Span>  {reservations.id}</Item>
       </List>
       </Div>

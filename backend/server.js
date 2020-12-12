@@ -39,6 +39,8 @@ express()
 
 .get("/profile", getSingleReservation)
 
+.get("/confirmed", getReservations)
+
 .delete("/reservations/:id/delete", deleteReservation)
 
 .put("/reservations/:id", updateReservation)

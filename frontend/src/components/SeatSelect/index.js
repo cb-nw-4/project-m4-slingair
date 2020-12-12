@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-// import { addReservations } from "../../../../backend/handlers";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
@@ -47,7 +46,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
-      // TODO: Send data to the server for validation/submission
+      // Send data to the server for validation/submission
       fetch("/reservations", {
         method: "POST"
       })
@@ -57,8 +56,16 @@ const SeatSelect = ({ updateUserReservation }) => {
         history.push("/confirmed")
       })
 
+      // Add reservation id (received from server) to localStorage
+      fetch("/reservations", {
+        method: "POST"
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        localStorage.setItem('id', res.data.id)
+        console.log(localStorage)
+      })
 
-      // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
     }

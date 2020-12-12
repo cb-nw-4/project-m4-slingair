@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
 
-const Confirmation = ({  }) => {
+const Confirmation = () => {
   const { id, flight, seat, email, givenName, surname } = JSON.parse(window.localStorage.getItem('myData'));
+  window.localStorage.setItem('myDatas', JSON.stringify(JSON.parse(window.localStorage.getItem('myData'))));
   return (
     <Wrapper>
       <ConfirmationCard>
@@ -29,6 +31,10 @@ const Confirmation = ({  }) => {
           </ConfirmationDetails>
         </ConfirmationContainer>
       </ConfirmationCard>
+      <MenuContainer>
+        <StyledNavLink to="/profile">Change</StyledNavLink>
+        <StyledNavLink to="/delete">Delete</StyledNavLink>
+      </MenuContainer>
       <RIP src={tombstone} alt='tombstone' />
     </Wrapper>
   )
@@ -67,6 +73,42 @@ const ConfirmationDetails = styled.li`
 const RIP = styled.img`
   width: 200px;
   padding-top: 100px;
+`;
+
+const MenuContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+`;
+
+
+const StyledNavLink = styled(NavLink)`
+  background: ${themeVars.selectiveYellow};
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: ${themeVars.alabamaCrimson};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ${themeVars.headingFont};
+  font-size: 18px;
+  height: 42px;
+  margin: 0 0 0 8px;
+  padding: 0 14px;
+  width: 100%;
+  text-decoration: none;
+  transition: all ease 400ms;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    background: ${themeVars.alabamaCrimson};
+    color: ${themeVars.selectiveYellow};
+    border-color: ${themeVars.selectiveYellow};
+  }
 `;
 
 export default Confirmation;

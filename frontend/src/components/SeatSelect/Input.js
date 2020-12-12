@@ -12,6 +12,7 @@ const Input = ({ name, type, placeholder, handleChange, value }) => {
         onChange={(ev) => handleChange(ev.target.value, name)}
         value={value}
       />
+      
     </Wrapper>
   );
 };

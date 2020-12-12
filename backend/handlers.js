@@ -58,9 +58,8 @@ const getSingleReservation = (req, res) => {
 
 const deleteReservation = (req, res) => {
   const reservation = reservations.filter((i) => i.id != req.params.id);
-  console.log(reservation);
   if (!reservation) {
-    res.status(204).json({ status: 204, message: "flight not found"});
+    res.status(204).json({ status: 204, message: "Reservation not found"});
   } else {
     res.status(200).json({ status: 200, data: {reservation}, message: "Reservation deleted"});
   }
@@ -73,7 +72,7 @@ const updateReservation = (req, res) => {
   reservation[0].surname = req.body.surname;
   reservation[0].email = req.body.email;
   if (!reservation) {
-    res.status(204).json({ status: 204, message: "flight not found"});
+    res.status(204).json({ status: 204, message: "Reservation not found"});
   } else {
     res.status(200).json({ status: 200, data: {reservation}, message: "Reservation changed"});
   }

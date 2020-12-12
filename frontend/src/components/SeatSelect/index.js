@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
-const SeatSelect = ({ updateUserReservation }) => {
+const SeatSelect = () => {
   const history = useHistory();
   const [flightNumber, setFlightNumber] = useState(null);
   const [formData, setFormData] = useState(initialState);
@@ -46,9 +46,7 @@ const SeatSelect = ({ updateUserReservation }) => {
     ev.preventDefault();
     if (validateEmail()) {
       formData.flight = `${flightNumber}`;
-      formData.id = uuidv4();
-      console.log(formData);
-      
+      formData.id = uuidv4();      
       fetch("http://localhost:8000/confirmed", {
         method: "POST",
         body: JSON.stringify(formData),

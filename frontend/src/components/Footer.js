@@ -6,7 +6,9 @@ import logoImg from "../assets/air-sling.png";
 
 const Footer = () => (
   <Wrapper>
-    <Logo src={logoImg} />
+    <Link href="/admin">
+      <Logo src={logoImg} />
+    </Link>
     <p>The only way to fly!</p>
   </Wrapper>
 );
@@ -26,6 +28,10 @@ const Wrapper = styled.div`
 `;
 const Logo = styled.img`
   height: 100%;
+`;
+
+const Link = styled.a`
+  width: 45px;
 `;
 
 export default Footer;

@@ -5,26 +5,23 @@ import styled from "styled-components";
 
 const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
-const Search = ({ updateUserReservation }) => {
+const Search = () => {
   const history = useHistory();
   const [subStatus, setSubStatus] = useState("idle");
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    validateId()
+    formData.id === undefined
       ? setDisabled(true)
       : setDisabled(false);
-  }, [setDisabled]);
+  }, [formData, setDisabled]);
 
   const handleChange = (val, item) => {
     setFormData({ ...formData, [item]: val });
   };
-
   const validateId = () => {
-
     let idParts = "";
-    
     if(formData.id) {
       idParts = formData.id.split("-");
     }
@@ -35,6 +32,7 @@ const Search = ({ updateUserReservation }) => {
       idParts[2].length === 4 &&
       idParts[3].length === 4 &&
       idParts[4].length === 12
+
     );
     
   };

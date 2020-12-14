@@ -45,7 +45,6 @@ const addReservations = (req, res) => {
   //Peut-etre vrifier si le flight and seat exist dans le flight array et est disponible... ou peut-etre voir si toutes ces valid sont fait frontend]
   const alreadyTaken = reservations.some((reservation)=>(reservation.flight === flight && reservation.seat === seat));
   const incomplete = !flight || !seat || !givenName || !surname || !email;  
-  const isEmailValid = /(.+)@(.+){2,}\.(.+){2,}/.test(email);
 
   if (alreadyTaken) {
     res.status(400).json({ 
@@ -60,19 +59,16 @@ const addReservations = (req, res) => {
       data: req.body,
       message: "Incomplete information"
     });
-  }
-  else if (!isEmailValid) {
-    res.status(400).json({ 
-      status: 400,
-      data: req.body,      
-      message: "Invalid email"
-    });
-  }
+  } 
   else{
     const newReservation = {id: uuidv4(), ...req.body};   
     reservations.push(newReservation);
-    res.status(200).json({ 
-      status: 200,
+    flights[flight].forEach((flightSeat, index) => {
+        if (flightSeat.id === seat)
+          flights[flight][index] = { id: seat, isAvailable: false };
+    });
+    res.status(201).json({ 
+      status: 201,
       data: newReservation,
       message: "Reservation added"
     }); 
@@ -130,13 +126,10 @@ const updateReservation = (req, res) => {
     givenName,
     surname,
     email
-  } = req.body;
- 
-  //Peut-etre vrifier si le flight and seat exist dans le flight array et est disponible... ou peut-etre voir si toutes ces valid sont fait frontend] 
-  //Doit-on cr/er un nouveau numero de id?  besoin de verifier id?
+  } = req.body; 
+  
   const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
-  const incomplete = !flight || !seat || !givenName || !surname || !email;  
-  const isEmailValid = /(.+)@(.+){2,}\.(.+){2,}/.test(email);
+  const incomplete = !flight || !seat || !givenName || !surname || !email;   
 
   if (reservationIndex === -1) {
     res.status(400).json({ 
@@ -151,17 +144,14 @@ const updateReservation = (req, res) => {
       data: req.body,
       message: "Incomplete information"
     });
-  }
-  else if (!isEmailValid) {
-    res.status(400).json({ 
-      status: 400,
-      data: req.body,      
-      message: "Invalid email"
-    });
-  }
+  } 
   else{
     const newReservation = { id: req.params.id, ...req.body };   
     reservations[reservationIndex] = newReservation;
+    flights[flight].forEach((flightSeat, index) => {
+      if (flightSeat.id === seat)
+        flights[flight][index] = { id: seat, isAvailable: false };
+    });
     res.status(200).json({ 
       status: 200,
       data: newReservation,

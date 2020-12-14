@@ -4,7 +4,7 @@ import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 const { v4: uuidv4 } = require("uuid");
 
-const initialState = { seat: "", givenName: "", surname: "", email: "" };
+const initialState = { seat: "", givenName: "", surname: "", email: "", id: "" };
 
 const SeatSelect = ({ updateUserReservation }) => {
   const history = useHistory();
@@ -32,7 +32,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleChange = (val, item) => {
-    setFormData({ flightNumber, ...formData, [item]: val });
+    setFormData({ flightNumber, ...formData, [item]: val, id : uuidv4() });
     return formData;
   };
 
@@ -55,7 +55,9 @@ const SeatSelect = ({ updateUserReservation }) => {
         .then((json) => {
           let status = json.status;
           if (status == 201) {
-            setFormData({ flightNumber, formData });
+        
+
+            setFormData({ flightNumber, formData});
             const info = json.data;
             info.push(formData);
 

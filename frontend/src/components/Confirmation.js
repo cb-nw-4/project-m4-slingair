@@ -20,7 +20,7 @@ const Confirmation = () => {
   }, []);
   console.log(confirm);
   return (<Wrapper>
-  <Title>Confirmation</Title>
+  <Title>Reservation confirmed!</Title>
   <Div>
   <List>
     <Item><Span>First Name:</Span> {confirm.givenName}</Item>
@@ -31,7 +31,7 @@ const Confirmation = () => {
     <Item><Span>Reservation ID:</Span>  {confirm.id}</Item>
   </List>
   </Div>
-  <Tombstone src="../assets/tombstone.png" />
+  <Tombstone src={tombstone}/>
 </Wrapper>);
 };
 
@@ -50,7 +50,9 @@ display:flex;
 margin-top:30px;
 
 `;
-const Title = styled.h1``;
+const Title = styled.h1`
+
+`;
 
 const Span = styled.span`
 text-decoration:underline;
@@ -73,8 +75,9 @@ font-family: ${themeVars.contentFont};
 font-size:150%;
 `;
 
-const Tombstone = styled.image`
-
+const Tombstone = styled.img`
+height:150px;
+margin:50px;
 `;
 
 export default Confirmation;

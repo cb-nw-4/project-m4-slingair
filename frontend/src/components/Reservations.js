@@ -3,71 +3,86 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 
 const Reservations = () => {
-    const [reservations, setReservations] = useState([]);
-    useEffect(() => {
-        fetch("/reservations")
-        .then((res) => res.json())
-        .then((json) => {
-          const result = JSON.parse(localStorage.getItem("data"))
-          console.log(result);
-            console.log(json.data);
-            setReservations(result);
-          console.log(json.data);
-        })
-    }, []);
+  const [reservations, setReservations] = useState([]);
+  useEffect(() => {
+    fetch("/reservations")
+      .then((res) => res.json())
+      .then((json) => {
+        let arrayData = json.data;
+        let result = JSON.parse(localStorage.getItem("data"));
+        arrayData.push(result);
 
-    console.log(reservations.id);
-  return (
-    <Wrapper>
-      <Title>Reservations</Title>
-      <Div>
-      <List>
-        <Item><Span>First Name:</Span> {reservations.givenName}</Item>
-        <Item><Span>Last Name:</Span>  {reservations.surname}</Item>
-        <Item><Span>Email:</Span>  {reservations.email}</Item>
-        <Item><Span>Seat Number:</Span>  {reservations.seat}</Item>
-        <Item><Span>Flight Number:</Span>  {reservations.flightNumber}</Item>
-        <Item><Span>Reservation ID:</Span>  {reservations.id}</Item>
-      </List>
+        let filteredId = (array) => {
+          let arrayId = array.filter((arr) => {
+            if (arr.id !== undefined) {
+              return arr;
+            }
+          });
+          return arrayId;
+        };
+
+       let filteredData = filteredId(arrayData);
+       setReservations(filteredData);
+      });
+  }, []);
+
+  console.log(reservations);
+const allReservations = (reservations) => {
+  return ( reservations.map((reservation) => { 
+    return (
+  
+   
+      <Div key={reservation.id}>
+        <List key={reservation.id}>
+          <Item>
+            <Span>First Name:</Span> {reservation.givenName}
+          </Item>
+          <Item>
+            <Span>Last Name:</Span> {reservation.surname}
+          </Item>
+          <Item>
+            <Span>Email:</Span> {reservation.email}
+          </Item>
+          <Item>
+            <Span>Seat Number:</Span> {reservation.seat}
+          </Item>
+          <Item>
+            <Span>Flight Number:</Span> {reservation.flightNumber}
+          </Item>
+          <Item>
+            <Span>Reservation ID:</Span> {reservation.id}
+          </Item>
+        </List>
       </Div>
-    </Wrapper>
-  );
+ 
+  )}))}
+  return allReservations(reservations);
 };
 
-const Wrapper = styled.div`
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-margin:20px;
 
-`;
 const Div = styled.div`
-display:flex;
+  display: flex;
 
-margin-top:30px;
-
+  margin-top: 30px;
 `;
-const Title = styled.h1``;
+
 
 const Span = styled.span`
-text-decoration:underline;
-font-weight:bold;
-color:black;
+  text-decoration: underline;
+  font-weight: bold;
+  color: black;
 `;
 
 const List = styled.ul`
-padding:10px;
-border: 3px #AA001E solid;
-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-border-radius:10px;
-
-
+  padding: 10px;
+  border: 3px #aa001e solid;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 10px;
 `;
 
 const Item = styled.li`
-padding:5px;
-font-family: ${themeVars.contentFont};
-font-size:150%;
+  padding: 5px;
+  font-family: ${themeVars.contentFont};
+  font-size: 150%;
 `;
 export default Reservations;

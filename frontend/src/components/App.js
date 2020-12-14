@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Profile from "./Profile";
-import Reservations from "./Reservations";
+import AllReservations from "./AllReservations";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -34,7 +34,7 @@ const App = () => {
             <Confirmation />
           </Route>
           <Route exact path= "/reservations">
-            <Reservations/>
+            <AllReservations/>
           </Route>
           <Route exact path= "/profile">
             <Profile />

@@ -9,9 +9,9 @@ const Profile = () => {
         fetch("/profile")
         .then((res) => res.json())
         .then((json) => {
-       
-            console.log(json.data[0]);
-            setProfile(json.data[0]);
+          const result = JSON.parse(localStorage.getItem("data"));
+            console.log(json);
+            setProfile(result);
         })
     }, []);
 

@@ -5,20 +5,22 @@ import { Link, NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => (
-  <Wrapper>
-    <StyledImg to="/">
-      <h1>Sling Airlines</h1>
-    </StyledImg>
-    <Nav>
-      {/* TODO: only show links if the user has a reservation already */}
-      <>
-        <StyledNavLink exact={true} to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-      </>
-    </Nav>
-  </Wrapper>
-);
+const Header = ({email}) => {
+  //console.log(email);
+  return (
+    <Wrapper>
+      <StyledImg to="/">
+        <h1>Sling Airlines</h1>
+      </StyledImg>
+      <Nav>
+        {/* TODO: only show links if the user has a reservation already */}
+        <>
+          <StyledNavLink exact={true} to={`/view-reservation/${email}`}>Reservation</StyledNavLink>
+          <StyledNavLink exact={true} to="/profile">Profile</StyledNavLink>
+        </>
+      </Nav>
+    </Wrapper>
+  )};
 
 const Wrapper = styled.header`
   display: flex;

@@ -50,6 +50,13 @@ const getSingleReservation = (req, res) => {
   )})
 };
 
+const getUserReservations=(res, req)=>{
+  let email= req.params.email;
+  let userReservations=reservations.filter(el=>email===el.email);
+  console.log(userReservations);
+  res.status(201).json({status:201, data:userReservations});
+}
+
 const deleteReservation = (req, res) => {};
 
 const updateReservation = (req, res) => {};
@@ -62,4 +69,5 @@ module.exports = {
   getSingleReservation,
   deleteReservation,
   updateReservation,
+  getUserReservations,
 };

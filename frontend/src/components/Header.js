@@ -13,7 +13,7 @@ const Header = ({ userReservation }) => {
           <h1>Sling Airlines</h1>
         </Logo>
       </StyledNavLink>
-      {userReservation.id && (
+      {userReservation && (
         <Nav>
           <>
             <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>

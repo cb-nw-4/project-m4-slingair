@@ -14,7 +14,6 @@ const Form = ({
   handleSubmit,
   subStatus,
 }) => {
-  console.log("this is the form",formData)
   return (<Wrapper>
   <Plane
     selectedSeat={formData.seat}

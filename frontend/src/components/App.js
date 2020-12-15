@@ -25,8 +25,6 @@ const App = () => {
           setUserReservation(json.data);
         });
     }
-    // TODO: check localStorage for an id
-    // if yes, get data from server and add it to state
   }, [setUserReservation]);
 
   return (

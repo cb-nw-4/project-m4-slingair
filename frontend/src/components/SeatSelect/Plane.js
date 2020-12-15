@@ -21,7 +21,7 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat}) => {
   }, [flightNumber]);
 
   //console.log(flightNumber, handleSeatSelect, selectedSeat);
-  console.log('justClicked', selectedSeat, seating)
+  //console.log('justClicked', selectedSeat, seating)
 
   return (
     <Wrapper>

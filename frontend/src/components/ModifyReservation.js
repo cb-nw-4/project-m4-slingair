@@ -18,7 +18,6 @@ const ModifyReservation = ({
     disabled,
     subStatus,
     setSubStatus
-
 }) =>{
 
     useEffect(() => {
@@ -46,11 +45,11 @@ const ModifyReservation = ({
                 if (status === 200) {
                     setSubStatus("Update");
                     //console.log(json.data, 'reservation update')
-                    //updateUserReservation(json.data)
+                    updateUserReservation(json.data)
                     localStorage.setItem('id', json.data.id)
                     localStorage.setItem('flightNumber', json.data.flight)
                     console.log(localStorage, 'localStroge update')
-                    //history.push("/confirmed")
+                    history.push("/confirmed")
                 
             } else if (status===404) {
                 setSubStatus("error");

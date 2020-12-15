@@ -13,7 +13,6 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
 
     const isReservations = (allReservations.length > 0);
 
-    console.log(isReservations)
     
     const handleDelete = (ev) =>{
         

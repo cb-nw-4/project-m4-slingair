@@ -5,7 +5,8 @@ import Form from "./Form";
 
 // const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
-const SeatSelect = ({ setSubStatus , 
+const SeatSelect = ({ 
+  setSubStatus , 
   subStatus, 
   handleFlightSelect, 
   flightNumber, 
@@ -73,7 +74,7 @@ const SeatSelect = ({ setSubStatus ,
           const { status, error } = json;
           if (status === 200) {
             setSubStatus("confirmed");
-            //updateUserReservation(json.data);
+            updateUserReservation(json.data);
             //console.log(json.data, 'reservation post')
             localStorage.setItem('id', json.data.id)
             localStorage.setItem('flightNumber', json.data.flight)
@@ -98,14 +99,14 @@ const SeatSelect = ({ setSubStatus ,
     <>
       <FlightSelect
         flightNumber={flightNumber}
-        handleFlightSelect={handleFlightSelect()}
+        handleFlightSelect={handleFlightSelect}
       />
       <h2>Select your seat and Provide your information!</h2>
       <Form
         flightNumber={flightNumber}
         formData={formData}
-        handleChange={handleChange()}
-        handleSeatSelect={handleSeatSelect()}
+        handleChange={handleChange}
+        handleSeatSelect={handleSeatSelect}
         handleSubmit={handleSubmit}
         disabled={disabled}
         subStatus={subStatus}

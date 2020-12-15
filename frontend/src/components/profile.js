@@ -1,12 +1,20 @@
 import React, { useEffect,useState } from "react";
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
+import ListGroup from './ListGroup';
 import ReservationList from "./ReservationList";
 
 
 const Profile = ({subStatus, setSubStatus}) => {
 
     const [allReservations, setAllReservations] = useState([]);
+    const [selectedFlight, setSlectedFlight] =useState('');
+
+
+    const handleFlightSelect =(flight) =>{
+        setSlectedFlight(flight);
+    }
+
 
     useEffect(() => {
         
@@ -18,10 +26,18 @@ const Profile = ({subStatus, setSubStatus}) => {
         
     }, [setAllReservations]);
 
-
+    const filteredReservations = (selectedFlight  && !(selectedFlight ==='AllFlights')) ? 
+        allReservations.filter( reser => reser.flight === selectedFlight) : allReservations;
+    
     return <Wrapper>
+    
+    <ListGroup  selectedItem={selectedFlight}
+                onItemSelect={handleFlightSelect}
+
+            />
+
     <Container>
-        <ReservationList allReservations={allReservations}
+        <ReservationList allReservations={filteredReservations}
                         setSubStatus={setSubStatus} 
                         subStatus={subStatus} 
                         setAllReservations={setAllReservations}/>
@@ -34,15 +50,18 @@ const Profile = ({subStatus, setSubStatus}) => {
 
 const Wrapper = styled.div`
     display: flex;
+    align-content: space-between;
     padding: ${themeVars.pagePadding};
     margin-bottom: ${themeVars.pagePadding};
     align-items: center;
-    flex-direction: column;
     max-height: 100%;
 
 `
 
 const Container = styled.div`
+    flex-grow: 2;
+    margin-left: 30px;
+
     padding: 20px;
 `
 

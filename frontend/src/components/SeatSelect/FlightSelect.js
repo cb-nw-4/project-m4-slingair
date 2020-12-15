@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
 
-const FlightSelect = ({ handleFlightSelect}) => {
+const FlightSelect = ({handleFlightSelect}) => {
   const [flights, setFlights] = useState([]);
+
 
   useEffect(() => {
     // TODO: fetch the flight numbers
@@ -15,6 +16,7 @@ const FlightSelect = ({ handleFlightSelect}) => {
       })
 
   }, []);
+
 
   return (
     <Wrapper>

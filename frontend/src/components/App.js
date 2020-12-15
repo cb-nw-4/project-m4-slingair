@@ -16,6 +16,7 @@ const App = () => {
   const [userReservation, setUserReservation] = useState({});
   const [subStatus, setSubStatus] = useState("idle");
   const [isSeatModify, setSeatModify] = useState(false);
+ 
 
   //New Update
   const [formData, setFormData] = useState(initialState);
@@ -78,12 +79,12 @@ const App = () => {
                         subStatus={subStatus} 
                         formData={formData}
                         setFormData={setFormData}
-                        handleChange = {() => handleChange}
+                        handleChange = {handleChange}
                         flightNumber={flightNumber} 
                         validateEmail={validateEmail}
-                        handleFlightSelect={() => handleFlightSelect} 
+                        handleFlightSelect={handleFlightSelect} 
                         setFlightNumber={setFlightNumber}
-                        handleSeatSelect= {() => handleSeatSelect}
+                        handleSeatSelect= {handleSeatSelect}
                         isSeatModify={isSeatModify}/>
           </Route>
           <Route exact path="/confirmed">
@@ -97,7 +98,7 @@ const App = () => {
           </Route>
           <Route exact path="/profile">
             <Profile  setSubStatus={setSubStatus} 
-                      subStatus={subStatus} 
+                      subStatus={subStatus}
             />
           </Route>
 
@@ -108,12 +109,12 @@ const App = () => {
                                 subStatus={subStatus} 
                                 formData={formData}
                                 setFormData={setFormData}
-                                handleChange = {() => handleChange}
+                                handleChange = {handleChange}
                                 flightNumber={flightNumber} 
                                 validateEmail={validateEmail}
-                                handleFlightSelect={() => handleFlightSelect} 
+                                handleFlightSelect={handleFlightSelect} 
                                 setFlightNumber={setFlightNumber}
-                                handleSeatSelect= {() => handleSeatSelect} />
+                                handleSeatSelect= {handleSeatSelect} />
           </Route>
 
           <Route path="/error">404: Oops!</Route>

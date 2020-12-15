@@ -34,7 +34,14 @@ const getReservations = (req, res) => {
 };
 
 const getSingleReservation = (req, res) => {
-  const data = reservations;
+  const id = req.params.id;
+  const data = reservations.map((res) => {
+    if(res.id === id) {
+      return res
+    }
+  
+  })
+console.log(data);
   res.status(200).json({ status: 200, message: "Success", data: data });
 };
 

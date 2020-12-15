@@ -7,6 +7,8 @@ import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Profile from "./Profile";
 import AllReservations from "./AllReservations";
+import Reservations from "./Reservations";
+import SingleReservation from "./SingleReservation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -33,8 +35,15 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation />
           </Route>
-          <Route exact path= "/reservations">
+          <Route exact path= "/admin">
             <AllReservations/>
+          </Route>
+         
+          <Route exact path="reservations/:id">
+            <SingleReservation />
+          </Route>
+          <Route exact path= "/reservations">
+            <Reservations/>
           </Route>
           <Route exact path= "/profile">
             <Profile />

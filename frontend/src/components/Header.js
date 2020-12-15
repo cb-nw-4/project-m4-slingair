@@ -13,6 +13,7 @@ const Header = ({setDisabled}) => (
     <Nav>
       {/* TODO: only show links if the user has a reservation already */}
       <>
+      <StyledNavLink to="/admin"> Admin</StyledNavLink>
         <StyledNavLink to="/reservations">Reservation</StyledNavLink>
         <StyledNavLink to="/profile">Profile</StyledNavLink>
       </>

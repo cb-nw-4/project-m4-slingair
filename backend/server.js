@@ -35,9 +35,17 @@ express()
 
 .get("/reservations", getReservations)
 
+.get("/reservations/:id", getSingleReservation)
+
+.get("/admin", getReservations)
+
 .post("/reservations", addReservations)
 
-.get("/profile", getSingleReservation)
+
+
+
+
+
 
 .get("/confirmed", getReservations)
 

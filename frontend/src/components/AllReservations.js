@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
-import Reservations from "./Reservations";
+import Admin from "./Admin";
 
 const AllReservations = () => {
   return (
     <Wrapper>
       <Title>Reservations</Title>
-      <Reservations />
+      <Admin />
     </Wrapper>
   )
 };

@@ -10,12 +10,12 @@ const Profile = () => {
         .then((res) => res.json())
         .then((json) => {
           const result = JSON.parse(localStorage.getItem("data"));
-            console.log(json);
+      
             setProfile(result);
         })
     }, []);
 
-    console.log(profile.id);
+
   return (
     <Wrapper>
       <Title>Profile</Title>

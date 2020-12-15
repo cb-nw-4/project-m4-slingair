@@ -4,7 +4,8 @@ import { useHistory } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import ReservationInfo from "./ReservationInfo";
 import Input from "./SeatSelect/Input";
-//import Button from "./SeatSelect/Button";
+import Button from "./SeatSelect/Button";
+
 const initialState = { givenName: "", surname: "", email: "" };
 
 const Profile = ({userReservation, updateUserReservation, deleteUserReservation}) =>{
@@ -92,7 +93,9 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                 <Title>Your personal information and reservation: </Title>
                 <ReservationInfo reservation={userReservation} />                                            
             </ReservationContainer>
-            <Button onClick={handleClick}>Delete</Button>              
+            <ButtonWrapper >
+              <Button  handleClick={handleClick} text="Delete" />
+            </ButtonWrapper>              
             <UserForm>
                 <Input
                     name="givenName"
@@ -117,14 +120,19 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                 />
                 <Button
                     disabled={disabled}
-                    onClick={handleSubmit}            
-                >Modify</Button>
+                    handleClick={handleSubmit}   
+                    text="Modify"         
+                />
             </UserForm> 
             {error !== "" &&
             <Error>{`Error: ${error}`}</Error>}
         </Wrapper>
     )
 };
+
+const ButtonWrapper = styled.div`
+  width: 250px;
+`;
 
 const Wrapper = styled.div`
   display:flex;
@@ -157,24 +165,6 @@ const UserForm = styled.div`
   flex-direction:column;
   align-items: center;
   
-`;
-
-const Button = styled.button`
-  background: ${themeVars.alabamaCrimson};
-  border-radius: 4px;
-  border-color: transparent;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font-family: ${themeVars.headingFont};
-  font-size: 24px;
-  height: 48px;
-  width: 200px;
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
 `;
 
 const Error = styled.p` 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import ReservationInfo from "./ReservationInfo";
+import Button from "./SeatSelect/Button";
 
 
 const Reservation = ()=>{
@@ -11,7 +12,7 @@ const Reservation = ()=>{
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChanged = (value)=>{
-        setFlightId(value);
+        setFlightId(value);        
     };
 
     useEffect(() => {
@@ -23,6 +24,7 @@ const Reservation = ()=>{
       }, [flightId, setDisabled]);
 
     const handledClick = ()=>{
+        console.log("handledClick");
         fetch(`/reservation/${flightId}`)
           .then((res) => res.json())
           .then((json) => {       
@@ -32,6 +34,7 @@ const Reservation = ()=>{
                setReservation(data);               
             }  
             else {
+                console.log('message', message);
                 setErrorMessage(message);
                 setReservation({}); 
             }      
@@ -49,7 +52,9 @@ const Reservation = ()=>{
                     onChange={(ev) => handleChanged(ev.target.value)}
                     value={flightId}
                 />
-                <Button onClick={handledClick} disabled={disabled}>Find</Button>
+                <ButtonWrapper>
+                    <Button handleClick={handledClick} disabled={disabled} text="Find" />
+                </ButtonWrapper>
             </FindContainer>
             {Object.keys(reservation).length !== 0 && 
             <ReservationContainer>
@@ -65,6 +70,11 @@ const Reservation = ()=>{
 
 };
 
+const ButtonWrapper = styled.div`
+  width: 125px;
+  display: inline-block;
+`;
+
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -79,21 +89,6 @@ const FindContainer = styled.div`
 
 const ReservationContainer = styled.div`
     margin-top: 50px;  
-`;
-
-const Button = styled.button`
-    background-color: ${themeVars.alabamaCrimson};
-    color: ${themeVars.selectiveYellow};
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    font-size: 20px;
-    cursor: pointer;
-
-    &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
 `;
 
 const Input = styled.input`

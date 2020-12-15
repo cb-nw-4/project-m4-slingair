@@ -47,6 +47,7 @@ const Form = ({
         disabled={disabled}
         handleClick={handleSubmit}
         subStatus={subStatus}
+        text="Confirm"
       />
       {error !== "" &&
       <Error>{`Error: ${error}`}</Error>}

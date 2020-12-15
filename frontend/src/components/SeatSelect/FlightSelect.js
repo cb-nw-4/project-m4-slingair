@@ -22,8 +22,8 @@ const FlightSelect = ({ handleFlightSelect }) => {
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      <Select onChange={(ev) => handleFlightSelect(ev)} name="flight" value="Select a flight">
-        <option disabled>Select a flight</option>
+      <Select onChange={(ev) => handleFlightSelect(ev)} id="flight" name="flight">
+        <option disabled selected>Select a flight</option>
         {flights.map(flight => (
           <option key={RandomKey()} value={flight}>{flight}</option>
         ))}

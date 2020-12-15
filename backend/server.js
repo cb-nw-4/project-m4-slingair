@@ -61,6 +61,18 @@ express()
     }
   })
 
+  // Create a new reservation
+  .post('/reservations', async (req, res) => {
+    console.log(req.body);
+    try {
+      const response = await addReservations(req.body);
+  
+      res.status(201).json({ status: 201, result: 'ok', data: response.data, message: response.message });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+    }
+  })
+
   // add new endpoints here ☝️
   // ---------------------------------
   // Nothing to modify below this line

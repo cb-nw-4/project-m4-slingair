@@ -26,11 +26,9 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect />
+            <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
-          <Route exact path="/confirmed">
-            <Confirmation />
-          </Route>
+          <Route exact path="/confirmed" render={(props) => (<Confirmation props={{...props, userReservation: userReservation}} />)}/>
           <Route path="">404: Oops!</Route>
         </Switch>
         <Footer />

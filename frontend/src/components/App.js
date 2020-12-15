@@ -12,6 +12,7 @@ import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
+  const [subStatus, setSubStatus] = useState("idle");
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
@@ -24,15 +25,21 @@ const App = () => {
   useEffect(() => {
     const reservationID = window.localStorage.getItem('id');
     console.log('reservationID',reservationID);
-    if (reservationID ) {    
+    if (reservationID ) { 
+      setSubStatus("pending");   
       fetch(`/reservation/${reservationID}`)
       .then((res) => res.json())
       .then((json) => {
         const { status, data, message } = json; 
-        if (status === 200)
-          updateUserReservation(data);
-        else
-          console.log(message);
+        if (status === 200) {
+          setUserReservation({...data});
+          setSubStatus("confirmed");   
+        }
+        else {
+          setSubStatus("error"); 
+          window.localStorage.clear();
+          console.log(message)
+        };
       });
     }
     // TODO: check localStorage for an id
@@ -49,16 +56,19 @@ const App = () => {
             <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation userReservation={ userReservation }/>
+          {subStatus !== "pending" &&
+            <Confirmation userReservation={ userReservation }/>}
           </Route>
           <Route exact path="/view-reservation">
             <Reservation />
           </Route>
           <Route exact path="/profile">
-            <Profile userReservation={ userReservation } updateUserReservation={updateUserReservation} deleteUserReservation={deleteUserReservation}/>
+            {subStatus !== "pending" &&
+            <Profile userReservation={ userReservation } updateUserReservation={updateUserReservation} deleteUserReservation={deleteUserReservation} />}
           </Route>
           <Route exact path="/update">
-            <Update userReservation={ userReservation }/>
+          {subStatus !== "pending" &&
+            <Update userReservation={ userReservation } />}
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

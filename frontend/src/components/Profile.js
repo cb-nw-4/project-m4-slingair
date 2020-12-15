@@ -10,6 +10,7 @@ const initialState = { givenName: "", surname: "", email: "" };
 const Profile = ({userReservation, updateUserReservation, deleteUserReservation}) =>{
     const [formData, setFormData] = useState(initialState);
     const [disabled, setDisabled] = useState(true);
+    const [error, setError] = useState("");
     const history = useHistory();
 
     const handleChange = (val, item) => {
@@ -33,7 +34,8 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           : setDisabled(false);
       }, [formData, setDisabled]);
 
-    const handleClick = ()=>{     
+    const handleClick = (ev)=>{  
+      ev.preventDefault();   
         fetch(`/reservation/${userReservation.id}`, {
             method: "DELETE",
             body: JSON.stringify({...userReservation}),
@@ -44,21 +46,21 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           })
             .then((res) => res.json())
             .then((json) => {
-              const { status, data, message } = json;      
-              if (status === 200) {              
+              const { status, message } = json;      
+              if (status === 200) {               
+                setError("");           
                 deleteUserReservation();
                 window.localStorage.clear();
                 history.push('/update');                              
               } else {
-                console.log(message);        
+                setError(message);                      
               }
             });  
     };
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-        if (validateEmail()) {
-          // TODO: Send data to the server for validation/submission
+        if (validateEmail()) {         
           fetch(`/reservation/${userReservation.id}`, {
             method: "PUT",
             body: JSON.stringify({id: userReservation.id, flight: userReservation.flight, seat: userReservation.seat, ...formData}),
@@ -71,27 +73,26 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
             .then((json) => {
               const { status, data, message } = json;      
               if (status === 200) { 
-                console.log(data);
+                setError("");                 
                 updateUserReservation(data);                
                 history.push('/update');                      
               } else {
-                console.log(message);        
+                setError(message);        
               }
-            });  
-          // TODO: if 201, add reservation id (received from server) to localStorage
-          // TODO: if 201, redirect to /confirmed (push)
-          // TODO: if error from server, show error to user (stretch goal)
+            });           
         }
-      };
-    
+        else {
+          setError("Invalid email"); 
+        }
+      };    
 
-    return(
-        <Wrapper>
+    return(      
+        <Wrapper>        
             <ReservationContainer>
                 <Title>Your personal information and reservation: </Title>
-                <ReservationInfo reservation={userReservation} />                               
+                <ReservationInfo reservation={userReservation} />                                            
             </ReservationContainer>
-            <Button onClick={handleClick}>Delete</Button> 
+            <Button onClick={handleClick}>Delete</Button>              
             <UserForm>
                 <Input
                     name="givenName"
@@ -118,7 +119,9 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                     disabled={disabled}
                     onClick={handleSubmit}            
                 >Modify</Button>
-            </UserForm>
+            </UserForm> 
+            {error !== "" &&
+            <Error>{`Error: ${error}`}</Error>}
         </Wrapper>
     )
 };
@@ -172,6 +175,11 @@ const Button = styled.button`
     cursor: not-allowed;
     opacity: 0.5;
   }
+`;
+
+const Error = styled.p` 
+  color: ${themeVars.cadmiumRed};
+  font-weight: bold;
 `;
 
 export default Profile;

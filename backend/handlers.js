@@ -16,8 +16,7 @@ const getFlights = (req, res) => {
 
 const getFlight = (req, res) => {
   const flightData = flights[req.params.flightNum];
-  if (flightData){
-    console.log(flightData);
+  if (flightData){    
     res.status(200).json({ 
       status: 200,
       data: flightData,
@@ -72,7 +71,7 @@ const addReservations = (req, res) => {
       data: newReservation,
       message: "Reservation added"
     }); 
-  }
+  } 
 
 };
 
@@ -106,12 +105,9 @@ const deleteReservation = (req, res) => {
     flight,
     seat   
   } = req.body; 
-  console.log('req.body',req.body );
-  console.log('req.body.flight',req.body.flight );
-  console.log('flight',flight );
-  console.log('flights', flights);
-  console.log('flights[flight]', flights[flight]);
+  
   const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
+   
    if (reservationIndex !== -1){
     reservations.splice(reservationIndex, 1);
     flights[flight].forEach((flightSeat, index) => {
@@ -143,7 +139,8 @@ const updateReservation = (req, res) => {
   
   const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
   const incomplete = !flight || !seat || !givenName || !surname || !email;   
-
+  
+  
   if (reservationIndex === -1) {
     res.status(400).json({ 
       status: 400,

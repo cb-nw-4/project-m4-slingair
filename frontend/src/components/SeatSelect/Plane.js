@@ -5,16 +5,19 @@ import { themeVars } from "../GlobalStyles";
 
 const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
+  
 
   useEffect(() => {
-    fetch(`/flight/${flightNumber}`)
-      .then((res) => res.json())
-      .then((json) => {       
-        const { status } = json;
-        if (status === 200) {
+    if (flightNumber) {
+      fetch(`/flight/${flightNumber}`)
+        .then((res) => res.json())
+        .then((json) => {       
+          const { status } = json;
+          if (status === 200) {        
             setSeating(json.data);
-        }        
-      });      
+          }        
+        });   
+    }   
   }, [flightNumber]);
 
   return (  

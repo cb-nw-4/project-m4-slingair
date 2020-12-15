@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import ReservationInfo from "./ReservationInfo";
@@ -7,11 +7,20 @@ import ReservationInfo from "./ReservationInfo";
 const Reservation = ()=>{
     const [flightId, setFlightId] = useState("");
     const [reservation, setReservation] = useState({});
+    const [disabled, setDisabled] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChanged = (value)=>{
         setFlightId(value);
     };
+
+    useEffect(() => {
+        // This hook is listening to state changes and verifying whether or not all
+        // of the form data is filled out.
+        flightId === ""
+          ? setDisabled(true)
+          : setDisabled(false);
+      }, [flightId, setDisabled]);
 
     const handledClick = ()=>{
         fetch(`/reservation/${flightId}`)
@@ -40,9 +49,9 @@ const Reservation = ()=>{
                     onChange={(ev) => handleChanged(ev.target.value)}
                     value={flightId}
                 />
-                <Button onClick={handledClick}>Find</Button>
+                <Button onClick={handledClick} disabled={disabled}>Find</Button>
             </FindContainer>
-            {Object.keys(reservation).length !== 0 &&
+            {Object.keys(reservation).length !== 0 && 
             <ReservationContainer>
                 <Title>Your Reservation: </Title>
                 <ReservationInfo reservation={reservation} />                
@@ -51,7 +60,6 @@ const Reservation = ()=>{
             <ReservationContainer>
                 <Title>{ errorMessage} </Title>                    
             </ReservationContainer>}
-
         </Wrapper>
     );
 
@@ -81,6 +89,11 @@ const Button = styled.button`
     border-radius: 5px;
     font-size: 20px;
     cursor: pointer;
+
+    &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;
 
 const Input = styled.input`

@@ -7,14 +7,15 @@ import ReservationInfo from "./ReservationInfo";
 const Update = ({ userReservation }) => {
   console.log('confirmation',userReservation );
   return (
-    <Wrapper>
-     {Object.keys(userReservation).length !== 0 ?
+    <Wrapper>     
+     { Object.keys(userReservation).length !== 0 ?
       <ConfirmationBox>
         <Title>Your reservation is updated!</Title>
         <ReservationInfo reservation={userReservation} />             
-      </ConfirmationBox>  :
-           <Title2>Your reservation is deleted!</Title2>}
-    </Wrapper>);
+      </ConfirmationBox>  :      
+     <Title2>Your reservation is deleted!</Title2> }
+    </Wrapper>
+    );
 };
 
 const Title = styled.p`
@@ -28,10 +29,6 @@ const Title = styled.p`
 const Title2 = styled(Title)`  
   border-bottom: none; 
   margin: 30px;
-`;
-
-const Image = styled.img`
-  width: 200px;
 `;
 
 const ConfirmationBox = styled.div`  

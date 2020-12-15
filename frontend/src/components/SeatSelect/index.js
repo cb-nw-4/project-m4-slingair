@@ -11,6 +11,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
@@ -42,9 +43,10 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault();   
     if (validateEmail()) {
       // TODO: Send data to the server for validation/submission
+      setSubStatus("pending");
       fetch("/reservation", {
         method: "POST",
         body: JSON.stringify({flight: flightNumber, ...formData}),
@@ -59,12 +61,16 @@ const SeatSelect = ({ updateUserReservation }) => {
           if (status === 201) { 
             console.log(data);
             updateUserReservation(data);
-            window.localStorage.setItem('id', data.id);   
+            window.localStorage.setItem('id', data.id);  
+            setSubStatus("confirmed");
+            setError(""); 
             history.push('/confirmed');
            // window.localStorage.setItem(data.id);       
           //  window.history.replaceState({}, "", "/confirmed");
            // setSubStatus("confirmed");        
           } else {
+            setSubStatus("error"); 
+            setError(message); 
             console.log(message);        
           }
         });  
@@ -72,6 +78,8 @@ const SeatSelect = ({ updateUserReservation }) => {
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
     }
+    else
+      setError("Invalid email");
   };
 
   return (
@@ -89,7 +97,8 @@ const SeatSelect = ({ updateUserReservation }) => {
         handleSubmit={handleSubmit}
         disabled={disabled}
         subStatus={subStatus}
-      />
+        error={error}
+      />     
     </>
   );
 };

@@ -34,14 +34,6 @@ const Select = styled.select`
   border-radius: 5px;
 `;
 
-const Input = styled.input`
-  margin-left: 20px;
-  font-size: 16px;
-  &::-webkit-calendar-picker-indicator {
-              opacity: 100;
-           }
-`;
-
 const Wrapper = styled.div`
   background: ${themeVars.cadmiumRed};
   height: 80px;

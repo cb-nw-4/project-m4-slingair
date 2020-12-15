@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Plane from "./Plane";
 import Input from "./Input";
@@ -13,6 +13,7 @@ const Form = ({
   handleSeatSelect,
   handleSubmit,
   subStatus,
+  error,
 }) => (
   <Wrapper>
     <Plane
@@ -47,6 +48,8 @@ const Form = ({
         handleClick={handleSubmit}
         subStatus={subStatus}
       />
+      {error !== "" &&
+      <Error>{`Error: ${error}`}</Error>}
     </UserForm>
   </Wrapper>
 );
@@ -64,6 +67,12 @@ const UserForm = styled.div`
   margin: auto;
   padding: 30px;
   width: 400px;
+`;
+
+const Error = styled.p`
+  margin: 10px;
+  color: ${themeVars.cadmiumRed};
+  font-weight: bold;
 `;
 
 export default Form;

@@ -102,9 +102,22 @@ const getSingleReservation = (req, res) => {
 };
 
 const deleteReservation = (req, res) => {
+  const { 
+    flight,
+    seat   
+  } = req.body; 
+  console.log('req.body',req.body );
+  console.log('req.body.flight',req.body.flight );
+  console.log('flight',flight );
+  console.log('flights', flights);
+  console.log('flights[flight]', flights[flight]);
   const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
    if (reservationIndex !== -1){
     reservations.splice(reservationIndex, 1);
+    flights[flight].forEach((flightSeat, index) => {
+      if (flightSeat.id === seat)
+        flights[flight][index] = { id: seat, isAvailable: true };
+    });
     res.status(200).json({ 
       status: 200,
       data: {},

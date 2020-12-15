@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";
+import Profile from "./Profile";
+import Update from "./Update";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -13,6 +15,10 @@ const App = () => {
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
+  };
+
+  const deleteUserReservation = () => {
+    setUserReservation({});
   };
 
   useEffect(() => {
@@ -47,6 +53,12 @@ const App = () => {
           </Route>
           <Route exact path="/view-reservation">
             <Reservation />
+          </Route>
+          <Route exact path="/profile">
+            <Profile userReservation={ userReservation } updateUserReservation={updateUserReservation} deleteUserReservation={deleteUserReservation}/>
+          </Route>
+          <Route exact path="/update">
+            <Update userReservation={ userReservation }/>
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

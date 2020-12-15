@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
+import ReservationInfo from "./ReservationInfo";
 
 
 const Reservation = ()=>{
     const [flightId, setFlightId] = useState("");
     const [reservation, setReservation] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChanged = (value)=>{
         setFlightId(value);
@@ -18,8 +19,13 @@ const Reservation = ()=>{
           .then((json) => {       
             const { status, data, message } = json;
             if (status === 200) {
+               setErrorMessage("");
                setReservation(data);               
-            }        
+            }  
+            else {
+                setErrorMessage(message);
+                setReservation({}); 
+            }      
           }); 
     };    
 
@@ -39,12 +45,13 @@ const Reservation = ()=>{
             {Object.keys(reservation).length !== 0 &&
             <ReservationContainer>
                 <Title>Your Reservation: </Title>
-                <p><strong>Reservation #: </strong>{reservation.id}</p>
-                <p><strong>Flight #: </strong>{reservation.flight}</p>
-                <p><strong>Seat #: </strong>{reservation.seat}</p>
-                <p><strong>Name: </strong>{`${reservation.givenName} ${reservation.surname}`}</p>
-                <p><strong>Email: </strong>{reservation.email}</p>  
+                <ReservationInfo reservation={reservation} />                
             </ReservationContainer>}
+            { errorMessage !== "" &&
+            <ReservationContainer>
+                <Title>{ errorMessage} </Title>                    
+            </ReservationContainer>}
+
         </Wrapper>
     );
 

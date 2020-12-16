@@ -5,21 +5,26 @@ import { NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = ({ userReservation }) => (
+const Header = ({ userReservation }) => {
+
+  const isDisabled = Object.keys(userReservation).length === 0? "disabled" : "";
+  return (
   <Wrapper>
-    <Logo>
-      <h1>Sling Airlines</h1>
-    </Logo>
-    <Nav>
-      {Object.keys(userReservation).length !== 0 &&
-      <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-        <StyledNavLink to="/admin">Admin</StyledNavLink>
-      </>}
+    <NavLink to="/">
+      <Logo>
+        <h1>Sling Airlines</h1>
+      </Logo>
+    </NavLink>
+    <Nav>     
+      <>    
+        <StyledNavLink activeClassName='active' className={isDisabled} exact to="/view-reservation">Reservation</StyledNavLink>
+        <StyledNavLink activeClassName='active' className={isDisabled} exact to="/profile">Profile</StyledNavLink> 
+        <StyledNavLink activeClassName='active' exact to="/admin">Admin</StyledNavLink>
+      </>
     </Nav>
   </Wrapper>
-);
+  );
+};
 
 const Wrapper = styled.header`
   display: flex;
@@ -60,12 +65,18 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   transition: all ease 400ms;
 
-  &:disabled {
-    cursor: not-allowed;
+  &.disabled {    
+    pointer-events: none;
     opacity: 0.5;
+  } 
+
+  &:hover:not(.disabled) {
+    background: ${themeVars.alabamaCrimson};
+    color: ${themeVars.selectiveYellow};
+    border-color: ${themeVars.selectiveYellow};
   }
 
-  &:hover {
+  &.active {
     background: ${themeVars.alabamaCrimson};
     color: ${themeVars.selectiveYellow};
     border-color: ${themeVars.selectiveYellow};

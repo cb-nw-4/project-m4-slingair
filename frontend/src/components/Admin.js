@@ -5,6 +5,9 @@ import styled from 'styled-components';
 
 const Admin = ()=>{
     const [reservations, setReservations] = useState([]); 
+    const [singleReservation, setSingleReservation] = useState({}); 
+    const [errorMessage, setErrorMessage] = useState("");
+
     
     useEffect(() => {       
         fetch('/reservations')
@@ -21,17 +24,39 @@ const Admin = ()=>{
          
       }, []);
 
+      const handleReservation = (ev)=>{
+        fetch(`/reservation/${ev.target.value}`)
+        .then((res) => res.json())
+        .then((json) => {       
+          const { status, data, message } = json;
+          if (status === 200) {
+             setErrorMessage("");
+             setSingleReservation(data);               
+          }  
+          else {              
+              setErrorMessage(message);
+              setSingleReservation({}); 
+          }      
+        });
+
+      }
+
     return (
         <Wrapper>
             <h1>All reservations</h1>
-            {reservations.map((reservation)=>{
-                return(
-                    <ReservationContainer key={reservation.id}>
-                        <ReservationInfo  reservation={reservation} />
-                    </ReservationContainer>
-                );
-            })}
-
+            <Select  defaultValue= "" id='reservation' onChange={(ev)=>handleReservation(ev)}>
+            <option value=""  disabled hidden>Select a reservation id </option>  
+            {reservations.map((reservation)=>( <option key={reservation.id} value={reservation.id}>{reservation.id} </option>))}
+            </Select>
+            {Object.keys(singleReservation).length !== 0 &&
+                <ReservationContainer>
+                <ReservationInfo  reservation={singleReservation} />
+            </ReservationContainer>
+            }
+           { errorMessage !== "" &&
+            <ReservationContainer>
+                <Error>{`Error: ${errorMessage}`} </Error>                    
+            </ReservationContainer>}
         </Wrapper>
     );
 
@@ -43,16 +68,30 @@ flex-direction: column;
 align-items: center;   
 height: 100vh;
 line-height: 1.6;
-padding: 20px;
 
 h1 {
     margin-bottom: 15px;
+    background-color: ${themeVars.cadmiumRed}; 
+    width: 100%;
+    padding: 15px;
 }
 `;
 
+const Error = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  color: ${themeVars.alabamaCrimson}; 
+  margin-bottom: 15px;
+`;
+const Select = styled.select`  
+  height: 35px;
+  width: 300px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+`;
+
 const ReservationContainer = styled.div`
-    margin: 10px;
-    border-bottom: solid 2px ${themeVars.alabamaCrimson};
+    margin: 40px;   
 `;
 
 export default Admin;

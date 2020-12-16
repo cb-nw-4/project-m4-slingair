@@ -89,8 +89,8 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
 
     return(
         <Wrapper>
-            <ReservationContainer>
-                <Title>Your personal information and reservation: </Title>
+           <Title>Your personal information and reservation</Title>
+            <ReservationContainer>               
                 <ReservationInfo reservation={userReservation} />
             </ReservationContainer>
             <ButtonWrapper >
@@ -141,16 +141,14 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Title = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-  color: ${themeVars.alabamaCrimson};
-  border-bottom: solid 2px ${themeVars.alabamaCrimson};
-  margin-bottom: 15px;
+const Title = styled.h1`        
+    background-color: ${themeVars.cadmiumRed}; 
+    width: 100%;
+    padding: 25px; 
 `;
 
 const ReservationContainer = styled.div`
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 10px;
     line-height: 1.6;
 `;

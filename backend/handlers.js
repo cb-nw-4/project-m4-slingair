@@ -84,7 +84,8 @@ const getReservations = (req, res) => {
 };
 
 const getSingleReservation = (req, res) => {
-   const theReservation = reservations.find((reservation)=>(reservation.id === req.params.id));
+   const theReservation = reservations.find((reservation)=>(reservation.id === req.params.id)); 
+
    if (theReservation)
     res.status(200).json({ 
       status: 200,

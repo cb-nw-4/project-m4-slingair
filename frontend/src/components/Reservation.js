@@ -41,8 +41,8 @@ const Reservation = ()=>{
 
     return (
         <Wrapper>
-            <FindContainer>
-                <label htmlFor="id">Find your reservation:</label>
+            <h1 >Find your reservation</h1>
+            <FindContainer>                
                 <Input
                     type="text"
                     name="id"
@@ -79,6 +79,13 @@ const Wrapper = styled.div`
     align-items: center;   
     height: 100vh;
     line-height: 1.6;
+
+    h1 {
+        margin-bottom: 15px;
+        background-color: ${themeVars.cadmiumRed}; 
+        width: 100%;
+        padding: 15px;
+    }
 `;
 
 const FindContainer = styled.div`
@@ -86,7 +93,7 @@ const FindContainer = styled.div`
 `;
 
 const ReservationContainer = styled.div`
-    margin-top: 50px;  
+    margin-top: 20px;  
 `;
 
 const Input = styled.input`

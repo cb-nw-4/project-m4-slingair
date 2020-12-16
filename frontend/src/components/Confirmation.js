@@ -6,7 +6,6 @@ import tombstone from "../assets/tombstone.png";
 import ReservationInfo from "./ReservationInfo";
 
 const Confirmation = ({ userReservation }) => {
-  console.log('confirmation',userReservation );
   return (
     <Wrapper>
       <ConfirmationBox>

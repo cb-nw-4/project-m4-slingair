@@ -39,9 +39,8 @@ const addReservations = (req, res) => {
     givenName,
     surname,
     email
-  } = req.body;
+  } = req.body; 
  
-  //Peut-etre vrifier si le flight and seat exist dans le flight array et est disponible... ou peut-etre voir si toutes ces valid sont fait frontend]
   const alreadyTaken = reservations.some((reservation)=>(reservation.flight === flight && reservation.seat === seat));
   const incomplete = !flight || !seat || !givenName || !surname || !email;  
 

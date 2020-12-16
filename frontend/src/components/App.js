@@ -23,8 +23,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const reservationID = window.localStorage.getItem('id');
-    console.log('reservationID',reservationID);
+    const reservationID = window.localStorage.getItem('id');  
     if (reservationID ) { 
       setSubStatus("pending");   
       fetch(`/reservation/${reservationID}`)
@@ -41,9 +40,7 @@ const App = () => {
           console.log(message)
         };
       });
-    }
-    // TODO: check localStorage for an id
-    // if yes, get data from server and add it to state
+    }   
   }, [setUserReservation]);
 
   return (

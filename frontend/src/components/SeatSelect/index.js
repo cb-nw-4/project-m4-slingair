@@ -44,8 +44,7 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();   
-    if (validateEmail()) {
-      // TODO: Send data to the server for validation/submission
+    if (validateEmail()) {     
       setSubStatus("pending");
       fetch("/reservation", {
         method: "POST",
@@ -58,25 +57,17 @@ const SeatSelect = ({ updateUserReservation }) => {
         .then((res) => res.json())
         .then((json) => {
           const { status, data, message } = json;      
-          if (status === 201) { 
-            console.log(data);
+          if (status === 201) {            
             updateUserReservation(data);
             window.localStorage.setItem('id', data.id);  
             setSubStatus("confirmed");
             setError(""); 
-            history.push('/confirmed');
-           // window.localStorage.setItem(data.id);       
-          //  window.history.replaceState({}, "", "/confirmed");
-           // setSubStatus("confirmed");        
+            history.push('/confirmed');               
           } else {
             setSubStatus("error"); 
-            setError(message); 
-            console.log(message);        
+            setError(message);                  
           }
-        });  
-      // TODO: if 201, add reservation id (received from server) to localStorage
-      // TODO: if 201, redirect to /confirmed (push)
-      // TODO: if error from server, show error to user (stretch goal)
+        });        
     }
     else
       setError("Invalid email");

@@ -23,8 +23,7 @@ const Reservation = ()=>{
           : setDisabled(false);
       }, [flightId, setDisabled]);
 
-    const handledClick = ()=>{
-        console.log("handledClick");
+    const handledClick = ()=>{       
         fetch(`/reservation/${flightId}`)
           .then((res) => res.json())
           .then((json) => {       
@@ -33,8 +32,7 @@ const Reservation = ()=>{
                setErrorMessage("");
                setReservation(data);               
             }  
-            else {
-                console.log('message', message);
+            else {              
                 setErrorMessage(message);
                 setReservation({}); 
             }      

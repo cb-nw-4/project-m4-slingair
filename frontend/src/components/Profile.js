@@ -35,8 +35,8 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           : setDisabled(false);
       }, [formData, setDisabled]);
 
-    const handleClick = (ev)=>{  
-      ev.preventDefault();   
+    const handleClick = (ev)=>{
+      ev.preventDefault();
         fetch(`/reservation/${userReservation.id}`, {
             method: "DELETE",
             body: JSON.stringify({...userReservation}),
@@ -47,21 +47,21 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           })
             .then((res) => res.json())
             .then((json) => {
-              const { status, message } = json;      
-              if (status === 200) {               
-                setError("");           
+              const { status, message } = json;
+              if (status === 200) {
+                setError("");
                 deleteUserReservation();
                 window.localStorage.clear();
-                history.push('/update');                              
+                history.push('/update');
               } else {
-                setError(message);                      
+                setError(message);
               }
-            });  
+            });
     };
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-        if (validateEmail()) {         
+        if (validateEmail()) {
           fetch(`/reservation/${userReservation.id}`, {
             method: "PUT",
             body: JSON.stringify({id: userReservation.id, flight: userReservation.flight, seat: userReservation.seat, ...formData}),
@@ -72,30 +72,30 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           })
             .then((res) => res.json())
             .then((json) => {
-              const { status, data, message } = json;      
-              if (status === 200) { 
-                setError("");                 
-                updateUserReservation(data);                
-                history.push('/update');                      
+              const { status, data, message } = json;
+              if (status === 200) {
+                setError("");
+                updateUserReservation(data);
+                history.push('/update');
               } else {
-                setError(message);        
+                setError(message);
               }
-            });           
+            });
         }
         else {
-          setError("Invalid email"); 
+          setError("Invalid email");
         }
-      };    
+      };
 
-    return(      
-        <Wrapper>        
+    return(
+        <Wrapper>
             <ReservationContainer>
                 <Title>Your personal information and reservation: </Title>
-                <ReservationInfo reservation={userReservation} />                                            
+                <ReservationInfo reservation={userReservation} />
             </ReservationContainer>
             <ButtonWrapper >
-              <Button  handleClick={handleClick} text="Delete" />
-            </ButtonWrapper>              
+              <Button handleClick={handleClick} text="Delete" />
+            </ButtonWrapper>
             <UserForm>
                 <Input
                     name="givenName"
@@ -120,10 +120,10 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                 />
                 <Button
                     disabled={disabled}
-                    handleClick={handleSubmit}   
-                    text="Modify"         
+                    handleClick={handleSubmit}
+                    text="Modify"
                 />
-            </UserForm> 
+            </UserForm>
             {error !== "" &&
             <Error>{`Error: ${error}`}</Error>}
         </Wrapper>
@@ -150,24 +150,24 @@ const Title = styled.p`
 `;
 
 const ReservationContainer = styled.div`
-    margin-top: 50px;  
+    margin-top: 50px;
     margin-bottom: 10px;
     line-height: 1.6;
 `;
 
 const UserForm = styled.div`
   border: 3px solid ${themeVars.alabamaCrimson};
-  border-radius: 5px; 
+  border-radius: 5px;
   padding: 30px;
   width: 400px;
   margin: 30px;
   display: flex;
   flex-direction:column;
   align-items: center;
-  
+
 `;
 
-const Error = styled.p` 
+const Error = styled.p`
   color: ${themeVars.cadmiumRed};
   font-weight: bold;
 `;

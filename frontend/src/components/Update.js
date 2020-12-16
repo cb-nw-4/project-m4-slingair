@@ -4,8 +4,7 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import ReservationInfo from "./ReservationInfo";
 
-const Update = ({ userReservation }) => {
-  console.log('confirmation',userReservation );
+const Update = ({ userReservation }) => { 
   return (
     <Wrapper>     
      { Object.keys(userReservation).length !== 0 ?

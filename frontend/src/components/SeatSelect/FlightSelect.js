@@ -18,8 +18,7 @@ const FlightSelect = ({ handleFlightSelect }) => {
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
       <Select  defaultValue= "" id='flight' onChange={(ev)=>handleFlightSelect(ev)}>
-      <option value=""  disabled hidden>Select a flight </option>
-      {/* <datalist id='flights'> */}
+      <option value=""  disabled hidden>Select a flight </option>  
       {flights.map((flightNum)=>( <option key='flightNum' value={flightNum}>{flightNum} </option>))}
       </Select>
     </Wrapper>

@@ -77,7 +77,7 @@ const updateReservation = (req, res) => {
 
   const index = reservations.indexOf(findId);
   if (findId) {
-    const updatedObj = { ...findId, ...update};
+    const updatedObj = { ...findId, ...update };
 
     reservations.splice(index, 1, updatedObj);
 

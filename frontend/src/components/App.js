@@ -7,6 +7,7 @@ import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Profile from "./Profile";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
+import ViewReservation from "./ViewReservation";
 
 
 const App = () => {
@@ -47,6 +48,9 @@ const App = () => {
               updateUserReservation={updateUserReservation}
               userReservation={userReservation}
             />
+          </Route>
+          <Route exact path='/view-reservation'>
+            <ViewReservation userReservation={userReservation}></ViewReservation>
           </Route>
           <Route exact path="/error">
             404: Oops!

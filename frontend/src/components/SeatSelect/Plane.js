@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+// import { flights } from "../../../../backend/data";
 
 import { themeVars } from "../GlobalStyles";
 
 const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
-
+  console.log(flightNumber)
   useEffect(() => {
     // TODO: get seating data for selected flight
+    fetch(`/flight/${flightNumber}`)
+    .then(response => response.json())
+    .then(json => setSeating(json.data))
   }, [flightNumber]);
 
   return (

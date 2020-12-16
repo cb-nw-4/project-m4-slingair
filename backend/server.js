@@ -12,7 +12,8 @@ const {
   addReservations,
   getSingleReservation,
   deleteReservation,
-  updateReservation, } = require('./handlers');
+  updateReservation
+} = require('./handlers');
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
@@ -33,7 +34,7 @@ express()
     })
   // get flights (flight numbers)
   .get("/flights", getFlights)
-  .get("/flight", getFlight)
+  .get("/flight/:id", getFlight)
   .post("/new-reservations", addReservations)
   .get("/reservations", getReservations)
   .get("/reservations/:id", getSingleReservation)

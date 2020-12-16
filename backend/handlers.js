@@ -11,8 +11,8 @@ const getFlights = (req, res) => {
 };
 
 const getFlight = (req, res) => {
-  const seats = flights.SA231 //Change for the request flight name later
-  res.status(200).json({ status: 200, SA231: seats}) //Change for the request flight name later
+  const seats = flights[req.params.id]
+  res.status(200).json({ status: 200, data: seats})
 };
 
 const addReservations = (req, res) => {
@@ -49,6 +49,8 @@ const deleteReservation = (req, res) => {
 };
 
 const updateReservation = (req, res) => {};
+
+
 
 module.exports = {
   getFlights,

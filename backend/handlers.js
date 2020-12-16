@@ -102,6 +102,15 @@ const deleteReservation = (req, res) => {
 
   const reservation = reservations.find( reser => reser.id == reservationId);
   
+  const EmptyReservation ={
+    id: '',
+    flight: '',
+    seat: '',
+    givenName: '',
+    surname: '',
+    email: '',
+  }
+  
   if(!reservation){
 
     res.status(404).json({
@@ -116,6 +125,7 @@ const deleteReservation = (req, res) => {
   res.status(200).json({
   status: 200,
   data: reservations,
+  empty: EmptyReservation,
   message:'Reservation is deleted from the data Base'
 })
 
@@ -140,7 +150,6 @@ const updateReservation = (req, res) => {
 
   let entrieObj = Object.entries(updateObj);
   
-
   
   if(!reservation){
 

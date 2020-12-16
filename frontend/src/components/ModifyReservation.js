@@ -7,10 +7,8 @@ import Form from "./SeatSelect/Form";
 
 
 const ModifyReservation = ({
-    updateUserReservation,
     userReservation,
     flightNumber,
-    handleFlightSelect,
     setFlightNumber,
     formData,
     handleChange,
@@ -22,6 +20,8 @@ const ModifyReservation = ({
 
     useEffect(() => {
         setFlightNumber(localStorage.flightNumber)
+        setSubStatus('idle')
+
     }, []);
 
     const history = useHistory();
@@ -43,12 +43,12 @@ const ModifyReservation = ({
             .then((json) => {
                 const { status, error } = json;
                 if (status === 200) {
-                    setSubStatus("Update");
                     //console.log(json.data, 'reservation update')
-                    updateUserReservation(json.data)
+                    setSubStatus("Update");
                     localStorage.setItem('id', json.data.id)
                     localStorage.setItem('flightNumber', json.data.flight)
-                    console.log(localStorage, 'localStroge update')
+                    //updateUserReservation(json.data)
+                    //console.log(localStorage, 'localStroge update')
                     history.push("/confirmed")
                 
             } else if (status===404) {
@@ -63,7 +63,6 @@ const ModifyReservation = ({
     return( 
         <>
 
-
         <H1>Make changed before you cofirm </H1>
 
         <h3> Your Flight flightNumber is #: {userReservation.flight}</h3>
@@ -71,7 +70,7 @@ const ModifyReservation = ({
 
         <Form
             flightNumber={flightNumber}
-            formData={userReservation}
+            formData={formData}
             handleChange={handleChange}
             handleSeatSelect={handleSeatSelect}
             handleSubmit={handleUpdate}

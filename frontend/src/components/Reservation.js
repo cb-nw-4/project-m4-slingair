@@ -6,29 +6,65 @@ import { themeVars } from "./GlobalStyles";
 import Button from "./SeatSelect/Button";
 
 
-const Reservation = ({userReservation}) => {
+const Reservation = ({userReservation, setUserReservation, subStatus, setSubStatus}) => {
     const history = useHistory();
 
     const [isModify, setIsModify] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
+    let dataUser;
+    const isReservation = (localStorage.length > 0);
 
 
     const handleModify = (ev) =>{
         ev.preventDefault()
         setIsModify(true);
-        console.log(isModify, 'modify is Clicked');
         history.push("/modifyReservation")
 
     }
 
     const handleDelete = (ev) =>{
         ev.preventDefault()
-        setIsDelete(true);
-        console.log(isDelete, 'Delete is Clicked');
+
+        alert( `Are you sure to delete your reservation ${localStorage.id}??
+        Press Ok to continue`);
+
+    fetch(`/deleteReservations/${localStorage.id}`, {
+
+        method: "Delete",
+        body: JSON.stringify(dataUser),
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    }) 
+    .then(res => (res.json()))
+    .then((json) => {
+        const { status, error } = json;
+        if (status === 200) {
+            setSubStatus("Delete");
+            localStorage.clear()
+            history.push("/")
+
+        }else if (status===404) {
+            setSubStatus("error");
+            console.log([error]);
+            history.push("/error")
+        }
+        })
     }
 
-    
+    //console.log('userReservation', userReservation)
+
     return (<Wrapper>
+
+    {!isReservation &&
+
+        <h1>You don't have any reservation in Data Base</h1>
+    }
+
+    {isReservation && 
+
+        <>
         <h2>This is your reservation page </h2>
 
         <DivContainer>
@@ -68,15 +104,15 @@ const Reservation = ({userReservation}) => {
 
         </Container>
 
+        </>
+    
+        }
+
+
 
         {isModify && 
             <ModifyReservation />
         }
-
-
-    
-
-    
 
     
     </Wrapper>);

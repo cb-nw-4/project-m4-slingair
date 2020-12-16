@@ -3,18 +3,21 @@ import { useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
-// const initialState = { seat: "", givenName: "", surname: "", email: "" };
+//const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
 const SeatSelect = ({ 
+  initialState,
   setSubStatus , 
   subStatus, 
   handleFlightSelect, 
+  setFlightNumber,
   flightNumber, 
   validateEmail,
   formData,
   setFormData,
   handleChange,
   handleSeatSelect,
+  setUserReservation,
   updateUserReservation,
 }) => {
   const history = useHistory();
@@ -22,6 +25,15 @@ const SeatSelect = ({
   // const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
 
+  useEffect(() => {
+    if(localStorage.length === 0){
+      setFormData(initialState)
+      setUserReservation({})
+      setFlightNumber(null)
+      
+    }
+  }, []);
+  
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
     // of the form data is filled out.
@@ -55,10 +67,7 @@ const SeatSelect = ({
     ev.preventDefault();
     if (validateEmail()) {
       // TODO: Send data to the server for validation/submission
-
       formData.flight = flightNumber;
-
-      console.log(formData, 'formData');
 
       fetch("/reservations", {
         method: "POST",
@@ -74,7 +83,7 @@ const SeatSelect = ({
           const { status, error } = json;
           if (status === 200) {
             setSubStatus("confirmed");
-            updateUserReservation(json.data);
+            //updateUserReservation(json.data);
             //console.log(json.data, 'reservation post')
             localStorage.setItem('id', json.data.id)
             localStorage.setItem('flightNumber', json.data.flight)

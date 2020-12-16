@@ -33,9 +33,9 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
             const { status, error } = json;
             if (status === 200) {
                     setSubStatus("Delete");
-                    console.log(json.data, 'delete post')
+                    //console.log(json.data, 'delete post')
                     setAllReservations(json.data)  
-                    console.log('after', allReservations)                  
+                    //console.log('after', allReservations)                  
                 
             } else if (status===404) {
                 setSubStatus("error");

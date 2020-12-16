@@ -15,9 +15,8 @@ const initialState = { seat: "", givenName: "", surname: "", email: "" };
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
   const [subStatus, setSubStatus] = useState("idle");
-  const [isSeatModify, setSeatModify] = useState(false);
- 
 
+ 
   //New Update
   const [formData, setFormData] = useState(initialState);
   const [flightNumber, setFlightNumber] = useState(null);
@@ -38,11 +37,10 @@ const App = () => {
 
   const handleChange = (val, item) => {
     setFormData({ ...formData, [item]: val });
+  
   };
 
   const handleSeatSelect = (seatId) => {
-    setSeatModify(true);
-    console.log('seat');
     setFormData({ ...formData, seat: seatId });
   };
 
@@ -50,17 +48,16 @@ const App = () => {
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
-
   };
 
   useEffect(() => {
-    // TODO: check localStorage for an id
-
+    // TODO: check localStorage for an id)
+    
     if(localStorage.length !== 0){
+
       fetch(`/reservations/${localStorage.id}`)
       .then((res) => res.json())
       .then((json) => {
-        //console.log(json, 'app')
         updateUserReservation(json.data);
       })
     }
@@ -75,24 +72,31 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <SeatSelect setSubStatus={setSubStatus} 
+                        initialState={initialState}
+                        setFlightNumber={setFlightNumber}
                         updateUserReservation={updateUserReservation}
                         subStatus={subStatus} 
                         formData={formData}
                         setFormData={setFormData}
+                        setUserReservation={setUserReservation}
                         handleChange = {handleChange}
                         flightNumber={flightNumber} 
                         validateEmail={validateEmail}
                         handleFlightSelect={handleFlightSelect} 
                         setFlightNumber={setFlightNumber}
                         handleSeatSelect= {handleSeatSelect}
-                        isSeatModify={isSeatModify}/>
+                      />
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation userReservation={userReservation} />
+            <Confirmation userReservation={userReservation}
+                        />
           </Route>
           <Route exact path="/reservation">
             <Reservation 
                         userReservation={userReservation}
+                        setSubStatus={setSubStatus} 
+                        setUserReservation={updateUserReservation}
+                        subStatus={subStatus} 
                       
             />
           </Route>
@@ -104,15 +108,12 @@ const App = () => {
 
           <Route exact path='/modifyReservation'>
             <ModifyReservation  userReservation={userReservation}
-                                updateUserReservation={updateUserReservation}
                                 setSubStatus={setSubStatus} 
                                 subStatus={subStatus} 
                                 formData={formData}
                                 setFormData={setFormData}
                                 handleChange = {handleChange}
-                                flightNumber={flightNumber} 
-                                validateEmail={validateEmail}
-                                handleFlightSelect={handleFlightSelect} 
+                                flightNumber={flightNumber}
                                 setFlightNumber={setFlightNumber}
                                 handleSeatSelect= {handleSeatSelect} />
           </Route>

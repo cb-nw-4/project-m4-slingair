@@ -50,8 +50,6 @@ h1 {
 }
 `;
 
-const Title = styled.p``;
-
 const ReservationContainer = styled.div`
     margin: 10px;
     border-bottom: solid 2px ${themeVars.alabamaCrimson};

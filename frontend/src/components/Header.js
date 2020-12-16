@@ -15,6 +15,7 @@ const Header = ({ userReservation }) => (
       <>
         <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
         <StyledNavLink to="/profile">Profile</StyledNavLink>
+        <StyledNavLink to="/admin">Admin</StyledNavLink>
       </>}
     </Nav>
   </Wrapper>

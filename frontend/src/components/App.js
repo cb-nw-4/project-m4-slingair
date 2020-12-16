@@ -8,6 +8,7 @@ import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";
 import Profile from "./Profile";
 import Update from "./Update";
+import Admin from "./Admin";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -66,6 +67,9 @@ const App = () => {
           <Route exact path="/update">
           {subStatus !== "pending" &&
             <Update userReservation={ userReservation } />}
+          </Route>
+          <Route exact path="/admin">
+            <Admin />
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

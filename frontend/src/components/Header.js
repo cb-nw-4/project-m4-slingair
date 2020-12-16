@@ -5,20 +5,24 @@ import { NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => {
+const Header = ({ handleBackToHome }) => {
   const reservationId = localStorage.getItem('reservationId');
   return (
     <Wrapper>
       <Logo>
         <h1>Sling Airlines</h1>
       </Logo>
-      <>{reservationId && (
-        <Nav>
-          <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-          <StyledNavLink to="/profile">Profile</StyledNavLink>
-        </Nav>
-      )}
-      </>
+      <NavLinkWrapper>
+        <>{reservationId && (
+          <Nav>
+            <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+            <StyledNavLink to="/profile">Profile</StyledNavLink>
+          </Nav>
+        )}
+        </>
+        <StyledNavLink to="/admin-login">Admin</StyledNavLink>
+        <StyledNavLink to="/" onClick={handleBackToHome}>Home</StyledNavLink>
+      </NavLinkWrapper>
     </Wrapper>
   );
 }
@@ -30,6 +34,7 @@ const Wrapper = styled.header`
   height: 110px;
   padding: ${themeVars.pagePadding} 18px;
 `;
+
 const Logo = styled.div`
   background-image: url(${slingairLogo});
   background-repeat: no-repeat;
@@ -40,11 +45,17 @@ const Logo = styled.div`
   height: 60px;
   width: 550px;
 `;
-const Nav = styled.nav`
+
+const NavLinkWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
+
+const Nav = styled.nav`
+  display: flex;
+`;
+
 const StyledNavLink = styled(NavLink)`
   background: ${themeVars.selectiveYellow};
   border: 1px solid transparent;

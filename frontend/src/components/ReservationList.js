@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
@@ -57,7 +57,7 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
 
         {isReservations && 
         <>
-        <h3>You have #<em>{allReservations.length} resevations</em>  in Data Base</h3>
+        <h3>You have #<em>{allReservations.length} resevations</em> in Data Base</h3>
         <Table>
             <thead>
                 <tr>

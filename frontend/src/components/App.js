@@ -16,7 +16,6 @@ const App = () => {
   const [userReservation, setUserReservation] = useState({});
   const [subStatus, setSubStatus] = useState("idle");
 
- 
   //New Update
   const [formData, setFormData] = useState(initialState);
   const [flightNumber, setFlightNumber] = useState(null);
@@ -51,7 +50,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    // TODO: check localStorage for an id)
     
     if(localStorage.length !== 0){
 
@@ -61,7 +59,6 @@ const App = () => {
         updateUserReservation(json.data);
       })
     }
-    // if yes, get data from server and add it to state
   }, [setUserReservation, subStatus]);
 
   return (
@@ -92,11 +89,9 @@ const App = () => {
                         />
           </Route>
           <Route exact path="/reservation">
-            <Reservation 
-                        userReservation={userReservation}
-                        setSubStatus={setSubStatus} 
-                        setUserReservation={updateUserReservation}
-                        subStatus={subStatus} 
+            <Reservation  userReservation={userReservation}
+                          setSubStatus={setSubStatus}
+                          subStatus={subStatus} 
                       
             />
           </Route>

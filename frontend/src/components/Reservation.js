@@ -1,30 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import ModifyReservation from './ModifyReservation';
 import { themeVars } from "./GlobalStyles";
 import Button from "./SeatSelect/Button";
 
 
-const Reservation = ({userReservation, setUserReservation, subStatus, setSubStatus}) => {
+const Reservation = ({userReservation, subStatus, setSubStatus}) => {
     const history = useHistory();
 
-    const [isModify, setIsModify] = useState(false);
-    const [isDelete, setIsDelete] = useState(false);
     let dataUser;
     const isReservation = (localStorage.length > 0);
 
-
     const handleModify = (ev) =>{
         ev.preventDefault()
-        setIsModify(true);
         history.push("/modifyReservation")
 
     }
 
     const handleDelete = (ev) =>{
         ev.preventDefault()
-
         alert( `Are you sure to delete your reservation ${localStorage.id}??
         Press Ok to continue`);
 
@@ -106,12 +100,6 @@ const Reservation = ({userReservation, setUserReservation, subStatus, setSubStat
 
         </>
     
-        }
-
-
-
-        {isModify && 
-            <ModifyReservation />
         }
 
     

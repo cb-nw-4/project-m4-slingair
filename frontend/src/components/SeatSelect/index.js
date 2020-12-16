@@ -22,6 +22,7 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
+    console.log("console check: handleFlightSelect");
   };
 
   const handleSeatSelect = (seatId) => {
@@ -48,6 +49,36 @@ const SeatSelect = ({ updateUserReservation }) => {
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
+
+      let newReservation = {
+        "flight": flightNumber,
+        "seat": formData.seat,
+        "givenName": formData.givenName,
+        "surname": formData.surname,
+        "email": formData.email
+      };
+
+      console.log(newReservation)
+
+      fetch("/reservation", {
+        method: 'POST',
+        body: JSON.stringify(newReservation),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res)=>res.json())
+      .then((res)=>{
+        if(res.status == "201"){
+          localStorage.setItem("id", res.data.id);
+          console.log("local storage check", localStorage.getItem("id"));
+          history.push("/confirmed");
+        }
+      })
+      .catch((error)=>console.log(error))
+
+
     }
   };
 

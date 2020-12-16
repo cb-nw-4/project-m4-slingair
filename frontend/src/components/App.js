@@ -8,12 +8,13 @@ import Confirmation from "./Confirmation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
+
   const [userReservation, setUserReservation] = useState({});
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
   };
-
+  
   useEffect(() => {
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state

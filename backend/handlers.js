@@ -9,16 +9,20 @@ const { flights, reservations } = require("./data");
 // Get flights
 const getFlights = (req, res) => {
   return new Promise((resolve, reject) => {
-    resolve({ data: Object.keys(flights) });
-    // reject({ data: 'n/a', message: 'Sorry, but flight information is not available right now. Please try again later.'});
+    // resolve({ data: Object.keys(flights) });
+    reject({ data: 'n/a', message: 'Flight data not available.'});
   });
 }
 
 // Get seating for specfic flight
 const getFlight = (req, res) => {
   return new Promise((resolve, reject) => {
-    resolve({ data: flights[req] });
-    // reject({ data: req, message: 'Cannot get seating information for flight.' });
+    // Make sure flight number exists
+    if (flights.hasOwnProperty(req)) {
+      resolve({ data: flights[req] });
+    } else {
+      reject({ data: req, message: 'Flight does not exist' });
+    }
   });
 }
 
@@ -27,7 +31,7 @@ const addReservations = (req, res) => {
   return new Promise((resolve, reject) => {
     // Make sure flight number exists
     if (!flights.hasOwnProperty(req.flightNumber)) {
-      reject({ result: 'error', data: req, message: 'Flight does not exist' });
+      reject({ data: req, message: 'Flight does not exist' });
       return;
     }
 
@@ -35,7 +39,7 @@ const addReservations = (req, res) => {
     const seatObj = flights[req.flightNumber].find(seat => seat.id === req.formData.seat);
       
     if (!seatObj.isAvailable) {
-      reject({ result: 'error', data: req, message: 'Seat not available' });
+      reject({ data: req, message: 'Seat not available' });
       return;
     }
 
@@ -59,16 +63,32 @@ const addReservations = (req, res) => {
     });
 
     reservations.push(newReservation);
-    resolve({ result: 'ok', data: newReservation, message: 'Reservation created' });
+    resolve({ data: newReservation, message: 'Reservation created' });
     console.log(flights);
     console.log(reservations);
   });
 };
 
+// Get all reservations
+const getReservations = (req, res) => {
+  return new Promise((resolve, reject) => {
+    resolve({ data: reservations });
+    // reject({ data: 'n/a', message: 'Reservation data not available' });
+  });
+};
 
-const getReservations = (req, res) => {};
+// Get a specific reservation
+const getSingleReservation = (req, res) => {
+  return new Promise((resolve, reject) => {
+    const reservation = reservations.find(res => res.id === req)
 
-const getSingleReservation = (req, res) => {};
+    if (typeof(reservation) !== 'undefined') {
+      resolve({ data: reservation });
+    } else {
+      reject({ data: req, message: 'Reservation not found' });
+    }
+  });
+};
 
 const deleteReservation = (req, res) => {};
 

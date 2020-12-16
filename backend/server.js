@@ -38,7 +38,7 @@ express()
   // add new endpoints here 👇
 
   // Get flights
-  .get('/flights', async (req, res) => {
+  .get('/v1/flights', async (req, res) => {
     try {
       const response = await getFlights();
 
@@ -49,25 +49,45 @@ express()
   })
 
   // Get seating for specfic flight
-  .get('/flights/:id', async (req, res) => {
-    if (req.params.id !== 'null') {
-      try {
-        const response = await getFlight(req.params.id);
+  .get('/v1/flights/:id', async (req, res) => {
+    try {
+      const response = await getFlight(req.params.id);
 
-        res.status(200).json({ status: 200, result: 'ok', data: response.data });
-      } catch (err) {
-        res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
-      }
+      res.status(200).json({ status: 200, result: 'ok', data: response.data });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
     }
   })
 
   // Create a new reservation
-  .post('/reservations', async (req, res) => {
+  .post('/v1/reservations', async (req, res) => {
     console.log(req.body);
     try {
       const response = await addReservations(req.body);
   
       res.status(201).json({ status: 201, result: 'ok', data: response.data, message: response.message });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+    }
+  })
+
+  // Get all reservations
+  .get('/v1/reservations/', async (req, res) => {
+    try {
+      const response = await getReservations(req.params.id);
+
+      res.status(200).json({ status: 200, result: 'ok', data: response.data });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+    }
+  })
+
+  // Get a specific reservation
+  .get('/v1/reservations/:id', async (req, res) => {
+    try {
+      const response = await getSingleReservation(req.params.id);
+
+      res.status(200).json({ status: 200, result: 'ok', data: response.data });
     } catch (err) {
       res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
     }

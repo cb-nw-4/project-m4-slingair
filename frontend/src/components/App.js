@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import ErrorPage from './ErrorPage';
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -15,8 +16,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    // TODO: check localStorage for an id
-    // if yes, get data from server and add it to state
+    // Check if there is an existing reservation id in local storage
+    const reservationId = localStorage.getItem('reservationId');
+    
+    if (reservationId !== null) {
+      fetch('http://localhost:8000/v1/reservations/' + reservationId)
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.result === 'ok') {
+            setUserReservation(json.data);
+          }
+        });
+    }
   }, [setUserReservation]);
 
   return (
@@ -28,7 +39,8 @@ const App = () => {
           <Route exact path="/">
             <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
-          <Route exact path="/confirmed" render={(props) => (<Confirmation props={{...props, userReservation: userReservation}} />)}/>
+          <Route exact path="/confirmed" render={props => (<Confirmation {...props} />)}></Route>
+          <Route exact path="/error-page" render={props => (<ErrorPage {...props} />)}></Route>
           <Route path="">404: Oops!</Route>
         </Switch>
         <Footer />

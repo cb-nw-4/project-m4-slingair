@@ -5,16 +5,15 @@ import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
 const Confirmation = (props) => {
-  console.log(props);
   return (
     <Wrapper>
       <DetailBox>
         <Heading>Your flight is confirmed!</Heading>
-        <p><StyleBold>Reservation #:</StyleBold> {props.props.userReservation.id}</p>
-        <p><StyleBold>Flight #:</StyleBold> {props.props.userReservation.flight}</p>
-        <p><StyleBold>Seat #:</StyleBold> {props.props.userReservation.seat}</p>
-        <p><StyleBold>Name #:</StyleBold> {props.props.userReservation.givenName} {props.props.userReservation.surname}</p>
-        <p><StyleBold>Email #:</StyleBold> {props.props.userReservation.email}</p>
+        <p><StyleBold>Reservation #:</StyleBold> {props.location.state.id}</p>
+        <p><StyleBold>Flight #:</StyleBold> {props.location.state.flight}</p>
+        <p><StyleBold>Seat #:</StyleBold> {props.location.state.seat}</p>
+        <p><StyleBold>Name #:</StyleBold> {props.location.state.givenName} {props.location.state.surname}</p>
+        <p><StyleBold>Email #:</StyleBold> {props.location.state.email}</p>
       </DetailBox>
       <TombStone />
     </Wrapper>
@@ -28,7 +27,7 @@ const Wrapper = styled.div`
 const DetailBox = styled.div`
   margin-top: 150px;
   width: 450px;
-  height: 250px;
+  /* height: 250px; */
   border: 2px solid ${themeVars.alabamaCrimson};
   border-radius: 5px;
   padding: 15px;

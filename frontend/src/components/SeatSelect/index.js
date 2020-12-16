@@ -12,7 +12,6 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
 
-
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
     // of the form data is filled out.
@@ -47,32 +46,27 @@ const SeatSelect = ({ updateUserReservation }) => {
 
     if (validateEmail()) {
       // Send the data to the backend
-      fetch('http://localhost:8000/reservations', {
+      fetch('http://localhost:8000/v1/reservations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ flightNumber: flightNumber, formData: formData })
       })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.result === 'ok') {
-          updateUserReservation(json.data);
-          history.push({
-            pathname: '/confirmed',
-            data: json.data
-          })
-        } else {
-          window.alert(json.message);
-        }
-      });
-
-
-
-
-
-      // TODO: Send data to the server for validation/submission
-      // TODO: if 201, add reservation id (received from server) to localStorage
-      // TODO: if 201, redirect to /confirmed (push)
-      // TODO: if error from server, show error to user (stretch goal)
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.result === 'ok') {
+            updateUserReservation(json.data);
+            localStorage.setItem('reservationId', json.data.id);
+            history.push({
+              pathname: '/confirmed',
+              state: json.data
+            });
+          } else {
+            history.push({
+              pathname: '/error-page',
+              state: json.message
+            });
+          }
+        });
     }
   };
 

@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { useHistory } from "react-router-dom";
 import { themeVars } from "../GlobalStyles";
 import RandomKey from '../RandomKey';
 
 const FlightSelect = ({ handleFlightSelect }) => {
+  const history = useHistory();
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/flights')
-    .then((res) => res.json())
-    .then((json) => {
-      if (json.result === 'ok') {
-        setFlights(json.data);
-      } else {
-        window.alert(json.message);
+    fetch('http://localhost:8000/v1/flights')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.result === 'ok') {
+          setFlights(json.data);
+        } else {
+          history.push({
+            pathname: '/error-page',
+            state: json.message
+          });
+        }
       }
-    });
+    );
   }, []);
 
   return (

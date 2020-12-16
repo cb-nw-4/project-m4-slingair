@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
 
 const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
+  const history = useHistory();
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/flights/' + flightNumber)
-    .then((res) => res.json())
-    .then((json) => {
-      if (json.result === 'ok') {
-        setSeating(json.data);
-      } else {
-        window.alert(json.message);
-      }
-    });
+    if (flightNumber !== null) {
+      fetch('http://localhost:8000/v1/flights/' + flightNumber)
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.result === 'ok') {
+            setSeating(json.data);
+          } else {
+            history.push({
+              pathname: '/error-page',
+              state: json.message
+            });
+          }
+        });
+    }
   }, [flightNumber]);
 
   return (

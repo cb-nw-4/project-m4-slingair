@@ -24,6 +24,8 @@ const Wrapper = styled.div`
     margin: 12px 0 0 24px;
   }
 `;
+
+
 const Logo = styled.img`
   height: 100%;
 `;

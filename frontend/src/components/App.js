@@ -12,13 +12,18 @@ const App = () => {
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
+    console.log(userReservation);
   };
 
   useEffect(() => {
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
+    if (localStorage.id.length > 0) {
+      setUserReservation(localStorage.id);
+    }
   }, [setUserReservation]);
 
+  console.log(userReservation);
   return (
     <BrowserRouter>
       <GlobalStyles />
@@ -29,7 +34,7 @@ const App = () => {
             <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation />
+            <Confirmation userReservation={userReservation}/>
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

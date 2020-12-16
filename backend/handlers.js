@@ -40,9 +40,10 @@ const addReservations = (req, res) => {
     surname: req.body.surname,
     email: req.body.email,
   }
-
-  res.status(200).json({
-    status: 200,
+  reservations.push(newReservation);
+  
+  res.status(201).json({
+    status: 201,
     data: newReservation,
   })
 };

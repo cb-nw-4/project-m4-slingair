@@ -4,26 +4,27 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
-const Confirmation = () => {
-  const [reservData, setReservData] = useState([]);
+const Confirmation = ({userReservation}) => {
+  /*const [reservData, setReservData] = useState([]);*/
 
-  useEffect(() => {
-    if(localStorage.getItem("id")!=null){
+  /*useEffect(() => {
+    let reservId = localStorage.getItem("id");
+    if(reservId){
       fetch(`/reservation/${localStorage.getItem("id")}`)
       .then((res)=>res.json())
       .then((res)=>setReservData(res.data))
     }
-  }, [localStorage.getItem("id")]);
+  }, []);*/
 
   return (
   <Wrapper>
     <Box>
       <Confirmed>Your flight is confirmed!</Confirmed>
-      <Info><b>Reservation #:</b> {reservData.id}</Info>
-      <Info><b>Flight #:</b> {reservData.flight}</Info>
-      <Info><b>Seat #:</b> {reservData.seat}</Info>
-      <Info><b>Name:</b> {reservData.givenName} {reservData.surname}</Info>
-      <Info><b>Email:</b> {reservData.email}</Info>
+      <Info><b>Reservation #:</b> {userReservation.id}</Info>
+      <Info><b>Flight #:</b> {userReservation.flight}</Info>
+      <Info><b>Seat #:</b> {userReservation.seat}</Info>
+      <Info><b>Name:</b> {userReservation.givenName} {userReservation.surname}</Info>
+      <Info><b>Email:</b> {userReservation.email}</Info>
     </Box>
     <Img src={tombstone} />
   </Wrapper>);

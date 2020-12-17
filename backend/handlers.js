@@ -6,38 +6,32 @@ const { v4: uuidv4 } = require("uuid");
 //  Use this data. Changes will persist until the server (backend) restarts.
 const { flights, reservations } = require("./data");
 
-/*************** */
-/* getFlights() */ 
-/*************** */
 const getFlights = (req, res) => {
-  res.status(202).json({
-    status:202,
-    data: {...flights}
+  res.status(200).json({
+    status:200,
+    data: {...flights},
+    message: "Request for flight numbers was fulfilled."
   });
 };
 
-/*************** */
-/* getFlight()   */ 
-/*************** */
 const getFlight = (req, res) => {
   let flightNum = Object.keys(flights).filter((num)=>num == req.params.id);
   if(flightNum.length == 0){
     res.status(400).json({
       status:400,
-      message: "Error: this flight number is not valid."
+      data:{},
+      message: "Error: request could not be fulfilled due to invalid flight number."
     });
   }else{
     let flightData = flights[req.params.id];
-    res.status(202).json({
-      status:202,
-      data: flightData
+    res.status(200).json({
+      status:200,
+      data: flightData,
+      message: "Request for flight seating data was fulfilled."
     });
   }
 };
 
-/********************* */
-/* addReservations()   */ 
-/********************* */
 const addReservations = (req, res) => {
   if(!(req.body.flight in flights)){
     res.status(400).json({
@@ -97,43 +91,39 @@ const addReservations = (req, res) => {
 
   res.status(201).json({
     status:201,
-    message: "Reservation successful!",
-    data: randomID
+    data: randomID,
+    message: "New reservation created.",
   });
 };
 
-/********************* */
-/* getReservations()   */ 
-/********************* */
+
 const getReservations = (req, res) => {
   res.status(202).json({
     status:202,
-    data: reservations
+    data: reservations,
+    message: "Request for all reservations fulfilled."
   });
 };
 
-/********************* */
-/* getSingleReservation()*/ 
-/********************* */
+
 const getSingleReservation = (req, res) => {
   let reservationData = reservations.filter((reservation)=>reservation.id == req.params.id);
   if(reservationData.length==0){
     res.status(400).json({
       status:400,
-      message: "Error: this reservation number is not valid."
+      data: req.params.id,
+      message: "Error: request could not be fulfilled due to invalid id."
     });
   }else{
     res.status(202).json({
       status:202,
-      data: reservationData[0]
+      data: reservationData[0],
+      message: "Request for reservation data fulfilled."
     });
   }
 
 };
 
-/********************* */
-/* deleteReservation()*/ 
-/********************* */
 const deleteReservation = (req, res) => {
   let reservationData = reservations.filter((reservation)=>reservation.id == req.params.id);
   if(reservationData.length==0){
@@ -149,9 +139,9 @@ const deleteReservation = (req, res) => {
       }
     });
 
-    res.status(202).json({
-      status:202,
-      message: "hehe"
+    res.status(200).json({
+      status:200,
+      message: "The reservation was deleted."
     });
   }
 };

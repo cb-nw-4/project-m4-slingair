@@ -22,7 +22,6 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
-    console.log("console check: handleFlightSelect");
   };
 
   const handleSeatSelect = (seatId) => {
@@ -51,14 +50,12 @@ const SeatSelect = ({ updateUserReservation }) => {
       // TODO: if error from server, show error to user (stretch goal)
 
       let newReservation = {
-        "flight": flightNumber,
-        "seat": formData.seat,
-        "givenName": formData.givenName,
-        "surname": formData.surname,
-        "email": formData.email
+        flight: flightNumber,
+        seat: formData.seat,
+        givenName: formData.givenName,
+        surname: formData.surname,
+        email: formData.email
       };
-
-      console.log(newReservation)
 
       fetch("/reservation", {
         method: 'POST',
@@ -70,14 +67,13 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
       .then((res)=>res.json())
       .then((res)=>{
-        if(res.status == "201"){
+        if(res.status === 201){
+          updateUserReservation({...res.data,...newReservation});
           localStorage.setItem("id", res.data.id);
-          console.log("local storage check", localStorage.getItem("id"));
           history.push("/confirmed");
         }
       })
-      .catch((error)=>console.log(error))
-
+      .catch((error)=>console.log(error.message))
 
     }
   };

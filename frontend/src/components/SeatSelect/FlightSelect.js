@@ -8,18 +8,19 @@ const FlightSelect = ({ handleFlightSelect }) => {
 
   useEffect(() => {
     // TODO: fetch the flight numbers
-    fetch("/flights")
-    .then((res)=>res.json())
-    .then((res)=>setFlights(Object.keys(res.data)))
-    .catch((error)=>console.log(error))
-
-  }, []);
+    if(flights.length===0){
+      fetch("/flights")
+      .then((res)=>res.json())
+      .then((res)=>setFlights(Object.keys(res.data)))
+      .catch((error)=>console.log(error))
+    }
+  }, [handleFlightSelect,flights.length]);
 
   let key =1;
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      <DropDown name="flightNum" onChange ={handleFlightSelect}> Select a flight 
+      <DropDown name="flightNum" onChange ={handleFlightSelect}>  
       <option hidden>Select a flight</option>
         { flights.map((flight)=>
         <option value={flight} key={key++}>{flight}</option>)}

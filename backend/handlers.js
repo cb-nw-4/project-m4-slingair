@@ -19,7 +19,7 @@ const getFlight = (req, res) => {
   if(flightNum.length == 0){
     res.status(400).json({
       status:400,
-      data:{},
+      data:req.params.id,
       message: "Error: request could not be fulfilled due to invalid flight number."
     });
   }else{
@@ -98,8 +98,8 @@ const addReservations = (req, res) => {
 
 
 const getReservations = (req, res) => {
-  res.status(202).json({
-    status:202,
+  res.status(200).json({
+    status:200,
     data: reservations,
     message: "Request for all reservations fulfilled."
   });
@@ -115,8 +115,8 @@ const getSingleReservation = (req, res) => {
       message: "Error: request could not be fulfilled due to invalid id."
     });
   }else{
-    res.status(202).json({
-      status:202,
+    res.status(200).json({
+      status:200,
       data: reservationData[0],
       message: "Request for reservation data fulfilled."
     });
@@ -129,6 +129,7 @@ const deleteReservation = (req, res) => {
   if(reservationData.length==0){
     res.status(400).json({
       status:400,
+      data: req.params.id,
       message: "Error: this reservation number is not valid."
     });
   }else{
@@ -146,20 +147,24 @@ const deleteReservation = (req, res) => {
   }
 };
 
-/********************* */
-/* updateReservation()*/ 
-/********************* */
+
 const updateReservation = (req, res) => {
-  let reservationData = reservations.filter((reservation)=>reservation.id == req.params.id);
-  if(reservationData.length==0){
+  let index = reservations.findIndex((reservation)=>reservation.id == req.params.id);
+
+  if(index==-1){
     res.status(400).json({
       status:400,
+      data: req.params.id,
       message: "Error: this reservation number is not valid."
     });
   }else{
+    let update = {...reservations[index], ...req.body};
+    reservations[index] = update;
+
     res.status(202).json({
       status:202,
-      message: "hehe"
+      data: update,
+      message: "Reservation updated.",
     });
   }
 };

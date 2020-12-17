@@ -1,21 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
 const Confirmation = ({userReservation}) => {
-  /*const [reservData, setReservData] = useState([]);*/
-
-  /*useEffect(() => {
-    let reservId = localStorage.getItem("id");
-    if(reservId){
-      fetch(`/reservation/${localStorage.getItem("id")}`)
-      .then((res)=>res.json())
-      .then((res)=>setReservData(res.data))
-    }
-  }, []);*/
-
   return (
   <Wrapper>
     <Box>

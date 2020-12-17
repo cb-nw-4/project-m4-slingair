@@ -7,10 +7,6 @@ import slingairLogo from "../assets/logo_text.png";
 
 const Header = ({userReservation}) => {
 
-  let checkStorage = localStorage.getItem("id");
-  console.log("header", checkStorage);
-  console.log("userReservation",userReservation);
-
   return (
   <Wrapper>
     <Logo>

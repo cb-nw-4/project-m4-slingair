@@ -57,6 +57,7 @@ const SeatSelect = ({ updateUserReservation }) => {
         email: formData.email
       };
 
+      setSubStatus("pending");
       fetch("/reservation", {
         method: 'POST',
         body: JSON.stringify(newReservation),
@@ -67,6 +68,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
       .then((res)=>res.json())
       .then((res)=>{
+        setSubStatus("processed");
         if(res.status === 201){
           updateUserReservation({...res.data,...newReservation});
           localStorage.setItem("id", res.data.id);

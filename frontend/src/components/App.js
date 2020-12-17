@@ -23,7 +23,7 @@ const App = () => {
       fetch(`/reservation/${localStorage.getItem("id")}`)
       .then((res)=>res.json())
       .then((res)=>{
-        if(res.status=== 202 ){
+        if(res.status=== 200 ){
           updateUserReservation(res.data);
         }else{
           localStorage.clear();

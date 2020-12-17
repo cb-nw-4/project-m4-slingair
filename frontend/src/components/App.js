@@ -9,6 +9,7 @@ import GlobalStyles, { themeVars } from "./GlobalStyles";
 import Reservation from "./Reservation";
 import Profile from "./profile";
 import ModifyReservation from "./ModifyReservation";
+import Page404 from "./Page404";
 
 const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
@@ -113,7 +114,9 @@ const App = () => {
                                 handleSeatSelect= {handleSeatSelect} />
           </Route>
 
-          <Route path="/error">404: Oops!</Route>
+          <Route path="/error">
+            <Page404 />
+          </Route>
 
         </Switch>
         <Footer />

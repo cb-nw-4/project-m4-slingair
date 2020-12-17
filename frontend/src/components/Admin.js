@@ -8,7 +8,7 @@ function Admin({ userReservation }) {
   const [allReservations, setAllReservations] = useState([])
 
   useEffect(() => {
-      fetch(`https://journeyedu.herokuapp.com/slingair/users`)
+      fetch(`https://journeyedu.herokuapp.com/slingair/users?limit=25`)
       .then(res => res.json())
       .then(json => setAllReservations(json))
   },[])
@@ -27,6 +27,7 @@ function Admin({ userReservation }) {
           <p>{reservation.flight}</p>
           <p>{reservation.seat}</p>
           <p>{reservation.surname}</p>
+          <p>{reservation.email}</p>
         </Wrapper>)
       })}
     </Div>

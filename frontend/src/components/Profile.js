@@ -5,13 +5,13 @@ import { themeVars } from "./GlobalStyles";
 import ReservationInfo from "./ReservationInfo";
 import Input from "./SeatSelect/Input";
 import Button from "./SeatSelect/Button";
-
-const initialState = { givenName: "", surname: "", email: "" };
+import Plane from "./SeatSelect/Plane";
 
 const Profile = ({userReservation, updateUserReservation, deleteUserReservation}) =>{
-    const [formData, setFormData] = useState(initialState);
+    const [formData, setFormData] = useState({ seat: userReservation.seat, givenName: userReservation.givenName, surname: userReservation.surname, email: userReservation.email });
     const [disabled, setDisabled] = useState(true);
     const [error, setError] = useState("");
+    const [chooseSeat, setChooseSeat] = useState(false);
     const history = useHistory();
 
     const handleChange = (val, item) => {
@@ -34,6 +34,18 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
           ? setDisabled(true)
           : setDisabled(false);
       }, [formData, setDisabled]);
+
+      const handleChooseSeat = ()=>{
+        setChooseSeat(true);
+      }
+
+      const handleCancel = ()=>{
+        setChooseSeat(false);
+      }
+
+      const handleSeatSelect = (seatId) => {
+        setFormData({ ...formData, seat: seatId });
+      };
 
     const handleClick = (ev)=>{
       ev.preventDefault();
@@ -64,7 +76,7 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
         if (validateEmail()) {
           fetch(`/reservation/${userReservation.id}`, {
             method: "PUT",
-            body: JSON.stringify({id: userReservation.id, flight: userReservation.flight, seat: userReservation.seat, ...formData}),
+            body: JSON.stringify({id: userReservation.id, flight: userReservation.flight, ...formData}),
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -90,12 +102,18 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
     return(
         <Wrapper>
            <Title>Your personal information and reservation</Title>
+           { !chooseSeat ? <>
             <ReservationContainer>               
                 <ReservationInfo reservation={userReservation} />
             </ReservationContainer>
-            <ButtonWrapper >
-              <Button handleClick={handleClick} text="Delete" />
-            </ButtonWrapper>
+            <div>
+              <ButtonWrapper >
+                <Button handleClick={handleChooseSeat} text="Change seat" />
+              </ButtonWrapper>
+              <ButtonWrapper >
+                <Button handleClick={handleClick} text="Delete" />
+              </ButtonWrapper>
+            </div>
             <UserForm>
                 <Input
                     name="givenName"
@@ -123,7 +141,22 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                     handleClick={handleSubmit}
                     text="Modify"
                 />
-            </UserForm>
+            </UserForm></>
+            : <>
+            <Plane
+              selectedSeat={formData.seat}
+              flightNumber={userReservation.flight}
+              handleSeatSelect={handleSeatSelect}
+            /> 
+            <div>
+              <ButtonWrapper2 >
+                <Button handleClick={handleCancel} text="Cancel" />
+              </ButtonWrapper2>
+              <ButtonWrapper2 >
+                <Button handleClick={handleSubmit} text="OK" />
+              </ButtonWrapper2>
+              </div>
+             </> }
             {error !== "" &&
             <Error>{`Error: ${error}`}</Error>}
         </Wrapper>
@@ -131,7 +164,16 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
 };
 
 const ButtonWrapper = styled.div`
-  width: 250px;
+  width: 190px;
+  display: inline-block;
+  margin: 0 15px;  
+`;
+
+const ButtonWrapper2 = styled.div`
+  width: 120px;
+  display: inline-block;
+  margin: 10px 15px;  
+  margin-right: 40px;
 `;
 
 const Wrapper = styled.div`

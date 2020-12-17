@@ -45,11 +45,11 @@ const Admin = ()=>{
         <Wrapper>
             <h1>All reservations</h1>
             <Select  defaultValue= "" id='reservation' onChange={(ev)=>handleReservation(ev)}>
-            <option value=""  disabled hidden>Select a reservation id </option>  
-            {reservations.map((reservation)=>( <option key={reservation.id} value={reservation.id}>{reservation.id} </option>))}
+            <option value=""  disabled hidden>Select a reservation</option>  
+            {reservations.map((reservation)=>( <option key={reservation.id} value={reservation.id}>{`${reservation.id}  |  ${reservation.givenName} ${reservation.surname} `}</option>))}
             </Select>
             {Object.keys(singleReservation).length !== 0 &&
-                <ReservationContainer>
+            <ReservationContainer>
                 <ReservationInfo  reservation={singleReservation} />
             </ReservationContainer>
             }
@@ -85,7 +85,7 @@ const Error = styled.p`
 `;
 const Select = styled.select`  
   height: 35px;
-  width: 300px;
+  width: 400px;
   border-radius: 5px;
   margin-bottom: 30px;
 `;

@@ -156,12 +156,23 @@ const updateReservation = (req, res) => {
     });
   } 
   else{
-    const newReservation = { id: req.params.id, ...req.body };   
+    const newReservation = { id: req.params.id, ...req.body };  
+    const oldFlight = reservations[reservationIndex].flight;
+    const oldSeat = reservations[reservationIndex].seat;
     reservations[reservationIndex] = newReservation;
-    flights[flight].forEach((flightSeat, index) => {
-      if (flightSeat.id === seat)
-        flights[flight][index] = { id: seat, isAvailable: false };
-    });
+
+    if (oldSeat !== seat || oldFlight !== flight) {      
+      flights[oldFlight].forEach((flightSeat, index) => {
+        if (flightSeat.id === oldSeat)
+          flights[oldFlight][index] = { id: oldSeat, isAvailable: true };
+      });  
+
+      flights[flight].forEach((flightSeat, index) => {
+        if (flightSeat.id === seat)
+          flights[flight][index] = { id: seat, isAvailable: false };
+      });
+    }
+
     res.status(200).json({ 
       status: 200,
       data: newReservation,

@@ -8,11 +8,12 @@ import Confirmation from "./Confirmation";
 import Profile from "./Profile";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 import ViewReservation from "./ViewReservation";
+import Admin from "./Admin";
 
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
-
+  console.log(userReservation)
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
   };
@@ -51,6 +52,9 @@ const App = () => {
           </Route>
           <Route exact path='/view-reservation'>
             <ViewReservation userReservation={userReservation}></ViewReservation>
+          </Route>
+          <Route exact path='/admin'>
+            <Admin userReservation={userReservation}></Admin>
           </Route>
           <Route exact path="/error">
             404: Oops!

@@ -93,9 +93,7 @@ const SeatSelect = ({
           } else if (json.status == 400) {
             history.push("/error");
           }
-          console.log(initialState);
-
-          console.log(initialState, "hello");
+          
         });
 
       // TODO: Send data to the server for validation/submission

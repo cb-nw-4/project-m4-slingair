@@ -5,19 +5,27 @@ import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
 const Confirmation = (props) => {
-  return (
-    <Wrapper>
-      <DetailBox>
-        <Heading>Your flight is confirmed!</Heading>
-        <p><StyleBold>Reservation #:</StyleBold> {props.location.state.id}</p>
-        <p><StyleBold>Flight #:</StyleBold> {props.location.state.flight}</p>
-        <p><StyleBold>Seat #:</StyleBold> {props.location.state.seat}</p>
-        <p><StyleBold>Name #:</StyleBold> {props.location.state.givenName} {props.location.state.surname}</p>
-        <p><StyleBold>Email #:</StyleBold> {props.location.state.email}</p>
-      </DetailBox>
-      <TombStone />
-    </Wrapper>
-  );
+  if (typeof(props.location.state) !== 'undefined') {
+    return (
+      <Wrapper>
+        <DetailBox>
+          <Heading>Your flight is confirmed!</Heading>
+          <p><StyleBold>Reservation #:</StyleBold> {props.location.state.id}</p>
+          <p><StyleBold>Flight #:</StyleBold> {props.location.state.flight}</p>
+          <p><StyleBold>Seat #:</StyleBold> {props.location.state.seat}</p>
+          <p><StyleBold>Name #:</StyleBold> {props.location.state.givenName} {props.location.state.surname}</p>
+          <p><StyleBold>Email #:</StyleBold> {props.location.state.email}</p>
+        </DetailBox>
+        <TombStone />
+      </Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper>
+        <DetailBox>To view your reservation, please click the Reservation link.</DetailBox>
+      </Wrapper>
+    );
+  }
 };
 
 const Wrapper = styled.div`

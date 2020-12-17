@@ -61,7 +61,6 @@ express()
 
   // Create a new reservation
   .post('/v1/reservations', async (req, res) => {
-    console.log(req.body);
     try {
       const response = await addReservations(req.body);
   
@@ -88,6 +87,29 @@ express()
       const response = await getSingleReservation(req.params.id);
 
       res.status(200).json({ status: 200, result: 'ok', data: response.data });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+    }
+  })
+
+  // Delete a specific reservation
+  .delete('/v1/reservations/:id', async (req, res) => {
+    try {
+      const response = await deleteReservation(req.params.id);
+
+      res.status(200).json({ status: 200, result: 'ok', message: response.message });
+    } catch (err) {
+      res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
+    }
+  })
+
+  // Update a specific reservation
+  
+  .put('/v1/reservations/:id', async (req, res) => {
+    try {
+      const response = await updateReservation(req);
+  
+      res.status(200).json({ status: 200, result: 'ok', data: response.data, message: response.message });
     } catch (err) {
       res.status(200).json({ status: 200, result: 'error', data: err.data, message: err.message });
     }

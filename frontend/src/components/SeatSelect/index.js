@@ -11,6 +11,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
+  // const [errMessage, setErrMessage] = useState("");
 
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
@@ -43,11 +44,33 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+    setSubStatus("pending");
+
     if (validateEmail()) {
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
+      fetch("/new-reservation", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((json) => {
+        const { status, error } = json;
+        if (status === "success") {
+          // window.location.href = "/order-confirmed";
+          setSubStatus("confirmed");
+        } else if (error) {
+          setSubStatus("error");
+          console.log("email error");
+          // setErrMessage(errorMessages[error]); // STRETCH
+        }
+      })
     }
   };
 

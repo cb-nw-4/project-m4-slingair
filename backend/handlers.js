@@ -16,13 +16,36 @@ const getFlight = (req, res) => {
 };
 
 const addReservations = (req, res) => {
-  reservations.push(req.body);
-  console.log(reservations);
-  res.status(201).json({ status: 201, reservations: reservations });
+  const newAccount = req.body;
+  // console.log(newAccount, 'test');
+  // console.log(reservations, 'test2');
+
+//TO CHANGE
+  //CHECK FOR EMPTY VALUE
+  let currentStatus = 201;
+  let errorId = null;
+  const objectValues = Object.values(newAccount);
+  let isValueEmpty = objectValues.some((value) => value === "");
+  // console.log(objectValues, 'values');
+  // console.log(isValueEmpty, 'test');
+  if (isValueEmpty){
+    currentStatus = 404;
+    errorId = "missing data";
+  }
+
+  //Send to endpoint
+  if(currentStatus === 201){
+    reservations.push(req.body);
+    console.log(reservations);
+    res.status(201).json({ status: currentStatus, data: reservations });
+  } else {
+    res.status(404).json({ status: currentStatus, error: errorId });
+  }
+  
 };
 
 const getReservations = (req, res) => {
-  res.status(200).json({ status: 200, reservations: reservations});
+  res.status(200).json({ status: currentStatus, reservations: reservations});
 };
 
 const getSingleReservation = (req, res) => {

@@ -5,9 +5,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import Reservation from "./Reservation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
-const App = () => {
+const App = ({ id }) => {
   const [userReservation, setUserReservation] = useState({});
 
   const updateUserReservation = (newData) => {
@@ -19,11 +20,15 @@ const App = () => {
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
     if (localStorage.id.length > 0) {
-      setUserReservation(localStorage.id);
+      fetch(`/reservations/${localStorage.id}`, {
+        method: "GET",
+      })
+      .then((res) => res.json())
+      .then((res) => setUserReservation(res.data[0]))
     }
+
   }, [setUserReservation]);
 
-  console.log(userReservation);
   return (
     <BrowserRouter>
       <GlobalStyles />
@@ -36,6 +41,10 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation}/>
           </Route>
+          <Route exact path="/view-reservation">
+            <Confirmation userReservation={userReservation}/>
+          </Route>
+          <Route exact path="/reservations/:id" component={Reservation}/>
           <Route path="">404: Oops!</Route>
         </Switch>
         <Footer />

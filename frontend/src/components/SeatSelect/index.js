@@ -23,7 +23,6 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleFlightSelect = (flightNum) => {
     console.log('handleFlightSelect', flightNum);
     setFlightNumber(flightNum);
-    console.log(flightNumber);
   };
 
   const handleSeatSelect = (seatId) => {
@@ -65,11 +64,11 @@ const SeatSelect = ({ updateUserReservation }) => {
         }
       })
 
+
       // TODO: if error from server, show error to user (stretch goal)
     }
   };
 
-  console.log(formData);
   return (
     <>
       <FlightSelect

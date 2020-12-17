@@ -8,9 +8,9 @@ function Admin({ userReservation }) {
   const [allReservations, setAllReservations] = useState([])
 
   useEffect(() => {
-      fetch('/reservation')
+      fetch(`https://journeyedu.herokuapp.com/slingair/users`)
       .then(res => res.json())
-      .then(json => setAllReservations(json.body))
+      .then(json => setAllReservations(json))
   },[])
 
   console.log(allReservations)

@@ -6,6 +6,13 @@ const { v4: uuidv4 } = require("uuid");
 //  Use this data. Changes will persist until the server (backend) restarts.
 const { flights, reservations } = require("./data");
 
+const changeSeatAvailability = (flightNum, seatNum, isAvailable) =>{
+  flights[flightNum].forEach((flightSeat, index) => {
+    if (flightSeat.id === seatNum)
+      flights[flightNum][index] = { id: seatNum, isAvailable: isAvailable };
+  });
+};
+
 const getFlights = (req, res) => {
   res.status(200).json({ 
     status: 200,
@@ -61,10 +68,8 @@ const addReservations = (req, res) => {
   else{
     const newReservation = {id: uuidv4(), ...req.body};   
     reservations.push(newReservation);
-    flights[flight].forEach((flightSeat, index) => {
-        if (flightSeat.id === seat)
-          flights[flight][index] = { id: seat, isAvailable: false };
-    });
+    changeSeatAvailability(flight, seat, false);
+   
     res.status(201).json({ 
       status: 201,
       data: newReservation,
@@ -110,10 +115,8 @@ const deleteReservation = (req, res) => {
    
    if (reservationIndex !== -1){
     reservations.splice(reservationIndex, 1);
-    flights[flight].forEach((flightSeat, index) => {
-      if (flightSeat.id === seat)
-        flights[flight][index] = { id: seat, isAvailable: true };
-    });
+    changeSeatAvailability(flight, seat, true);
+  
     res.status(200).json({ 
       status: 200,
       data: {},
@@ -161,16 +164,9 @@ const updateReservation = (req, res) => {
     const oldSeat = reservations[reservationIndex].seat;
     reservations[reservationIndex] = newReservation;
 
-    if (oldSeat !== seat || oldFlight !== flight) {      
-      flights[oldFlight].forEach((flightSeat, index) => {
-        if (flightSeat.id === oldSeat)
-          flights[oldFlight][index] = { id: oldSeat, isAvailable: true };
-      });  
-
-      flights[flight].forEach((flightSeat, index) => {
-        if (flightSeat.id === seat)
-          flights[flight][index] = { id: seat, isAvailable: false };
-      });
+    if (oldSeat !== seat || oldFlight !== flight) {    
+      changeSeatAvailability(oldFlight, oldSeat, true);  
+      changeSeatAvailability(flight, seat, false);      
     }
 
     res.status(200).json({ 
@@ -181,6 +177,8 @@ const updateReservation = (req, res) => {
   }
 
 };
+
+
 
 module.exports = {
   getFlights,

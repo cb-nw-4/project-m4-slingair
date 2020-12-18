@@ -53,7 +53,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       // TODO: if error from server, show error to user (stretch goal)
       fetch("/new-reservation", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({...formData, flight:flightNumber}),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -61,16 +61,36 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
       .then((res) => res.json())
       .then((json) => {
-        const { status, error } = json;
-        if (status === "success") {
-          // window.location.href = "/order-confirmed";
-          setSubStatus("confirmed");
-        } else if (error) {
-          setSubStatus("error");
-          console.log("email error");
-          // setErrMessage(errorMessages[error]); // STRETCH
+        function myStorage(key, value) {
+          console.log("in myStorage","key:",key,"value:",value)
+          return Promise.resolve().then(function () {
+              localStorage.setItem(key, value);
+          });
         }
-      })
+        const { status, error, data } = json;
+        console.log(status, data, 'testing')
+        try {
+          if (status === 201) {
+          myStorage('reservationId', data.id).then(() => {
+            updateUserReservation(data);
+            console.log("reservation is set in local storage")
+            setSubStatus("confirmed");
+            history.push('/confirmed');
+          })
+          // window.location.href = "/order-confirmed";
+          
+          }
+        } catch(error) {
+          return console.log('error');
+        }
+
+      } 
+        // else if (error) {
+        //   setSubStatus("error");
+        //   console.log("email error");
+          // setErrMessage(errorMessages[error]); // STRETCH
+        // }
+    )
     }
   };
 

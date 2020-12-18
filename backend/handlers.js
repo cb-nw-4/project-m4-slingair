@@ -102,15 +102,6 @@ const deleteReservation = (req, res) => {
 
   const reservation = reservations.find( reser => reser.id == reservationId);
   
-  const EmptyReservation ={
-    id: '',
-    flight: '',
-    seat: '',
-    givenName: '',
-    surname: '',
-    email: '',
-  }
-  
   if(!reservation){
 
     res.status(404).json({
@@ -125,7 +116,6 @@ const deleteReservation = (req, res) => {
   res.status(200).json({
   status: 200,
   data: reservations,
-  empty: EmptyReservation,
   message:'Reservation is deleted from the data Base'
 })
 
@@ -135,8 +125,6 @@ const deleteReservation = (req, res) => {
 const updateReservation = (req, res) => {
 
   const reservationId = req.params.id;
-  
-  console.log(req.body, 'update')
 
   const updateObj ={
     flight: req.body.flight,
@@ -171,7 +159,6 @@ const updateReservation = (req, res) => {
     data: reservation,
     message:'Reservation is updated in the data Base'
   })
-
     
   }
   

@@ -5,6 +5,8 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+const handler = require("./handlers");
+
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
@@ -21,6 +23,19 @@ express()
   // add new endpoints here 👇
 
   // get flights (flight numbers)
+  .get("/flights", handler.getFlights)
+
+  .get("/flights/:flightkey",handler.getFlight)
+
+  .get("/reservations",handler.getReservations)
+
+  .get("/reservations/:reservationID",handler.getSingleReservation)
+
+  .post("/reservations",handler.addReservations)
+
+  .delete("/reservations/:reservationID",handler.deleteReservation)
+
+  .put("/reservations/:reservationID",handler.updateReservation)
 
   // add new endpoints here ☝️
   // ---------------------------------

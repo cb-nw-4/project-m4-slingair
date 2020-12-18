@@ -7,7 +7,7 @@ const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
 const SeatSelect = ({ updateUserReservation }) => {
   const history = useHistory();
-  const [flightNumber, setFlightNumber] = useState(null);
+  const [flightNumber, setFlightNumber] = useState("");
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
@@ -48,6 +48,30 @@ const SeatSelect = ({ updateUserReservation }) => {
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
+      setSubStatus("pending");
+
+      fetch("/reservations", {
+        method: "POST",
+        body: JSON.stringify({...formData, flightNumber}),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.status === 201) {
+          setSubStatus("confirmed");
+          updateUserReservation(json.data);
+          window.localStorage.setItem("reservationId", json.data.id);
+          history.push('/confirmed');
+        } else {
+          setSubStatus("error");
+          history.push('/error');
+        }
+      });
+
     }
   };
 

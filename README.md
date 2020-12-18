@@ -67,7 +67,7 @@ In order for your project to be considered `DONE` (passing grade), you should ha
 
 ### Backend
 
-1. Server endpoints are RESTful.
+1. Server endpoints are RESTful. 
 2. There are endpoints for the following actions:
    - retrieve all flight numbers
    - retrieve single flight data (seating)

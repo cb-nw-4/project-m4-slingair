@@ -7,9 +7,7 @@ import { themeVars } from "./GlobalStyles";
 
 
 
-const Page404 = ({location}) => {
-
-    console.log(location, 'location error')
+const Page404 = () => {
     return ( 
 
             <Mainbox>

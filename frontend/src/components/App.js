@@ -51,7 +51,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    
     if(localStorage.length !== 0){
 
       fetch(`/reservations/${localStorage.id}`)
@@ -83,7 +82,7 @@ const App = () => {
                         handleFlightSelect={handleFlightSelect} 
                         setFlightNumber={setFlightNumber}
                         handleSeatSelect= {handleSeatSelect}
-                      />
+            />
           </Route>
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation}
@@ -92,8 +91,7 @@ const App = () => {
           <Route exact path="/reservation">
             <Reservation  userReservation={userReservation}
                           setSubStatus={setSubStatus}
-                          subStatus={subStatus} 
-                      
+                          subStatus={subStatus}           
             />
           </Route>
           <Route exact path="/profile">
@@ -111,7 +109,8 @@ const App = () => {
                                 handleChange = {handleChange}
                                 flightNumber={flightNumber}
                                 setFlightNumber={setFlightNumber}
-                                handleSeatSelect= {handleSeatSelect} />
+                                handleSeatSelect= {handleSeatSelect} 
+            />
           </Route>
 
           <Route path="/error">

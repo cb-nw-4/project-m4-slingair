@@ -3,7 +3,7 @@ import React from 'react';
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import Button from './SeatSelect/Button';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 
@@ -53,8 +53,6 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
         <h1>You don't have any reservation in Data Base</h1>
         }
 
-        
-
         {isReservations && 
         <>
         <h3>You have #<em>{allReservations.length} resevations</em> in Data Base</h3>
@@ -75,7 +73,7 @@ const ReservationList = ({allReservations, subStatus, setSubStatus, setAllReserv
                 
                 {allReservations.map(reservation =>(
                     <tr className="rowreservation" key={reservation.id}>
-                        <td>{`${reservation.givenName} ${reservation.surname}`}</td>
+                        <td>{`${reservation.givenName} ${reservation.surname}`} </td>
                         <td>{reservation.email}</td>
                         <td>{reservation.flight}</td>
                         <td>{reservation.seat}</td>

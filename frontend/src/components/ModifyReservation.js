@@ -20,7 +20,6 @@ const ModifyReservation = ({
     useEffect(() => {
         setFlightNumber(localStorage.flightNumber)
         setSubStatus('idle')
-
     }, []);
 
     const history = useHistory();
@@ -62,27 +61,24 @@ const ModifyReservation = ({
     return( 
         <>
 
-        <H1>Make changed before you cofirm </H1>
+            <H1>Make changed before you cofirm </H1>
 
-        <h3> Your Flight flightNumber is #: {userReservation.flight}</h3>
-        <Container> 
-
-        <Form
-            flightNumber={flightNumber}
-            formData={formData}
-            handleChange={handleChange}
-            handleSeatSelect={handleSeatSelect}
-            handleSubmit={handleUpdate}
-            disabled={disabled}
-            subStatus={subStatus}
-        />
-        </Container>
+            <h3> Your Flight flightNumber is #: {userReservation.flight}</h3>
+            <Container> 
+                <Form
+                    flightNumber={flightNumber}
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleSeatSelect={handleSeatSelect}
+                    handleSubmit={handleUpdate}
+                    disabled={disabled}
+                    subStatus={subStatus}
+                />
+            </Container>
         
         </>
     
     )
-
-
 }
 
 const H1 = styled.h1`

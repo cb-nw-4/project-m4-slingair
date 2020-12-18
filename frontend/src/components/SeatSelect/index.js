@@ -66,6 +66,12 @@ const SeatSelect = ({ updateUserReservation }) => {
               state: json.message
             });
           }
+        })
+        .catch(() => {
+          history.push({
+            pathname: '/error-page',
+            state: 'Component: index, Cannot contact server'
+          });
         });
     }
   };

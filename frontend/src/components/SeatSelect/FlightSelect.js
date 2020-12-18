@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 import { themeVars } from "../GlobalStyles";
 import RandomKey from '../RandomKey';
 
-const FlightSelect = ({ handleFlightSelect }) => {
+const FlightSelect = (props) => {
   const history = useHistory();
   const [flights, setFlights] = useState([]);
+  let flightNum = 'Select a flight';
 
   useEffect(() => {
     fetch('http://localhost:8000/v1/flights')
@@ -21,15 +22,24 @@ const FlightSelect = ({ handleFlightSelect }) => {
             state: json.message
           });
         }
-      }
-    );
+      })
+      .catch(() => {
+        history.push({
+          pathname: '/error-page',
+          state: 'Component: FlightSelect, Cannot contact server'
+        });
+      });
   }, []);
+
+  if (props.flightNumber !== null) {
+    flightNum = props.flightNumber;
+  }
 
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      <Select onChange={(ev) => handleFlightSelect(ev)} id="flight" name="flight">
-        <option disabled selected>Select a flight</option>
+      <Select onChange={(ev) => props.handleFlightSelect(ev)} value={flightNum} id="flight" name="flight">
+        <option disabled>Select a flight</option>
         {flights.map(flight => (
           <option key={RandomKey()} value={flight}>{flight}</option>
         ))}

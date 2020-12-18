@@ -21,6 +21,12 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
               state: json.message
             });
           }
+        })
+        .catch(() => {
+          history.push({
+            pathname: '/error-page',
+            state: 'Component: Plane, Cannot contact server'
+          });
         });
     }
   }, [flightNumber]);

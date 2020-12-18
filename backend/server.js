@@ -104,7 +104,6 @@ express()
   })
 
   // Update a specific reservation
-  
   .put('/v1/reservations/:id', async (req, res) => {
     try {
       const response = await updateReservation(req);

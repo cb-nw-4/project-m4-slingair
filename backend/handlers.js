@@ -158,8 +158,6 @@ const updateReservation = (req, res) => {
     });
 
     reservations.splice(index, 1, updatedReservation);
-    console.log(reservations);
-    console.log(flights);
     resolve({ data: {...updatedReservation, id: req.params.id}, message: 'Reservation updated' });
   });
 };

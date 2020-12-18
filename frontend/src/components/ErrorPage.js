@@ -5,13 +5,12 @@ import { themeVars } from "./GlobalStyles";
 import raccoon from "../assets/transdeadraccoon.png";
 
 const ErrorPage = (props) => {
-  console.log(props);
   return (
     <Wrapper>
       <Raccoon />
       <Message>
-        Sorry, but something seems to have gone horribly wrong. Our server has
-        generated the following message: <StyleBold>{props.location.state}</StyleBold>
+        Sorry, but something seems to have gone horribly wrong. The following
+        error has occured: <StyleBold>{props.location.state}</StyleBold>
         <br />Please try again later.
       </Message>
     </Wrapper>

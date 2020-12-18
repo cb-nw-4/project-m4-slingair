@@ -17,8 +17,6 @@ const App = ({ id }) => {
   };
 
   useEffect(() => {
-    // TODO: check localStorage for an id
-    // if yes, get data from server and add it to state
     if (localStorage.id.length > 0) {
       fetch(`/reservations/${localStorage.id}`, {
         method: "GET",

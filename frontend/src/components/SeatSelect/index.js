@@ -63,9 +63,6 @@ const SeatSelect = ({ updateUserReservation }) => {
           console.log("Error encountered.")
         }
       })
-
-
-      // TODO: if error from server, show error to user (stretch goal)
     }
   };
 

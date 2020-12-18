@@ -6,12 +6,21 @@ const { v4: uuidv4 } = require("uuid");
 //  Use this data. Changes will persist until the server (backend) restarts.
 const { flights, reservations } = require("./data");
 
+
 const getFlights = (req, res) => {
-  res.status(200).json({
-    status: 200,
-    data: Object.keys(flights),
-  })
-};
+  let flightArray = Object.keys(flights);
+  if (flightArray.length > 0) {
+    res.status(200).json({
+      status: 200,
+      data: flightArray,
+    })
+  } else {
+    res.status(404).json({
+      status: 404,
+      data: "Flights not found.",
+    })
+  }
+}
 
 const getFlight = (req, res) => {
   let flightId = req.params.id;
@@ -50,11 +59,18 @@ const addReservations = (req, res) => {
 
 
 const getReservations = (req, res) => {
-  res.status(200).json({
-    status: 200,
-    data: reservations,
-  })
-};
+  if (reservations.length > 0) {
+    res.status(200).json({
+      status: 200,
+      data: reservations,
+    })
+  } else {
+    res.status(404).json({
+      status: 404,
+      data: "Reservations not found.",
+    })
+  }
+}
 
 
 const getSingleReservation = (req, res) => {
@@ -109,7 +125,6 @@ const updateReservation = (req, res) => {
     status: 200,
     message: "Reservation has been updated.",
   })
-
 };
 
 module.exports = {

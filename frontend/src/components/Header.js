@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import Confirmation from "./Confirmation";
 
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => (
-  <Wrapper>
-    <Logo>
-      <h1>Sling Airlines</h1>
-    </Logo>
-    <Nav>
-      {/* TODO: only show links if the user has a reservation already */}
-      <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-      </>
-    </Nav>
-  </Wrapper>
-);
+const Header = ({ userReservation }) => {
+  const flightConfirmed = userReservation.givenName;
+  return (
+    <Wrapper>
+      <Logo>
+        <h1>Sling Airlines</h1>
+      </Logo>
+        {flightConfirmed && (
+          <Nav>
+            <>
+              <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+              <StyledNavLink to="/profile">Profile</StyledNavLink> 
+            </>
+          </Nav>
+        )}
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled.header`
   display: flex;

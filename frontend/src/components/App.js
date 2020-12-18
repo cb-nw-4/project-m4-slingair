@@ -32,7 +32,7 @@ const App = ({ id }) => {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header />
+      <Header userReservation={userReservation}/>
       <Main>
         <Switch>
           <Route exact path="/">

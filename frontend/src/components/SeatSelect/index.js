@@ -4,9 +4,14 @@ import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 const { v4: uuidv4 } = require("uuid");
 
-const initialState = { seat: "", givenName: "", surname: "", email: "", id: "" };
+const initialState = {
+  seat: "",
+  givenName: "",
+  surname: "",
+  email: "",
+};
 
-const SeatSelect = ({ updateUserReservation }) => {
+const SeatSelect = ({ updateUserReservation, userReservation }) => {
   const history = useHistory();
   const [flightNumber, setFlightNumber] = useState(null);
   const [formData, setFormData] = useState(initialState);
@@ -32,8 +37,8 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleChange = (val, item) => {
-    setFormData({ flightNumber, ...formData, [item]: val, id : uuidv4() });
-    return formData;
+    setFormData({ ...formData, [item]: val });
+    console.log(formData);
   };
 
   const validateEmail = () => {
@@ -47,27 +52,31 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    localStorage.setItem("data", "form");
+
     if (validateEmail()) {
-      fetch("/reservations", { method: "post" })
+      fetch("/reservations", {
+        method: "POST",
+        body: JSON.stringify({...formData, flight: flightNumber}),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
         .then((res) => res.json())
-        // .then((json) => (json = json.data))
         .then((json) => {
-          let status = json.status;
-          if (status == 201) {
         
+          if(json.status == 201) {
 
-            setFormData({ flightNumber, formData});
-            const info = json.data;
-            info.push(formData);
-
-            localStorage.setItem("data", JSON.stringify(formData));
-            const result = localStorage.getItem("data");
-           
-            return result;
+          
+          updateUserReservation(json.data);
+          window.localStorage.setItem("formData", JSON.stringify(json.data));
+          console.log(JSON.parse(window.localStorage.getItem("formData")));
+          history.push("/confirmed");
           }
-        })
-        history.replace("/confirmed");
+          else if(json.status == 400) {
+            history.push("/error");
+          }
+        });
     }
   };
 

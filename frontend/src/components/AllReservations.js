@@ -6,7 +6,7 @@ import Admin from "./Admin";
 const AllReservations = () => {
   return (
     <Wrapper>
-      <Title>Reservations</Title>
+      <Title>All Reservations</Title>
       <Admin />
     </Wrapper>
   )

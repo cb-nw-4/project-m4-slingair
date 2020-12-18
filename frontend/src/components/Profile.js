@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 
-const Profile = () => {
+const Profile = ({updateUserReservation, userReservation}) => {
  
     const [profile, setProfile] = useState([]);
     useEffect(() => {
         fetch("/profile")
         .then((res) => res.json())
         .then((json) => {
-          const result = JSON.parse(localStorage.getItem("data"));
-      
+          console.log(json.data);
+          const result = JSON.parse(localStorage.getItem("formData"));
+      console.log(result)
             setProfile(result);
         })
     }, []);
@@ -25,7 +26,7 @@ const Profile = () => {
         <Item><Span>Last Name:</Span>  {profile.surname}</Item>
         <Item><Span>Email:</Span>  {profile.email}</Item>
         <Item><Span>Seat Number:</Span>  {profile.seat}</Item>
-        <Item><Span>Flight Number:</Span>  {profile.flight}</Item>
+        <Item><Span>Flight Number:</Span>  {profile.flightNumber}</Item>
         <Item><Span>Reservation ID:</Span>  {profile.id}</Item>
       </List>
       </Div>

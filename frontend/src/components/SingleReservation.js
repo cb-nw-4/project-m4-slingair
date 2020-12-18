@@ -5,25 +5,24 @@ import { themeVars } from "./GlobalStyles";
 
 const SingleReservation = () => {
     const [reservations, setReservations] = useState([]);
+    const { id } = useParams();
+   
     useEffect(() => {
-      fetch("/reservations")
+      fetch(`/reservations/:${id}`)
         .then((res) => res.json())
         .then((json) => {
+            console.log(json);
           let arrayData = json.data;
-          let result = JSON.parse(localStorage.getItem("data"));
-          arrayData.push(result);
-  
-          let filteredId = (array) => {
-            let arrayId = array.filter((arr) => {
-              if (arr.id !== undefined) {
-                return arr;
-              }
-            });
-            return arrayId;
-          };
-  
-         let filteredData = filteredId(arrayData);
-         setReservations(filteredData);
+          console.log({id});
+          console.log(arrayData)
+          setReservations(arrayData);
+        //   let result = JSON.parse(localStorage.getItem("data"));
+        //   arrayData.push(result);
+        //   setReservations(arrayData);
+        //     console.log(reservations)
+      
+   
+         
         });
     }, []);
   

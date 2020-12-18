@@ -11,6 +11,7 @@ const {
   getReservations,
   addReservations,
   getSingleReservation,
+  allReservations,
   deleteReservation,
   updateReservation,
 } = require("./handlers");
@@ -29,25 +30,19 @@ express()
   // ---------------------------------
   // add new endpoints here 👇
 
-.get("/flight", getFlights)
+.get("/flights", getFlights)
 
-.get("/seating", getFlight)
+.get("/flight/:id", getFlight)
 
 .get("/reservations", getReservations)
-
-.get("/reservations/:id", getSingleReservation)
-
-.get("/admin", getReservations)
 
 .post("/reservations", addReservations)
 
 
+.get("/reservations/:id", getSingleReservation)
 
+.get("/admin", allReservations)
 
-
-
-
-.get("/confirmed", getReservations)
 
 .delete("/reservations/:id/delete", deleteReservation)
 

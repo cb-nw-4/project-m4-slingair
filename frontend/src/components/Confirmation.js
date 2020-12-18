@@ -4,31 +4,20 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
-const Confirmation = () => {
+const Confirmation = ({userReservation}) => {
 
-  const [confirm, setConfirm] = useState([]);
-  useEffect(() => {
-    fetch("/confirmed")
-      .then((res) => res.json())
-      .then((json) => {
-        const result = JSON.parse(localStorage.getItem("data"))
-        console.log(result);
-          console.log(json.data);
-          setConfirm(result);
-        console.log(json.data);
-      })
-  }, []);
-  console.log(confirm);
+ 
+
   return (<Wrapper>
   <Title>Reservation confirmed!</Title>
   <Div>
   <List>
-    <Item><Span>First Name:</Span> {confirm.givenName}</Item>
-    <Item><Span>Last Name:</Span>  {confirm.surname}</Item>
-    <Item><Span>Email:</Span>  {confirm.email}</Item>
-    <Item><Span>Seat Number:</Span>  {confirm.seat}</Item>
-    <Item><Span>Flight Number:</Span>  {confirm.flightNumber}</Item>
-    <Item><Span>Reservation ID:</Span>  {confirm.id}</Item>
+    <Item><Span>First Name:</Span> {userReservation.givenName}</Item>
+    <Item><Span>Last Name:</Span>  {userReservation.surname}</Item>
+    <Item><Span>Email:</Span>  {userReservation.email}</Item>
+    <Item><Span>Seat Number:</Span>  {userReservation.seat}</Item>
+    <Item><Span>Flight Number:</Span>  {userReservation.flightNumber}</Item>
+    <Item><Span>Reservation ID:</Span>  {userReservation.id}</Item>
   </List>
   </Div>
   <Tombstone src={tombstone}/>

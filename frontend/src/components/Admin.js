@@ -5,11 +5,13 @@ import { themeVars } from "./GlobalStyles";
 const Admin = () => {
   const [Admin, setAdmin] = useState([]);
   useEffect(() => {
-    fetch("/Admin")
+    fetch("/admin")
       .then((res) => res.json())
       .then((json) => {
+          console.log(json.data)
+          
         let arrayData = json.data;
-        let result = JSON.parse(localStorage.getItem("data"));
+        let result = JSON.parse(localStorage.getItem("formData"));
         arrayData.push(result);
 
         let filteredId = (array) => {
@@ -46,7 +48,7 @@ const allAdmin = (Admin) => {
             <Span>Seat Number:</Span> {reservation.seat}
           </Item>
           <Item>
-            <Span>Flight Number:</Span> {reservation.flightNumber}
+            <Span>Flight Number:</Span> {reservation.flightNumber || reservation.flight}
           </Item>
           <Item>
             <Span>Reservation ID:</Span> {reservation.id}

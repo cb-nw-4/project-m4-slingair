@@ -13,7 +13,7 @@ const Form = ({
   handleSeatSelect,
   handleSubmit,
   subStatus,
-}) => (
+}) =>  {return (
   <Wrapper>
     <Plane
       selectedSeat={formData.seat}
@@ -49,7 +49,7 @@ const Form = ({
       />
     </UserForm>
   </Wrapper>
-);
+)}
 
 const Wrapper = styled.form`
   display: flex;
@@ -67,3 +67,33 @@ const UserForm = styled.div`
 `;
 
 export default Form;
+
+//goes in index.js in seat select 
+// if (validateEmail()) {
+//   fetch(
+//     update && userReservation
+//       ? `/reservations/${userReservation.id}`
+//       : "/reservations", {
+//         method: update ? "PUT" : "POST",
+//         body: JSON.stringify({...formData, flight: flightNumber}),
+     
+//       }
+//   )
+//     .then((res) => res.json())
+//     .then((json) => {
+ 
+//       if (json.status == 201) {
+//         updateUserReservation(json.data);
+//         if(!update) {
+//           window.localStorage.setItem("reservationId", json.data.id);
+//         }
+//       history.push("/confirmed");
+//       } else if (json.status == 400) {
+//           history.push("/error");
+//         }
+    
+//       }
+//     );
+  
+// }
+// };

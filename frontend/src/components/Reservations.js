@@ -6,9 +6,10 @@ import { useParams } from "react-router-dom";
 const Reservations = () => {
 
   const { id } = useParams();
+  const [value, setValue] = useState("");
   const [single, setSingle] = useState([]);
   useEffect(() => {
-      fetch(`/reservations/:${id}`)
+      fetch(`/reservations`)
       .then((res) => res.json())
       .then((json) => { console.log(json.data)
           setSingle(json.data);
@@ -19,7 +20,7 @@ const Reservations = () => {
   return (
   <Wrapper>
     <Title>Enter Your Confirmation ID</Title>
-      <Input type="text" />
+      <Input type="text" value={value}/>
       <Button> Find your Reservation</Button>
   </Wrapper>
   );

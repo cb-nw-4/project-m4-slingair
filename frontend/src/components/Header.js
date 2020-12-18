@@ -5,8 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = ({email}) => {
-  //console.log(email);
+const Header = () => {
   return (
     <Wrapper>
       <StyledImg to="/">
@@ -15,7 +14,7 @@ const Header = ({email}) => {
       <Nav>
         {/* TODO: only show links if the user has a reservation already */}
         <>
-          <StyledNavLink exact={true} to={`/view-reservation/${email}`}>Reservation</StyledNavLink>
+          <StyledNavLink exact={true} to={`/view-reservation`}>Reservation</StyledNavLink>
           <StyledNavLink exact={true} to="/profile">Profile</StyledNavLink>
         </>
       </Nav>

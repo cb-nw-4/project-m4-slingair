@@ -5,14 +5,11 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
-import UserLogInPage from "./SeatSelect/User";
-import UserProfile from "./SeatSelect/UserProfile";
-import UserData from "./SeatSelect/UserData";
+import ResByID from "./SeatSelect/User";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
-  const [email, setEmail]=useState('');
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
   };
@@ -32,12 +29,11 @@ const App = () => {
     }
   }, [setUserReservation]);
 
-  console.log(email);
 
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header email={email}/>
+      <Header />
       <Main>
         <Switch>
           <Route exact path="/">
@@ -46,14 +42,8 @@ const App = () => {
           <Route exact path="/confirmed">
             <Confirmation userReservation={userReservation}/>
           </Route>
-          <Route exact path="/profile">
-            <UserLogInPage setEmail={setEmail}/>
-          </Route>
-          <Route exact path="/profile/userprofile">
-            <UserProfile email={email}/>
-          </Route>
-          <Route exact path="/view-reservation/:email">
-            <UserData email={email}/>
+          <Route exact path="/view-reservation">
+            <ResByID />
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

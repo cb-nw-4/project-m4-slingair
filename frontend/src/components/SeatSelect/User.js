@@ -2,23 +2,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { themeVars } from "../GlobalStyles";
 
-const UserLogInPage=({setEmail})=>{
+const ResByID=()=>{
     //console.log(userReservation);
     const [value, setValue]=useState('');
-    const validateEmail = () => {
-        const emailParts = value.split("@");
-        return (
-            emailParts.length === 2 &&
-            emailParts[0].length > 0 &&
-            emailParts[1].length > 0
-        );
-    };
+    let bool=false;
+    let resData={};
     const handleSubmit =  (ev) => {
         ev.preventDefault();
-        if (validateEmail()) {
-            setEmail(value);
-            console.log(value);
-            window.location.href = "/profile/userprofile";
+        if(value.length===36){
+            fetch(`/getreservation/${value}`)
+            .then(res=>res.json())
+            .then(res=>resData=res.data)
+            .then(()=>{
+                if(resData.id===value){
+                    console.log(resData.givenName)
+                    bool=true;
+                    return(
+                        <div>{(bool===true)?<p>{resData.givenName} </p>:<p></p>}
+                        </div>
+                    )
+                }
+            })
         }
     }
 
@@ -27,9 +31,9 @@ const UserLogInPage=({setEmail})=>{
         <>
             <form onSubmit={handleSubmit}>
                 <input
-                    name="email"
-                    placeholder="Email"
-                    type="email"
+                    name="Reservation ID"
+                    placeholder="Reservation ID"
+                    type="text"
                     value={value}
                     onChange={(ev) => {
                         setValue(ev.target.value)
@@ -37,11 +41,13 @@ const UserLogInPage=({setEmail})=>{
                 />
                 <button type='submit' >Submit</button>
             </form>
+            <div>{(bool===true)?<p>{resData.givenName} </p>:<p></p>}
+            </div>
         </>
     )
 };
 
-export default UserLogInPage;
+export default ResByID;
 
 // fetch("/allreservations")
 // .then(res=>res.json())

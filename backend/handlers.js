@@ -48,12 +48,14 @@ const addReservations = (req, res) => {
     email: req.body.email,
   }
 
-  const isValid = reservations.filter(reservation => (reservation.email === newReservation.email))
+  //IsValid only unique email Address for the same flight Number
+  //The same Email Can be use for different flights
+
+  const isValid = reservations.filter(reservation => (reservation.email === newReservation.email && reservation.flight === newReservation.flight))
 
 
   if(isValid.length === 0){
     reservations.push(newReservation);
-
     res.status(200).json({
       status: 200,
       data: newReservation,

@@ -1,15 +1,19 @@
 import { createGlobalStyle } from "styled-components";
 
 export const themeVars = {
-  cadmiumRed: "#D80026",
+  cadmiumRed: "#ffcc00",
+  //alabamaCrimson:"#007acc",
   alabamaCrimson: "#AA001E",
-  selectiveYellow: "#FDBB01",
-  orange: "#F79D00",
-  desertSand: "#E3C4A6",
+  
+  selectiveYellow: "#e67300",
+  orange: "#cc4400",
+  desertSand: " #803300",
   pagePadding: "24px",
   headingFont: "'Permanent Marker', Arial, Helvetica, sans-serif",
   contentFont: "'Kosugi', Arial, Helvetica, sans-serif",
-  background: "#F79D00",
+  //background: "#F79D00",
+  background: "#2eb8b8"
+
 };
 
 export default createGlobalStyle`

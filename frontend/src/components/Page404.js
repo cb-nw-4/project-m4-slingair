@@ -13,27 +13,25 @@ const Page404 = ({location}) => {
     return ( 
 
             <Mainbox>
-            <div className="err">4</div>
-            <img src={plane} alt='img plane'/>
-            <div className="err2">4</div>
-            <div className="msg">
-                Something goes wrong with your reservation 
-                <p>Let's go <Link to="/">home</Link> and try from there.</p>
-            </div>
+                
+                <div className="err">4</div>
+                <img src={plane} alt='img plane'/>
+                <div className="err2">4</div>
+                <div className="msg">
+                    Something goes wrong with your reservation 
+                    <p>Let's go <Link to="/">home</Link> and try from there.</p>
+                </div>
             </Mainbox>
-
 
     );
 }
- 
+
 
 const Mainbox = styled.div`
     margin: auto;
     height: 600px;
     width: 600px;
     position: relative;
-
-
 
     .err {
         color: ${themeVars.alabamaCrimson};
@@ -64,7 +62,8 @@ const Mainbox = styled.div`
     .msg {
         text-align: center;
         font-family: 'Nunito Sans', sans-serif;
-        font-size: 1.6rem;
+        font-size: 1.2rem;
+        margin: 20px;
         position:absolute;
         left: 16%;
         top: 45%;
@@ -95,16 +94,19 @@ const Mainbox = styled.div`
 
     & p{
         padding: 20px 0;
-        margin-top: 40px;
+        margin-top: 20px;
     }
 
     & a {
         text-decoration: none;
+        font-size: 1.2em;
         color: ${themeVars.alabamaCrimson};
     }
 
     & a:hover {
         text-decoration: underline;
+        font-weight: bolder;
+
     }
 
 `

@@ -5,6 +5,15 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
+const { 
+  getFlights,
+  getFlight,
+  addReservations,
+  getSingleReservation,
+  deleteReservation,
+  updateReservation,
+} = require('./handlers.js');
+
 express()
   // Below are methods that are included in express(). We chain them for convenience.
   // --------------------------------------------------------------------------------
@@ -20,8 +29,26 @@ express()
   // ---------------------------------
   // add new endpoints here 👇
 
-  // get flights (flight numbers)
+  // get flights (flight numbers) > getFlights
+  .get(('/flights'),  getFlights)
 
+  // take flight number selected from FE and return seat selection in BE
+  .get(('/flight/:id'),  getFlight)
+
+  // POST request for handleSubmit function for Confirm button
+  .post(('/confirm'), addReservations)
+
+  // use reservation id to update reservation
+  .get(('/getReservation/:reservationId'), getSingleReservation)
+
+  // get reservation info for reservation page
+  .get(('/reservation/:reservationId'), getSingleReservation)
+
+  // delete reservation endpoint
+  .delete(('/reservation/:reservationId'), deleteReservation)
+
+  // update reservation endpoint
+  .patch(('/profile/:reservationId'), updateReservation )
   // add new endpoints here ☝️
   // ---------------------------------
   // Nothing to modify below this line

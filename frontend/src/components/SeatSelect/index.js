@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
+// import localStorage from 'local-storage';
 
 const initialState = { seat: "", givenName: "", surname: "", email: "" };
 
@@ -18,10 +19,11 @@ const SeatSelect = ({ updateUserReservation }) => {
     Object.values(formData).includes("") || flightNumber === ""
       ? setDisabled(true)
       : setDisabled(false);
-  }, [flightNumber, formData, setDisabled]);
+}, [flightNumber, formData, setDisabled]);
 
-  const handleFlightSelect = (ev) => {
-    setFlightNumber(ev.target.value);
+  // in FlightSelect, onChange function is set to handleFlightSelect for select/Menu Container
+  const handleFlightSelect = (event) => {
+    setFlightNumber(event.target.value);
   };
 
   const handleSeatSelect = (seatId) => {
@@ -43,13 +45,35 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+    setSubStatus("pending");
     if (validateEmail()) {
+      fetch('/confirm', {
+        method: 'POST',
+        body: JSON.stringify({...formData, flight: flightNumber}),
+        headers: {
+          Accept: 'application/json',
+          "Content-Type": "application/json",
+        }
+      })
+      .then((res) => res.json())
+      .then((response) => {
+        // response: Object { status: 201, data: "17d88c15-8754-441b-bc34-6756960c3ee4" }
+        const { status, data } = response;
+        if (status === 201) {
+          setSubStatus("confirmed");
+          localStorage.setItem("reservationId", `${data}`);
+          updateUserReservation();
+          history.push("/confirmed");
+        } else { 
+          setSubStatus("error");
+        }
+      })
+    }
+  }
       // TODO: Send data to the server for validation/submission
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)
-    }
-  };
 
   return (
     <>

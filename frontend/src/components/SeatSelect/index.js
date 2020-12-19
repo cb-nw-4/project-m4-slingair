@@ -62,7 +62,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       .then((res) => res.json())
       .then((json) => {
         function myStorage(key, value) {
-          console.log("in myStorage","key:",key,"value:",value)
+          // console.log("in myStorage","key:",key,"value:",value)
           return Promise.resolve().then(function () {
               localStorage.setItem(key, value);
           });

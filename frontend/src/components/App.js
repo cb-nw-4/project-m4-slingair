@@ -11,19 +11,19 @@ const App = () => {
   const [userReservation, setUserReservation] = useState({});
 
   const updateUserReservation = (newData) => {
-    console.log('newData',userReservation,{ ...userReservation, ...newData })
+    // console.log('newData',userReservation,{ ...userReservation, ...newData })
     setUserReservation({ ...userReservation, ...newData });
   };
 
   useEffect(() => {
     // TODO: check localStorage for an id
     // if yes, get data from server and add it to state
-    console.log("useEffect set user reservation")
+    // console.log("useEffect set user reservation")
     const reservationId = localStorage.getItem('reservationId');
     fetch(`/reservations/${reservationId}`)
     .then((res) => res.json())
     .then((json) => {
-      console.log("updated user reservation withL ",json)
+      // console.log("updated user reservation withL ",json)
       updateUserReservation(json)
     })
   }, [setUserReservation]);

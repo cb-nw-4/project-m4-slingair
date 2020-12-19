@@ -49,7 +49,7 @@ const addReservations = (req, res) => {
     // } 
       reservations.push(newAccount);
       res.status(currentStatus).json({ status: currentStatus, data: {...reservation, id: reservationId} });
-      console.log(reservations, 'reservations handlers.js line 39ish');
+      // console.log(reservations, 'reservations handlers.js line 39ish');
   }
 };
 
@@ -59,9 +59,9 @@ const getReservations = (req, res) => {
 
 const getSingleReservation = (req, res) => {
   const reservationId = req.params.id;
-  console.log(reservationId)
+  // console.log(reservationId);
   if (reservations.some((reservation) => {
-    console.log(reservation.id, reservationId);
+    // console.log(reservation.id, reservationId);
     return reservation.id === reservationId
   })){
     const reservationInfo = reservations.filter((reservation) => reservation.id === reservationId)
@@ -83,7 +83,42 @@ const deleteReservation = (req, res) => {
   }
 };
 
-const updateReservation = (req, res) => {};
+const updateReservation = (req, res) => {
+  const reservationId = req.params.id;
+  const updatedInfo = req.body;
+  // console.log(updatedInfo, 'BODY');
+
+  if (reservations.some((reservation) => {
+    return reservation.id === reservationId
+  })){
+    const reservationInfo = reservations.filter((reservation) => reservation.id === reservationId)
+    console.log(reservationInfo[0], 'INFO')
+    //Update informations
+    if(updatedInfo.givenName){
+      reservationInfo[0].givenName = updatedInfo.givenName;
+    }
+    if(updatedInfo.surname){
+      reservationInfo[0].surname = updatedInfo.surname;
+    }
+    if(updatedInfo.email){
+      reservationInfo[0].email = updatedInfo.email;
+    }
+    if(updatedInfo.seat){
+      reservationInfo[0].seat = updatedInfo.seat;
+    }
+    if(updatedInfo.flight){
+      reservationInfo[0].flight = updatedInfo.flight;
+    }
+    
+
+    //Send to endpoint
+    res.status(200).json({ status: 200, data: reservationInfo});
+    console.log("success")
+  } else {
+    res.status(404).json({ status: 404, error: 'id not found'});
+  }
+
+};
 
 
 

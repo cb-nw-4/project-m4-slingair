@@ -7,17 +7,24 @@ import tombstone from "../assets/tombstone.png";
 const Confirmation = ({ userReservation }) => {
   console.log(userReservation, 'reservation');
   console.log(userReservation.data, 'DATA');
-  return <Wrapper>
+  // console.log(userReservation.data[0], 'OBJECT')
+  if(userReservation.data){
+    const userInfo = userReservation.data[0];
+    console.log(userInfo);
+    return <Wrapper>
     <div className='reservationBox'>
         <div className='header'>Your flight is confirmed!</div>
-        <p>Reservation #: {userReservation.status}</p>
-        <p>Flight:</p>
-        <p>Seat #:</p>
-        <p>Name:</p>
-        <p>Email:</p>
+        <p>Reservation #: {userInfo.id}</p>
+        <p>Flight: {userInfo.flight}</p>
+        <p>Seat #: {userInfo.seat}</p>
+        <p>Name: {userInfo.givenName} {userInfo.surname}</p>
+        <p>Email: {userInfo.email}</p>
     </div>
     <img className='tombstone' src={tombstone}/>
     </Wrapper>;
+  } else {
+    return <div>Loading...</div>
+  }
 };
 
 const Wrapper = styled.div`

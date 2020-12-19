@@ -39,7 +39,7 @@ express()
   .get("/reservations", getReservations)
   .get("/reservations/:id", getSingleReservation)
   .delete("/reservations/:id", deleteReservation)
-  .patch("/update", updateReservation)
+  .patch("/reservations/:id", updateReservation)
   // add new endpoints here ☝️
   // ---------------------------------
   // Nothing to modify below this line

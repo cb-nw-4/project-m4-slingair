@@ -30,7 +30,7 @@ const Reservation = ()=>{
             const { status, data, message } = json;
             if (status === 200) {
                setErrorMessage("");
-               setReservation(data);               
+               setReservation({...data});               
             }  
             else {              
                 setErrorMessage(message);
@@ -51,7 +51,7 @@ const Reservation = ()=>{
                     value={flightId}
                 />
                 <ButtonWrapper>
-                    <Button handleClick={handledClick} disabled={disabled} text="Find" />
+                    <Button handleClick={handledClick} disabled={disabled}>Find</Button>
                 </ButtonWrapper>
             </FindContainer>
             {Object.keys(reservation).length !== 0 && 

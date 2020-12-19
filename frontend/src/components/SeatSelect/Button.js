@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { themeVars } from "../GlobalStyles";
 
-const Button = ({ handleClick, disabled, subStatus, text }) => (
+const Button = ({ handleClick, disabled, subStatus, children }) => (
   <Wrapper disabled={disabled || subStatus === "pending"} onClick={handleClick}>
-    {text}
+    {children}
   </Wrapper>
 );
 

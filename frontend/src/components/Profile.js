@@ -108,10 +108,10 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
             </ReservationContainer>
             <div>
               <ButtonWrapper >
-                <Button handleClick={handleChooseSeat} text="Change seat" />
+                <Button handleClick={handleChooseSeat}>Change seat</Button>
               </ButtonWrapper>
               <ButtonWrapper >
-                <Button handleClick={handleClick} text="Delete" />
+                <Button handleClick={handleClick}>Delete</Button>
               </ButtonWrapper>
             </div>
             <UserForm>
@@ -138,9 +138,8 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
                 />
                 <Button
                     disabled={disabled}
-                    handleClick={handleSubmit}
-                    text="Modify"
-                />
+                    handleClick={handleSubmit}                   
+                 >Modify</Button>
             </UserForm></>
             : <>
             <Plane
@@ -150,10 +149,10 @@ const Profile = ({userReservation, updateUserReservation, deleteUserReservation}
             /> 
             <div>
               <ButtonWrapper2 >
-                <Button handleClick={handleCancel} text="Cancel" />
+                <Button handleClick={handleCancel}>Cancel</Button>
               </ButtonWrapper2>
               <ButtonWrapper2 >
-                <Button handleClick={handleSubmit} text="OK" />
+                <Button handleClick={handleSubmit}>Ok</Button>
               </ButtonWrapper2>
               </div>
              </> }

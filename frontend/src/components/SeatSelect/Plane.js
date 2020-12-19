@@ -14,7 +14,7 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
         .then((json) => {       
           const { status } = json;
           if (status === 200) {        
-            setSeating(json.data);
+            setSeating([...json.data]);
           }        
         });   
     }   

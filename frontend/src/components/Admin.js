@@ -31,7 +31,7 @@ const Admin = ()=>{
           const { status, data, message } = json;
           if (status === 200) {
              setErrorMessage("");
-             setSingleReservation(data);               
+             setSingleReservation({...data});               
           }  
           else {              
               setErrorMessage(message);

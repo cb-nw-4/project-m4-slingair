@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+//, { useState } 
 import styled from "styled-components";
 import Plane from "./Plane";
 import Input from "./Input";
@@ -13,12 +14,14 @@ const Form = ({
   handleSeatSelect,
   handleSubmit,
   subStatus,
+  userReservation
 }) => (
   <Wrapper>
     <Plane
       selectedSeat={formData.seat}
       flightNumber={flightNumber}
       handleSeatSelect={handleSeatSelect}
+      userReservation={userReservation}
     />
     <UserForm>
       <Input

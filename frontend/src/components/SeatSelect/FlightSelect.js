@@ -3,17 +3,26 @@ import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
 
-const FlightSelect = ({ handleFlightSelect }) => {
+const FlightSelect = ({ handleFlightSelect, flightNumber }) => {
   const [flights, setFlights] = useState([]);
 
   useEffect(() => {
-    // TODO: fetch the flight numbers
-  }, []);
+    fetch('/flights')
+      .then(res => res.json())
+      .then((json) => {
+        //console.log(json)
+        setFlights(json.data)
+  })}, [])
 
   return (
     <Wrapper>
       <label htmlFor="flight">Flight Number :</label>
-      {/* TODO: Create a dropdown from the flight numbers */}
+        <select value={flightNumber} onChange={(ev) => handleFlightSelect(ev)}>
+          <option value="" disabled hidden>Select a Flight</option>
+            {flights.map((item) => (
+              <option key={item} value={item}>{item}</option>
+            ))}
+        </select>
     </Wrapper>
   );
 };
@@ -25,6 +34,12 @@ const Wrapper = styled.div`
   align-items: center;
   padding: ${themeVars.pagePadding};
   margin-bottom: ${themeVars.pagePadding};
+
+  & select {
+    margin: 15px;
+    padding: 10px 20px;
+    border-radius: 3px;
+  }
 `;
 
 export default FlightSelect;

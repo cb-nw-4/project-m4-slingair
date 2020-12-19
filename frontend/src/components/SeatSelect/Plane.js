@@ -3,25 +3,37 @@ import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
 
-const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
+const Plane = ({ flightNumber, handleSeatSelect, selectedSeat, userReservation }) => {
   const [seating, setSeating] = useState([]);
+  //console.log(userReservation.seat)
+  //const reservedSeat = userReservation.seat;
+
 
   useEffect(() => {
-    // TODO: get seating data for selected flight
+    if(flightNumber !== "") {
+    // console.log(flightNumber);
+    fetch(`/flights/${flightNumber}`)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json)
+        setSeating(json.data)        
+      })
+    }
   }, [flightNumber]);
 
   return (
     <Wrapper>
       {flightNumber && seating && seating.length > 0 ? (
-        seating.map((seat) => (
-          <SeatWrapper key={`seat-${seat.id}`}>
+        seating.map((seat) => {
+          //console.log(seat, "seat")
+          return <SeatWrapper key={seat.id}> 
             <label>
-              {seat.isAvailable ? (
+              {(seat.isAvailable) ? (
                 <>
                   <Seat
                     type="radio"
                     name="seat"
-                    onChange={() => handleSeatSelect(seat.id)}
+                    onChange={() => handleSeatSelect(seat.id, seat)}
                   />
                   <Available
                     className={selectedSeat === seat.id ? "checked" : ""}
@@ -29,12 +41,10 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
                     {seat.id}
                   </Available>
                 </>
-              ) : (
-                <Unavailable>{seat.id}</Unavailable>
-              )}
+              ) : (<Unavailable>{seat.id}</Unavailable>)}
             </label>
           </SeatWrapper>
-        ))
+        })
       ) : (
         <Placeholder>Select a Flight to view seating.</Placeholder>
       )}

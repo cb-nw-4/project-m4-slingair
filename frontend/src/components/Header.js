@@ -1,24 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import { themeVars } from "./GlobalStyles";
 import slingairLogo from "../assets/logo_text.png";
 
-const Header = () => (
+const Header = ({ userReservation={} }) => {
+  //console.log(userReservation)
+  //console.log(userReservation.id)
+  return (
   <Wrapper>
-    <Logo>
-      <h1>Sling Airlines</h1>
-    </Logo>
-    <Nav>
-      {/* TODO: only show links if the user has a reservation already */}
-      <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-      </>
-    </Nav>
+    <Link to="/">
+      <Logo>Sling Airlines</Logo>
+    </Link>
+    {/* TODO: only show links if the user has a reservation already */}
+    { userReservation.id && 
+      <Nav>
+            <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+            <StyledNavLink to="/profile">Profile</StyledNavLink>
+       </Nav>
+    }
   </Wrapper>
-);
+  )
+};
 
 const Wrapper = styled.header`
   display: flex;
@@ -27,7 +31,7 @@ const Wrapper = styled.header`
   height: 110px;
   padding: ${themeVars.pagePadding} 18px;
 `;
-const Logo = styled.div`
+const Logo = styled.h1`
   background-image: url(${slingairLogo});
   background-repeat: no-repeat;
   background-position: left center, right center;
@@ -45,7 +49,7 @@ const Nav = styled.nav`
 const StyledNavLink = styled(NavLink)`
   background: ${themeVars.selectiveYellow};
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
   color: ${themeVars.alabamaCrimson};
   display: flex;
   justify-content: center;
@@ -53,7 +57,7 @@ const StyledNavLink = styled(NavLink)`
   font-family: ${themeVars.headingFont};
   font-size: 18px;
   height: 42px;
-  margin: 0 0 0 8px;
+  margin: 0 0 0 10px;
   padding: 0 14px;
   width: 100%;
   text-decoration: none;

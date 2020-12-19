@@ -9,7 +9,7 @@ export const themeVars = {
   pagePadding: "24px",
   headingFont: "'Permanent Marker', Arial, Helvetica, sans-serif",
   contentFont: "'Kosugi', Arial, Helvetica, sans-serif",
-  background: "#F79D00",
+  background: "#F79D00", 
 };
 
 export default createGlobalStyle`

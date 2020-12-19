@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
-const Confirmation = (userReservation) => {
+const ViewReservation = (userReservation) => {
   return (
     <>
-      <Text>Reservation Confirmed!</Text>
+      <Text>Reservation Summary</Text>
       <GrandParentWrapper>
         <ParentWrapper>
           <Wrapper>
@@ -43,8 +43,6 @@ const GrandParentWrapper = styled.div`
 const ParentWrapper = styled.div`
   width: 1200px;
   display: flex;
-  //justify-content: center;
-  //align-items: flex-start;
   border: 3px;
   border-style: solid;
   border-color: red;
@@ -61,10 +59,9 @@ const Wrapper = styled.div`
 const Text = styled.p`
   text-align: center;
   font-weight: 700;
-  //font-family: ${themeVars.headingFont};
   font-size: 36px;
   z-index: 4;
   padding: 20px;
 `;
 
-export default Confirmation;
+export default ViewReservation;

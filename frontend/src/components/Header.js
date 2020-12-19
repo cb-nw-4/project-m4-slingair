@@ -10,13 +10,25 @@ const Header = () => (
     <Logo>
       <h1>Sling Airlines</h1>
     </Logo>
-    <Nav>
-      {/* TODO: only show links if the user has a reservation already */}
-      <>
-        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-        <StyledNavLink to="/profile">Profile</StyledNavLink>
-      </>
-    </Nav>
+
+    {/* TODO: only show links if the user has a reservation already */}
+
+    {localStorage.getItem("reservationId") ? (
+      <Nav>
+        <>
+          <StyledNavLink to="/">Home</StyledNavLink>
+          <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
+          <StyledNavLink to="/profile">Profile</StyledNavLink>
+          <StyledNavLink to="/profile">Admin</StyledNavLink>
+        </>
+      </Nav>
+    ) : (
+      <Nav>
+        <>
+          <StyledNavLink to="/">Home</StyledNavLink>
+        </>
+      </Nav>
+    )}
   </Wrapper>
 );
 

@@ -7,11 +7,17 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
-    // TODO: get seating data for selected flight
+    if (flightNumber) {
+    fetch(`/flight/${flightNumber}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setSeating(json.data);
+      })};
   }, [flightNumber]);
 
   return (
     <Wrapper>
+      
       {flightNumber && seating && seating.length > 0 ? (
         seating.map((seat) => (
           <SeatWrapper key={`seat-${seat.id}`}>

@@ -17,24 +17,35 @@ const getFlight = (req, res) => {
   console.log(flight);
   let seats=flights[flight];
   //console.log(seats);
-  res.status(200).json({status:200, data:seats})
+  if(seats){
+    res.status(200).json({status:200, data:seats})
+  }
+  else{
+    res.status(404).json({status:404, data:flight, message:"seats not found"})
+  }
 };
 
 const addReservations = (req, res) => {
   let reservation=req.body.formData;
-  let flight=req.body.flightNumber;
-  reservation.id=uuidv4();
-  reservation.flight=flight;
-  console.log(reservation);
-  //console.log(flight);
-  flights[flight].forEach(el => {
-    if(el.id===reservation.seat){
-      return el.isAvailable=false;
-    }
-  });
-  reservations.push(reservation);
-  //console.log(reservations);
-  res.status(201).json({status:201, data:reservation});
+  if(reservation){
+    let flight=req.body.flightNumber;
+    reservation.id=uuidv4();
+    reservation.flight=flight;
+    console.log(reservation);
+    //console.log(flight);
+    flights[flight].forEach(el => {
+      if(el.id===reservation.seat){
+        return el.isAvailable=false;
+      }
+    });
+    reservations.push(reservation);
+    //console.log(reservations);
+    res.status(201).json({status:201, data:reservation});
+  }
+  else{
+    res.status(400).json({status:400, message:"Reservation is not created. Please try again."});
+  }
+  
 };
 
 const getReservations = (req, res) => {
@@ -43,7 +54,6 @@ const getReservations = (req, res) => {
 };
 
 const getSingleReservation = (req, res) => {
-  
   let reservation=reservations.find(reservation=>reservation.id===req.params.id);
   res.status(200).json({
     status:200,

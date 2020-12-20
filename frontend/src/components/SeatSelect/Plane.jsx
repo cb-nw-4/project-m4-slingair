@@ -2,11 +2,20 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { themeVars } from "../GlobalStyles";
-
+// Getting data of the chosen plane, seat numbers and if they are available.
+// Then showing the seats or the placeholder.
 const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
 
   useEffect(() => {
+    if (flightNumber) {
+      fetch(`/flight/${flightNumber}`)
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("flight", response.data);
+          setSeating(response.data);
+        });
+    }
     // TODO: get seating data for selected flight
   }, [flightNumber]);
 

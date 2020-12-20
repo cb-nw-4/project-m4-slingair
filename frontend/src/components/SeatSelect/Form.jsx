@@ -5,6 +5,7 @@ import Input from "./Input";
 import Button from "./Button";
 import { themeVars } from "../GlobalStyles";
 
+// inputs and button for the form
 const Form = ({
   disabled,
   flightNumber,

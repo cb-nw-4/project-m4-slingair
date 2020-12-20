@@ -41,6 +41,7 @@ const Wrapper = styled.div`
 
 const Dropdown = styled.select`
   height: 30px;
+  margin-left:15px;
   border: none;
   border-radius: 5px;
   width:150px;

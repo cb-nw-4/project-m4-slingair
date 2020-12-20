@@ -10,16 +10,16 @@ const Header = ({userReservation}) => (
     <Logo>
       <h1>Sling Airlines</h1>
     </Logo>
-    
+    {(userReservation ) && (
     <Nav>
 
       <>
       <StyledNavLink to="/admin"> Admin</StyledNavLink>
-        <StyledNavLink to="/reservations">Reservation</StyledNavLink>
+        <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
         <StyledNavLink to="/profile">Profile</StyledNavLink>
       </>
     </Nav>
- 
+ )}
   </Wrapper>
 );
 

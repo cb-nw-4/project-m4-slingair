@@ -2,34 +2,30 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 
-const Admin = () => {
+const Admin = ({userReservation}) => {
   const [Admin, setAdmin] = useState([]);
-  useEffect(() => {
+  const [newClient, setNewClient] = useState([])
+    useEffect(() => {
     fetch("/admin")
       .then((res) => res.json())
       .then((json) => {
           console.log(json.data)
           
-        let arrayData = json.data;
-        let result = JSON.parse(localStorage.getItem("formData"));
-        arrayData.push(result);
+        const arrayData = json.data;
+        let localData = JSON.parse(localStorage.getItem("formData"));
 
-        let filteredId = (array) => {
-          let arrayId = array.filter((arr) => {
-            if (arr.id !== undefined) {
-              return arr;
-            }
-          });
-          return arrayId;
-        };
+        arrayData.push(localData);
 
-       let filteredData = filteredId(arrayData);
-       setAdmin(filteredData);
+     
+
+       setAdmin(arrayData);
       });
   }, []);
+console.log(newClient)
 
 const allAdmin = (Admin) => {
-  return ( Admin.map((reservation) => { 
+  return ( Admin.map((reservation) => {
+    //   if (reservation != "") {
     return (
   
    
@@ -56,7 +52,9 @@ const allAdmin = (Admin) => {
         </List>
       </Div>
  
-  )}))}
+  )
+
+}))}
   return allAdmin(Admin);
 };
 
@@ -75,6 +73,7 @@ const Span = styled.span`
 `;
 
 const List = styled.ul`
+background-color:white;
   padding: 10px;
   border: 3px #aa001e solid;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -82,8 +81,10 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
+
   padding: 5px;
   font-family: ${themeVars.contentFont};
-  font-size: 150%;
+width:90vw;
+font-size:120%;
 `;
 export default Admin;

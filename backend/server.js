@@ -38,15 +38,13 @@ express()
 
 .post("/reservations", addReservations)
 
-
 .get("/reservations/:id", getSingleReservation)
 
 .get("/admin", allReservations)
 
-
-.delete("/reservations/:id/delete", deleteReservation)
-
 .put("/reservations/:id", updateReservation)
+
+.delete("/reservations/:id", deleteReservation)
 
   // add new endpoints here ☝️
   // ---------------------------------

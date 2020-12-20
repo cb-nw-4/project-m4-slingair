@@ -4,16 +4,17 @@ import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 const { v4: uuidv4 } = require("uuid");
 
-const initialState = {
-  seat: "",
-  givenName: "",
-  surname: "",
-  email: "",
-};
-
-const SeatSelect = ({ updateUserReservation, userReservation }) => {
+const SeatSelect = ({ updateUserReservation, userReservation, update }) => {
+  const initialState = userReservation || {
+    seat: "",
+    givenName: "",
+    surname: "",
+    email: "",
+  };
   const history = useHistory();
-  const [flightNumber, setFlightNumber] = useState(null);
+  const [flightNumber, setFlightNumber] = useState(
+    userReservation && userReservation.flight
+  );
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
@@ -26,6 +27,7 @@ const SeatSelect = ({ updateUserReservation, userReservation }) => {
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
 
+  
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
     console.log(ev.target.value);
@@ -54,26 +56,35 @@ const SeatSelect = ({ updateUserReservation, userReservation }) => {
     ev.preventDefault();
 
     if (validateEmail()) {
-      fetch("/reservations", {
-        method: "POST",
-        body: JSON.stringify({...formData, flight: flightNumber}),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      
+      fetch(
+        update && userReservation
+          ? `/reservations/${userReservation.id}`
+          : "/reservations",
+        {
+          method: "POST",
+          body: JSON.stringify({ ...formData, flight: flightNumber }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
         .then((res) => res.json())
         .then((json) => {
-        
-          if(json.status == 201) {
-
-          
-          updateUserReservation(json.data);
-          window.localStorage.setItem("formData", JSON.stringify(json.data));
-          console.log(JSON.parse(window.localStorage.getItem("formData")));
-          history.push("/confirmed");
-          }
-          else if(json.status == 400) {
+          if (json.status == 201) {
+            updateUserReservation(json.data);
+           console.log(json.data.seat);
+            if (!update) {
+              
+              window.localStorage.setItem("reservationId", json.data.id);
+            }
+            window.localStorage.setItem("formData", JSON.stringify(json.data));
+ 
+            console.log(JSON.parse(window.localStorage.getItem("formData")));
+           
+            history.push("/confirmed");
+          } else if (json.status == 400) {
             history.push("/error");
           }
         });

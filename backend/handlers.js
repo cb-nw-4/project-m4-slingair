@@ -38,10 +38,15 @@ const addReservations = (req, res) => {
   }
 };
 
-const getReservations = (req, res) => {
-  const data = reservations;
-  res.status(200).json({ status: 200, message: "Success", body: data });
-};
+const getReservations = async (req, res) => {
+ try {
+ const clientReservation =  await reservations;
+res.status(200).json({ status: 200, message: "Success", data: clientReservation });
+ }
+ catch {
+   res.status(400).json({status: 200, message: "Error 404"})
+ }
+}
 
 const getSingleReservation = (req, res) => {
   const id = req.params.id;
@@ -58,9 +63,41 @@ const allReservations = (req, res) => {
 
   res.status(200).json({ status: 200, message: "Success", data: reservations });
 };
-const deleteReservation = (req, res) => {};
 
-const updateReservation = (req, res) => {};
+
+
+const deleteReservation = (req, res) => {
+  const reservation = reservations.filter((reserv) => reserv.id != req.params.id);
+  if (!reservation) {
+    res.status(204).json({ status: 204, message: "Reservation not found"});
+  } else {
+    res.status(200).json({ status: 200, data: {reservation}, message: "Reservation deleted"});
+  }
+
+};
+
+const updateReservation = (req, res) => {
+  let reservationId = req.params.id;
+  let selectedReservation = reservations.filter((reservation) => reservationId === reservation.id);
+
+  selectedReservation = {
+    id: uuidv4(),
+    flight: req.body.flight,
+    seat: req.body.seat,
+    givenName: req.body.givenName,
+    surname: req.body.surname,
+    email: req.body.email,
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: "Reservation has been updated.",
+    data: selectedReservation,
+  })
+};
+
+
+
 
 module.exports = {
   getFlights,

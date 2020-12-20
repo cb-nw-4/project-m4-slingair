@@ -16,7 +16,7 @@ const Confirmation = ({userReservation}) => {
     <Item><Span>Last Name:</Span>  {userReservation.surname}</Item>
     <Item><Span>Email:</Span>  {userReservation.email}</Item>
     <Item><Span>Seat Number:</Span>  {userReservation.seat}</Item>
-    <Item><Span>Flight Number:</Span>  {userReservation.flightNumber}</Item>
+    <Item><Span>Flight Number:</Span>  {userReservation.flightNumber || userReservation.flight}</Item>
     <Item><Span>Reservation ID:</Span>  {userReservation.id}</Item>
   </List>
   </Div>

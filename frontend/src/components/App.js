@@ -7,8 +7,9 @@ import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Profile from "./Profile";
 import AllReservations from "./AllReservations";
-import Reservations from "./Reservations";
-import SingleReservation from "./SingleReservation";
+
+import SearchReservation from "./SearchReservation";
+import SingleReservation from "./FindReservation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -32,7 +33,7 @@ if(reservationId) {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header userReservation={userReservation} />
+      <Header userReservation={userReservation} update/>
       <Main>
         <Switch>
           <Route exact path="/">
@@ -42,23 +43,23 @@ if(reservationId) {
             <SeatSelect  updateUserReservation={updateUserReservation} update />
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation userReservation={userReservation} />
+            <Confirmation userReservation={userReservation} update />
           </Route>
           <Route exact path= "/profile">
             <Profile updateUserReservation={updateUserReservation} 
             userReservation={userReservation} />
           </Route>
-         
-          <Route exact path="reservations/:id">
+          <Route exact path= "/admin">
+            <AllReservations userReservation={userReservation}/>
+          </Route>
+          <Route exact path="/reservations/:id">
             <SingleReservation />
           </Route>
-          <Route exact path= "/reservations">
-            <Reservations/>
+          <Route exact path= "/view-reservation">
+            <SearchReservation userReservation={userReservation}/>
           </Route>
    
-          <Route exact path= "/admin">
-            <AllReservations/>
-          </Route>
+          
           <Route path="">404: Oops!</Route>
         </Switch>
         <Footer />

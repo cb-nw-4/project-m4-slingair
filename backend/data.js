@@ -72,14 +72,7 @@ const reservations = [
     surname: "McFly",
     email: "marty@backfuture.com"
   },
-  {
-    id: "88askjdfhskjd-3332-4ef2-bd71-be7a6430485f",
-    flight: "SA231",
-    seat: "5D",
-    givenName: "Ellie",
-    surname: "Lefebvre",
-    email: "Ellie@gmail.com"
-  },
+
 ];
 
 module.exports = { flights, reservations };

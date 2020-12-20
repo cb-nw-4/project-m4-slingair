@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 import Admin from "./Admin";
 
-const AllReservations = () => {
+const AllReservations = ({userReservation}) => {
   return (
     <Wrapper>
       <Title>All Reservations</Title>

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { themeVars } from "./GlobalStyles";
 
 const SearchReservation = ({ userReservation }) => {
-  const [placeHolder, setPlaceHolder] = useState("");
   const [value, setValue] = useState("");
   const [single, setSingle] = useState([]);
   const [foundReservation, setFoundReservation] = useState(false);
@@ -12,38 +11,33 @@ const SearchReservation = ({ userReservation }) => {
     fetch(`/reservations`)
       .then((res) => res.json())
       .then((json) => {
-        setSingle(json.data);
-        const result = JSON.parse(localStorage.getItem("formData"));
+        let result = JSON.parse(localStorage.getItem("formData"));
         let arrayData = json.data;
         arrayData.push(result);
 
-        setReservation(arrayData)
-        let filteredId = (array) => {
-          let arrayId = array.map((arr) => {
-            return arr.id;
-          });
-          return arrayId;
-        };
-        setSingle(filteredId(arrayData));
+        setReservation(arrayData);
       });
   }, []);
-
+  console.log(reservation);
   const handleClick = () => {
-    const clientId = reservation.find((reserv) => {
+    let clientId = reservation.filter((reserv) => {
       if (reserv.id === value) {
+        setFoundReservation(true);
         return reserv;
+        
       }
-    });
+    })
+    console.log(clientId)
     if (clientId) {
       setReservation(clientId);
-      setFoundReservation(true);
     }
-    else {
-       
-        setPlaceHolder("No result")
-    }
+    console.log(clientId);
+
+    return clientId;
   };
   console.log(reservation);
+  console.log(single);
+
   return (
     <Wrapper>
       <Title>Enter Your Confirmation ID</Title>
@@ -51,13 +45,13 @@ const SearchReservation = ({ userReservation }) => {
         type="text"
         value={value}
         onChange={(ev) => setValue(ev.target.value)}
-        placeholder={placeHolder}
       />
-  <Button onClick={handleClick}> Find your Reservation</Button>
-      {(foundReservation) &&
-       ( reservation.map((reserv) => {
+      <Button onClick={handleClick}> Find your Reservation</Button>
+
+      {foundReservation &&
+        reservation.map((reserv) => {
           return (
-            <Div key={reserv.id}>
+            <Div>
               <List key={reserv.id}>
                 <Item>
                   <Span>First Name:</Span> {reserv.givenName}
@@ -72,7 +66,7 @@ const SearchReservation = ({ userReservation }) => {
                   <Span>Seat Number:</Span> {reserv.seat}
                 </Item>
                 <Item>
-                  <Span>Flight Number:</Span>{" "}
+                  <Span>Flight Number:</Span>
                   {reserv.flightNumber || reserv.flight}
                 </Item>
                 <Item>
@@ -80,9 +74,8 @@ const SearchReservation = ({ userReservation }) => {
                 </Item>
               </List>
             </Div>
-          )
-        }))}
-    
+          );
+        })}
     </Wrapper>
   );
 };

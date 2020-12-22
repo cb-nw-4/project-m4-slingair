@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import Admin from "./Admin";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
@@ -15,10 +16,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    // TODO: check localStorage for an id
+    // TODO: check localStorage for an id 
     // if yes, get data from server and add it to state
+    // fetch("/reservation")
+    // .then(res => res.json())
+    // .then(res => setFlights(res.data))
   }, [setUserReservation]);
-
+console.log(userReservation)
   return (
     <BrowserRouter>
       <GlobalStyles />
@@ -26,10 +30,13 @@ const App = () => {
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect />
+            <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation />
+            <Confirmation userReservation={userReservation} />
+          </Route>
+          <Route exact path="/admin">
+            <Admin />
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

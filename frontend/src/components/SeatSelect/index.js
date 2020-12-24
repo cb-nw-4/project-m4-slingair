@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+// import { addReservations } from "/backend/handlers.js";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
@@ -22,6 +23,7 @@ const SeatSelect = ({ updateUserReservation }) => {
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
+    console.log(flightNumber)
   };
 
   const handleSeatSelect = (seatId) => {
@@ -44,7 +46,28 @@ const SeatSelect = ({ updateUserReservation }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (validateEmail()) {
+      
       // TODO: Send data to the server for validation/submission
+      fetch("/confirm", {
+        method: "POST",
+        body: JSON.stringify({ flight: flightNumber, ...formData}),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        })
+      .then((res) => res.json())
+      .then((reservation) => {
+        const { status, data } = reservation;
+        if (status === 201) {
+          setSubStatus("confirmed");
+          localStorage.setItem("id", data);
+          updateUserReservation();
+          history.push("/confirmed");
+        } else { 
+          setSubStatus("error");
+        }
+      })
       // TODO: if 201, add reservation id (received from server) to localStorage
       // TODO: if 201, redirect to /confirmed (push)
       // TODO: if error from server, show error to user (stretch goal)

@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
+import Reservation from "./Reservation";
+import Profile from "./Profile";
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
@@ -25,13 +27,18 @@ const App = () => {
       <Header />
       <Main>
         <Switch>
+          <Route exact path="/view-reservation">
+            <Reservation />
+          </Route>
           <Route exact path="/">
             <SeatSelect />
           </Route>
           <Route exact path="/confirmed">
             <Confirmation />
           </Route>
-          <Route path="">404: Oops!</Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
         </Switch>
         <Footer />
       </Main>

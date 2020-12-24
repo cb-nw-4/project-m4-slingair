@@ -28,7 +28,7 @@ express()
   .get("/flights/:flight", getFlight)
   .get("/reservations", getReservations)
   .get("/reservations/:id", getSingleReservation)
-  .post("/reservations", addReservations)
+  .post("/confirm", addReservations)
   .delete("/reservations/delete/:id", deleteReservation)
   .get("/reservations/update/:id", updateReservation)
 

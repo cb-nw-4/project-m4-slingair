@@ -10,7 +10,7 @@ const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
     fetch(`/flight/${flightNumber}`)
       .then((res) => res.json())
       .then((json) => {
-        setSeating(json.data);
+        setSeating(json[flightNumber]);
       })
   }, [flightNumber]);
 

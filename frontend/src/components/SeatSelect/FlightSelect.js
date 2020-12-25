@@ -10,7 +10,7 @@ const FlightSelect = ({ handleFlightSelect }) => {
     fetch('/flights')
       .then((res) => res.json())
       .then((json) => {
-        setFlights(json.data);
+        setFlights(json.flights);
       })
   }, []);
 

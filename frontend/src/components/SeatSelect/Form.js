@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Plane from "./Plane";
 import Input from "./Input";
@@ -12,14 +12,18 @@ const Form = ({
   handleChange,
   handleSeatSelect,
   handleSubmit,
+  handleUpdate,
   subStatus,
-}) => (
+  updateMode
+}) => {
+  return (
   <Wrapper>
     <Plane
       selectedSeat={formData.seat}
       flightNumber={flightNumber}
       handleSeatSelect={handleSeatSelect}
     />
+    <>{updateMode === false && (
     <UserForm>
       <Input
         name="givenName"
@@ -44,12 +48,25 @@ const Form = ({
       />
       <Button
         disabled={disabled}
+        handleClick={(updateMode === false) ? handleSubmit : handleUpdate}
+        subStatus={subStatus}
+        />
+      </UserForm>
+      )}
+      </>
+      <>{updateMode === true && (
+        <UserForm>
+        <Button
+        disabled={disabled}
         handleClick={handleSubmit}
         subStatus={subStatus}
-      />
-    </UserForm>
+        />
+      </UserForm>
+      )}
+      </>
   </Wrapper>
-);
+  );
+}
 
 const Wrapper = styled.form`
   display: flex;

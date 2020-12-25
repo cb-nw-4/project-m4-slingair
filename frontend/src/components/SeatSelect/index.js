@@ -3,9 +3,8 @@ import { useHistory } from "react-router-dom";
 import FlightSelect from "./FlightSelect";
 import Form from "./Form";
 
-const initialState = { seat: "", givenName: "", surname: "", email: "" };
-
-const SeatSelect = ({ updateUserReservation }) => {
+const SeatSelect = ({ updateUserReservation, userReservation, updateMode }) => {
+  const initialState = { seat: "", givenName: "", surname: "", email: "" };
   const history = useHistory();
   const [flightNumber, setFlightNumber] = useState(null);
   const [formData, setFormData] = useState(initialState);
@@ -20,6 +19,12 @@ const SeatSelect = ({ updateUserReservation }) => {
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
 
+  useEffect(() => {
+    if (updateMode === true) {
+      setFormData({ seat: '', givenName: userReservation.givenName, surname: userReservation.surname, email: userReservation.email });
+    }
+  }, [updateMode, userReservation, userReservation.email, userReservation.givenName, userReservation.surname]) 
+
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);
   };
@@ -29,11 +34,11 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleChange = (val, item) => {
-    setFormData({ ...formData, [item]: val });
+      setFormData({ ...formData, [item]: val });
   };
 
   const validateEmail = () => {
-    const emailParts = formData.email.split("@");
+      const emailParts = formData.email.split("@");
     return (
       emailParts.length === 2 &&
       emailParts[0].length > 0 &&
@@ -59,12 +64,12 @@ const SeatSelect = ({ updateUserReservation }) => {
       })
       .then((res) => res.json())
       .then((json) => {
-        if (json.status === 201) {
+        if (json.status === 201 ) {
           function createLocalStorage(key, value) {
-                return Promise.resolve().then(function () {
-                    localStorage.setItem(key, value);
-                });
-            }
+            return Promise.resolve().then(function () {
+            localStorage.setItem(key, value);
+            });
+          }
           createLocalStorage('reservationId', json.data.id).then(() => {
             setSubStatus("pending");
             updateUserReservation(json.data);
@@ -72,11 +77,35 @@ const SeatSelect = ({ updateUserReservation }) => {
           });
         }
         if (json.status === 400) {
-          console.log(json.data);
-          // TODO: if error from server, show error to user (stretch goal)
-        }
-      })
+          console.log(json.data); // for debugging
+          alert('Bad request'); // for user 
+        };
+      });
     }
+  };
+
+  const handleUpdate = (ev) => {
+    ev.preventDefault();
+    const reservationId = localStorage.getItem('reservationId');
+    fetch(`/reservation/${reservationId}`, {
+      method: 'PUT',
+      body: JSON.stringify(
+        {
+          flight: flightNumber,
+          ...formData
+        }
+      ),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => res.json())
+    .then((json) => {
+      setSubStatus("pending");
+      updateUserReservation(json.data);
+      history.push('/confirmed');
+    })
   };
 
   return (
@@ -92,8 +121,10 @@ const SeatSelect = ({ updateUserReservation }) => {
         handleChange={handleChange}
         handleSeatSelect={handleSeatSelect}
         handleSubmit={handleSubmit}
+        handleUpdate={handleUpdate}
         disabled={disabled}
         subStatus={subStatus}
+        updateMode={updateMode}
       />
     </>
   );

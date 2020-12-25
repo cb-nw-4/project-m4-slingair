@@ -86,11 +86,11 @@ const updateReservation = (req, res) => {
     && findReservation.givenName === update.givenName 
     && findReservation.surname === update.surname 
     && findReservation.email === update.email
-    && (findReservation.flight !== update.flight|| findReservation.seat !== update.seat)) {
+    && ((findReservation.flight !== update.flight && findReservation.seat === update.seat) || (findReservation.flight !== update.flight && findReservation.seat !== update.seat))) {
     const index = reservations.indexOf(findReservation);
     const updatedReservation = {...findReservation, flight: update.flight, seat: update.seat};
     reservations.splice(index, 1, updatedReservation);
-    res.status(200).json({ status: 200, message: 'Reservation updated.' });
+    res.status(200).json({ status: 200, data: updatedReservation });
   }
   else {
     res.status(400).json({ status: 400, message: 'This request cannot be completed. Please contact our customer support team for assistance.' });

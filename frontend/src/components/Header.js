@@ -16,7 +16,6 @@ const Header = ({ handleBackToHome }) => {
         <>{reservationId && (
           <Nav>
             <StyledNavLink to="/view-reservation">Reservation</StyledNavLink>
-            <StyledNavLink to="/profile">Profile</StyledNavLink>
           </Nav>
         )}
         </>

@@ -23,7 +23,7 @@ const SeatSelect = ({ updateUserReservation, userReservation, updateMode }) => {
     if (updateMode === true) {
       setFormData({ seat: '', givenName: userReservation.givenName, surname: userReservation.surname, email: userReservation.email });
     }
-  }, [updateMode, userReservation, userReservation.email, userReservation.givenName, userReservation.surname]) 
+  }, []) 
 
   const handleFlightSelect = (ev) => {
     setFlightNumber(ev.target.value);

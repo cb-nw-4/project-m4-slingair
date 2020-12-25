@@ -61,7 +61,7 @@ const Form = ({
         handleClick={handleSubmit}
         subStatus={subStatus}
         />
-      </UserForm>
+        </UserForm>
       )}
       </>
   </Wrapper>
@@ -75,6 +75,7 @@ const Wrapper = styled.form`
   margin: 0 auto;
   max-width: 700px;
 `;
+
 const UserForm = styled.div`
   border: 3px solid ${themeVars.alabamaCrimson};
   border-radius: 5px;

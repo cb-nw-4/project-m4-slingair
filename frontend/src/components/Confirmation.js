@@ -4,6 +4,7 @@ import SeatSelect from "./SeatSelect";
 import { themeVars } from "./GlobalStyles";
 import tombstone from "../assets/tombstone.png";
 
+<<<<<<< HEAD
 const Confirmation = ({ userReservation }) => {
   console.log(userReservation)
         return (
@@ -17,6 +18,10 @@ const Confirmation = ({ userReservation }) => {
         <img src={tombstone} alt='tombstone' height='150' width='170' />
       </div>
       )
+=======
+const Confirmation = ({ updateUserReservation }) => {
+  return <Wrapper></Wrapper>;
+>>>>>>> 0bcdb9dbcf0ba4200613d1207429ebe91294a535
 };
 
 export default Confirmation;

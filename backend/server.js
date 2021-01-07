@@ -22,15 +22,22 @@ express()
   // ---------------------------------
   // add new endpoints here 👇
 
+
   // get flights (flight numbers)
   .get("/flights", getFlights)
   .get("/flights/:flight", getFlight)
   .get("/reservations", getReservations)
   .get("/reservations/:id", getSingleReservation)
+<<<<<<< HEAD
   .post("/reservations", addReservations)
   .delete("/reservations/delete/:id", deleteReservation)
   .patch("/reservations/update/:id", updateReservation)
 
+=======
+  .post("/confirm", addReservations)
+  .delete("/reservations/delete/:id", deleteReservation)
+  .get("/reservations/update/:id", updateReservation)
+>>>>>>> 0bcdb9dbcf0ba4200613d1207429ebe91294a535
 
   // add new endpoints here ☝️
   // ---------------------------------

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-<<<<<<< HEAD
 const Reservation = ({ userReservation }) => {
     
     return (
@@ -22,15 +21,3 @@ const Reservation = ({ userReservation }) => {
 }
 
 export default Reservation;
-=======
-import { themeVars } from "./GlobalStyles";
-import tombstone from "../assets/tombstone.png";
-
-const Reservation = () => {
-  return <Wrapper>reservation page</Wrapper>;
-};
-
-const Wrapper = styled.div``;
-
-export default Reservation;
->>>>>>> 0bcdb9dbcf0ba4200613d1207429ebe91294a535

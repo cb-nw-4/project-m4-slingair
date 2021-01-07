@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Reservation = ({ userReservation }) => {
-    
+console.log(userReservation)
     return (
         <div>
             <h1>Your Reservation Details</h1>

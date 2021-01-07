@@ -34,9 +34,6 @@ const App = () => {
       <Header />
       <Main>
         <Switch>
-          <Route exact path="/view-reservation">
-            <Reservation />
-          </Route>
           <Route exact path="/">
             <SeatSelect userReservation={userReservation} updateUserReservation={updateUserReservation} />
           </Route>

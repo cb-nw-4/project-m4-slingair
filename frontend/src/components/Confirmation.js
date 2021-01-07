@@ -14,7 +14,7 @@ const Confirmation = ({ userReservation }) => {
         <p>Seat #: {`${userReservation.seat}`}</p>
         <p>Name: {`${userReservation.givenName} ${userReservation.surname}`}</p>
         <p>Email: {`${userReservation.email}`}</p>
-        <img src={tombstone} alt='tombstone' height='150' width='170' />
+        {/* <img src={tombstone} alt='tombstone' height='150' width='170' /> */}
       </div>
       )
 }

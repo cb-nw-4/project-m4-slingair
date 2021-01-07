@@ -7,7 +7,6 @@ import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
 import Reservation from "./Reservation";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
-import Reservation from "./Reservation";
 import Profile from "./Profile";
 
 const App = () => {

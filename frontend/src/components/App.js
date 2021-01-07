@@ -5,31 +5,71 @@ import Header from "./Header";
 import Footer from "./Footer";
 import SeatSelect from "./SeatSelect";
 import Confirmation from "./Confirmation";
+import Reservation from "./Reservation";
+import Profile from "./Profile";
+import Update from "./Update";
+import Admin from "./Admin";
 import GlobalStyles, { themeVars } from "./GlobalStyles";
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
+  const [subStatus, setSubStatus] = useState("idle");
 
   const updateUserReservation = (newData) => {
     setUserReservation({ ...userReservation, ...newData });
   };
 
+  const deleteUserReservation = () => {
+    setUserReservation({});
+  };
+
   useEffect(() => {
-    // TODO: check localStorage for an id
-    // if yes, get data from server and add it to state
+    const reservationID = window.localStorage.getItem('id');  
+    if (reservationID ) { 
+      setSubStatus("pending");   
+      fetch(`/reservation/${reservationID}`)
+      .then((res) => res.json())
+      .then((json) => {
+        const { status, data, message } = json; 
+        if (status === 200) {
+          setUserReservation({...data});
+          setSubStatus("confirmed");   
+        }
+        else {
+          setSubStatus("error"); 
+          window.localStorage.clear();
+          console.log(message)
+        };
+      });
+    }   
   }, [setUserReservation]);
 
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <Header />
+      <Header userReservation={userReservation} />
       <Main>
         <Switch>
           <Route exact path="/">
-            <SeatSelect />
+            <SeatSelect updateUserReservation={updateUserReservation}/>
           </Route>
           <Route exact path="/confirmed">
-            <Confirmation />
+          {subStatus !== "pending" &&
+            <Confirmation userReservation={ userReservation }/>}
+          </Route>
+          <Route exact path="/view-reservation">
+            <Reservation />
+          </Route>
+          <Route exact path="/profile">
+            {subStatus !== "pending" &&
+            <Profile userReservation={ userReservation } updateUserReservation={updateUserReservation} deleteUserReservation={deleteUserReservation} />}
+          </Route>
+          <Route exact path="/update">
+          {subStatus !== "pending" &&
+            <Update userReservation={ userReservation } />}
+          </Route>
+          <Route exact path="/admin">
+            <Admin />
           </Route>
           <Route path="">404: Oops!</Route>
         </Switch>

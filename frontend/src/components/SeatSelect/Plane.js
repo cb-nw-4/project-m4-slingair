@@ -5,12 +5,23 @@ import { themeVars } from "../GlobalStyles";
 
 const Plane = ({ flightNumber, handleSeatSelect, selectedSeat }) => {
   const [seating, setSeating] = useState([]);
+  
 
   useEffect(() => {
-    // TODO: get seating data for selected flight
+    if (flightNumber) {
+      fetch(`/flight/${flightNumber}`)
+        .then((res) => res.json())
+        .then((json) => {       
+          const { status } = json;
+          if (status === 200) {        
+            setSeating(json.data);
+          }        
+        });   
+    }   
   }, [flightNumber]);
 
-  return (
+  return (  
+   
     <Wrapper>
       {flightNumber && seating && seating.length > 0 ? (
         seating.map((seat) => (
@@ -83,7 +94,6 @@ const Seat = styled.input`
   height: 30px;
   width: 30px;
   margin: 0;
-
   &:checked {
     span {
       background: ${themeVars.alabamaCrimson};
@@ -111,7 +121,6 @@ const Available = styled(SeatNumber)`
   background: #fff;
   border: 1px solid ${themeVars.alabamaCrimson};
   cursor: pointer;
-
   &.checked,
   &:hover {
     background: ${themeVars.alabamaCrimson};

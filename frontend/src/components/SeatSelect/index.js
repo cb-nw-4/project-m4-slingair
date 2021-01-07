@@ -11,6 +11,7 @@ const SeatSelect = ({ updateUserReservation }) => {
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // This hook is listening to state changes and verifying whether or not all
@@ -20,7 +21,7 @@ const SeatSelect = ({ updateUserReservation }) => {
       : setDisabled(false);
   }, [flightNumber, formData, setDisabled]);
 
-  const handleFlightSelect = (ev) => {
+  const handleFlightSelect = (ev) => {   
     setFlightNumber(ev.target.value);
   };
 
@@ -42,13 +43,34 @@ const SeatSelect = ({ updateUserReservation }) => {
   };
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    if (validateEmail()) {
-      // TODO: Send data to the server for validation/submission
-      // TODO: if 201, add reservation id (received from server) to localStorage
-      // TODO: if 201, redirect to /confirmed (push)
-      // TODO: if error from server, show error to user (stretch goal)
+    ev.preventDefault();   
+    if (validateEmail()) {     
+      setSubStatus("pending");
+      fetch("/reservation", {
+        method: "POST",
+        body: JSON.stringify({flight: flightNumber, ...formData}),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          const { status, data, message } = json;      
+          if (status === 201) {            
+            updateUserReservation(data);
+            window.localStorage.setItem('id', data.id);  
+            setSubStatus("confirmed");
+            setError(""); 
+            history.push('/confirmed');               
+          } else {
+            setSubStatus("error"); 
+            setError(message);                  
+          }
+        });        
     }
+    else
+      setError("Invalid email");
   };
 
   return (
@@ -66,7 +88,8 @@ const SeatSelect = ({ updateUserReservation }) => {
         handleSubmit={handleSubmit}
         disabled={disabled}
         subStatus={subStatus}
-      />
+        error={error}
+      />     
     </>
   );
 };

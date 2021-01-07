@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { themeVars } from "../GlobalStyles";
 
-const Button = ({ handleClick, disabled, subStatus }) => (
+const Button = ({ handleClick, disabled, subStatus, text }) => (
   <Wrapper disabled={disabled || subStatus === "pending"} onClick={handleClick}>
-    Confirm
+    {text}
   </Wrapper>
 );
 
@@ -19,11 +19,11 @@ const Wrapper = styled.button`
   font-size: 24px;
   height: 48px;
   width: 100%;
-
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
 `;
+
 
 export default Button;

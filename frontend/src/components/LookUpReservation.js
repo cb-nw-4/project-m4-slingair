@@ -39,14 +39,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: ${themeVars.selectiveYellow};
+  background: ${themeVars.orange};
   height: 100vh;
 `;
 
 const Title = styled.p`
   font-size: 30px;
   font-weight: bold;
-  color:  white;
+  color:  ${themeVars.alabamaCrimson};
   text-align: center;
 `;
 

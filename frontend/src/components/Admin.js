@@ -30,13 +30,13 @@ return (
 };
 
 const Wrapper = styled.div`
-  background: ${themeVars.selectiveYellow};
+  background: ${themeVars.orange};
 `;
 
 const Title = styled.p`
   font-size: 25px;
   font-weight: bold;
-  color:  white;
+  color:  ${themeVars.alabamaCrimson};
   text-align: center;
   margin-top: 25px;
 `;

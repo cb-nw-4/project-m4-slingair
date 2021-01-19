@@ -11,7 +11,7 @@ import Profile from "./Profile";
 import Admin from "./Admin";
 import LookUpReservation from "./LookUpReservation";
 import DeleteReservation from "./DeleteReservation";
-import ModifyReservation from "./ModifyReservation";
+import ModifiedReservationSuccess from "./ModifiedReservationSuccess";
 
 const App = () => {
   const [userReservation, setUserReservation] = useState({});
@@ -54,14 +54,14 @@ const App = () => {
             <MyReservation userReservation={userReservation}/>
           </Route>
           <Route exact path="/profile">
-            <Profile userReservation={userReservation}/>
+            <Profile userReservation={userReservation} updateUserReservation={updateUserReservation} setUserReservation={setUserReservation}/>
           </Route>
           <Route exact path="/delete">
-            <DeleteReservation userReservation={userReservation}/>
+            <DeleteReservation />
             </Route>
-          {/* <Route exact path="/update">
-            <ModifyReservation />
-          </Route> */}
+          <Route exact path="/update">
+            <ModifiedReservationSuccess userReservation={userReservation}/>
+          </Route>
           <Route exact path="/reservations/:id">
             <LookUpReservation />
           </Route>
@@ -80,7 +80,7 @@ const Main = styled.div`
   background: ${themeVars.background};
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px);
+  height: calc(125vh - 110px);
 `;
 
 export default App;

@@ -93,22 +93,37 @@ const updateReservation = (req, res) => {
   delete body.id;
   //console.log(req.body.seat)
   //console.log(reservations)
+  
   //Not able to update to a reserved seat:
   const seatTaken = reservations.find((item) => item.seat === req.body.seat)
-  console.log(seatTaken)
+  console.log(seatTaken + "seatTaken")
 
-  if(reservation && !seatTaken){
+  //Not able update to a seat that does not exist:
+  const flightTaken = flights[body.flight]
+  const allSeats = Object.values(flightTaken);
+  const seatExists = allSeats.some((seat) => seat.id === body.seat)
+  //console.log(seatExists)
+
+  // Update seat availability:
+  const oldSeatIndex = flights[reservation.flight].findIndex((seat) => seat.id === reservation.seat)
+  const oldReservedSeat = flights[reservation.flight][oldSeatIndex]
+  oldReservedSeat.isAvailable = true;
+
+  if(reservation && !seatTaken && seatExists){
     const updatedAccount = {... reservation,...body };
     //console.log(updatedAccount)
     reservations[index] = updatedAccount;
+    const newSeatIndex = flights[updatedAccount.flight].findIndex((seat) => seat.id === updatedAccount.seat);
+    const newReservedSeat = flights[updatedAccount.flight][newSeatIndex];
+    newReservedSeat.isAvailable = false;
     res.status(200).json({ status: 200, message: "Success, reservation updated.", data: updatedAccount });
   } else if(seatTaken){
-    res.status(404).json({ status: 400, message: "Error, seat has been reserved.", data: req.body.seat })
+    res.status(404).json({ status: 400, message: "Error, seat is unavailable.", data: req.body.seat });
+  } else if(!seatExists){
+    res.status(404).json({ status: 404, message: "Error, seat not found." });
   } else {
-    res.status(404).json({ status: 404, message: "Error, reservation not found.", data: id })
+    res.status(404).json({ status: 404, message: "Error, reservation not found.", data: id });
   }
-
-  
 };
 
 module.exports = {

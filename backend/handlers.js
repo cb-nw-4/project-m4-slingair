@@ -13,6 +13,7 @@ const getFlights = (req, res) => {
 };
 
 const getFlight = (req, res) => {
+  console.log(req.params);
   let flight=req.params.flightid;
   console.log(flight);
   let seats=flights[flight];
@@ -27,6 +28,7 @@ const getFlight = (req, res) => {
 
 const addReservations = (req, res) => {
   let reservation=req.body.formData;
+  console.log(req.body);
   if(reservation){
     let flight=req.body.flightNumber;
     reservation.id=uuidv4();
@@ -55,15 +57,48 @@ const getReservations = (req, res) => {
 
 const getSingleReservation = (req, res) => {
   let reservation=reservations.find(reservation=>reservation.id===req.params.id);
-  res.status(200).json({
+  if(reservation){
+    res.status(200).json({
     status:200,
     data:reservation})
+  }
+  else{
+    res.status(404).json({status:404, message:"Reservation not found."})
+  }
 };
 
 
-const deleteReservation = (req, res) => {};
+const deleteReservation = (req, res) => {
+  const resID=req.params.id;
+  const resToDelete=reservations.find(el=>el.id===resID);
+  if(resToDelete){
+    const index=reservations.indexOf(resToDelete);
+    reservations.splice(index,1)
+    res.status(200).json({status:200, message:`Reservation with ID ${resID} is deleted.`})
+  }
+  else{
+    res.status(404).json({status:404, message:"Reservation not found."})
+  }
+};
 
-const updateReservation = (req, res) => {};
+const updateReservation = (req, res) => {
+  let resID=req.params.id;
+  let resBody=req.body.reservation
+  let oldReservation=reservations.find(el=>el.id===resID)
+  if(resBody&&
+    resBody.givenName === oldReservation.givenName &&
+    resBody.surname === oldReservation.surname &&
+    resBody.email === oldReservation.email &&
+    resBody.flight === oldReservation.flight){
+      const index=reservations.indexOf(oldReservation);
+      const updatedRes={...oldReservation, seat:resBody.seat}
+      reservations[index]=updatedRes;
+      res.status(200).json({status:200, message:"Reservation updated. Please check on your portal with your reservation ID.", data:updatedRes})
+  }
+  else{
+    res.status(400).json({status:400, message:"Reservation is not updated due to request error. Please contact our support staff or try again later."})
+  }
+};
 
 module.exports = {
   getFlights,

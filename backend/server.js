@@ -4,7 +4,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const { getFlights, getFlight, addReservations, getReservations, getSingleReservation } = require("./handlers");
+const { getFlights, getFlight, addReservations, getReservations, getSingleReservation, updateReservation, deleteReservation } = require("./handlers");
 
 
 express()
@@ -28,6 +28,8 @@ express()
   .post("/addreservation", addReservations)
   .get("/allreservations", getReservations)
   .get("/getreservation/:id", getSingleReservation)
+  .post("/reservationUpdate/:id", updateReservation)
+  .delete("/reservationDelete/:id", deleteReservation)
   
 
   // add new endpoints here ☝️

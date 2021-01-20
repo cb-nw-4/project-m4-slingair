@@ -42,7 +42,7 @@ const addReservations = (req, res) => {
     });
     reservations.push(reservation);
     //console.log(reservations);
-    res.status(201).json({status:201, data:reservation});
+    res.status(201).json({status:201, data:reservation, message:"Reservation created"});
   }
   else{
     res.status(400).json({status:400, message:"Reservation is not created. Please try again."});
@@ -51,7 +51,6 @@ const addReservations = (req, res) => {
 };
 
 const getReservations = (req, res) => {
-  console.log(reservations);
   res.status(200).json({status:200, data:reservations})
 };
 
@@ -74,10 +73,10 @@ const deleteReservation = (req, res) => {
   if(resToDelete){
     const index=reservations.indexOf(resToDelete);
     reservations.splice(index,1)
-    res.status(200).json({status:200, message:`Reservation with ID ${resID} is deleted.`})
+    res.status(200).json({status:200, message:`Reservation with ID ${resID} is deleted.`, data:resToDelete})
   }
   else{
-    res.status(404).json({status:404, message:"Reservation not found."})
+    res.status(404).json({status:404, message:"Reservation not found.", data:resToDelete})
   }
 };
 
@@ -96,7 +95,7 @@ const updateReservation = (req, res) => {
       res.status(200).json({status:200, message:"Reservation updated. Please check on your portal with your reservation ID.", data:updatedRes})
   }
   else{
-    res.status(400).json({status:400, message:"Reservation is not updated due to request error. Please contact our support staff or try again later."})
+    res.status(400).json({status:400, message:"Reservation is not updated due to request error. Please contact our support staff or try again later.", data:resBody})
   }
 };
 

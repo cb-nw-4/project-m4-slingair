@@ -70,19 +70,26 @@ const getSingleReservation = (req, res) => {
 };
 
 const deleteReservation = (req, res) => {
-  const reservation = reservations.filter((element) => element.id === req.params.id)
-  if(reservation != req.params.id){
-    res.status(204).json({
-      status:204,
-      message:"Reservation not found"
-    })
-  } else {
-    res.status(200).json({
-      status:200,
-      message:"Reservation deleted",
-      data:reservation
-    });
+  const { 
+    flight,
+    seat   
+  } = req.body; 
+  const reservationIndex = reservations.findIndex((reservation)=>(reservation.id === req.params.id));
+  if (reservationIndex !== -1){
+    reservations.splice(reservationIndex, 1);
+    changeSeatAvailability(flight, seat, true);
+    res.status(200).json({ 
+      status: 200,
+      data: {},
+      message: "Reservation deleted"
+    }); 
   }
+  else
+    res.status(404).json({ 
+      status: 404,
+      data: req.params.id,
+      message: "Reservation not found" 
+    });
 };
 
 const updateReservation = (req, res) => {
